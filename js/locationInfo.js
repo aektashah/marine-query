@@ -7658,12 +7658,15 @@ function initdata(){
         $(document).ready(function() {
             $.each(data, function(){
                 var marker = L.marker([this.field_lat, this.field_lon],
-                    {title: 'Hover Text',     // Add a title
+                    {title: 'Click to View Data',  
                      opacity: 0.5}).bindPopup("<b>Location: </b>" + 
                      this.location + ", " + this.state_province + ", " + 
                      this.country + 
                      "<br><b>Logger Type: </b>" + this.biomimic +
                      "<br><b>Logger ID: </b>" + this.microsite_id).addTo(map);
+                marker.on('dblclick', function(e){
+                    map.setView([this.field_lat-80, this.field_lon], map.getZoom() + 1, {animate: true});
+                })
                 marker._myId = this.microsite_id;
 
             })
@@ -7692,8 +7695,7 @@ function initdata(){
     function populateField(selectedFiled, selected){
         var field = document.getElementById(selectedFiled);
         field.value = selected;
-        console.log(field.value);
-    }
+     }
 
     // Autofills the drop downs in the filter
     function populateAllFields(markerID){

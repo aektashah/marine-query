@@ -21,6 +21,7 @@ function initmap() {
   maxZoom:17
   }).addTo(map);
 
+  map.doubleClickZoom.enable();
 
   initMarkers(L, map);
 
@@ -38,7 +39,15 @@ function initmap() {
     $('body').removeClass('nav-expanded');
     activateAndResetFields();
   });
+
+  // map.on('dblclick', function(marker){
+  //   map.setView(marker.latlng, map.getZoom() + 1, {animate: true});
+  // });
+
 };
+
+
+
 
 
 
