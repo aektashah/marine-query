@@ -1,0 +1,184 @@
+
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta charset="utf-8">
+  <title>Database</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  
+  <!-- Styles -->
+  <link rel="stylesheet" href="./css/font-awesome.min.css">
+  <link rel="stylesheet" href="./css/bootstrap.min.css">
+  <link rel="stylesheet" href="./css/main.css">
+  <link rel="stylesheet" href="css/filter.css">
+  <script src="js/locationInfo.js"></script>
+  <script src="js/map.js"></script>
+
+  <script src="http://maps.googleapis.com/maps/api/js?sensor=false&amp;libraries=places"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.16/angular.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.js"></script>
+  <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.3/leaflet.css" />
+  <script src="http://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.3/leaflet.js"></script>
+  <link href='http://fonts.googleapis.com/css?family=Muli:300' rel='stylesheet' type='text/css'>
+
+</head>
+
+<body onload="initmap(); initdata();" class="">
+  <div class="navbar navbar-inverse navbar-fixed-top">      
+        
+        <!--Include your brand here-->
+        <!-- <a class="navbar-brand" href="">Helmuth Lab Database</a> -->
+        <div class="navbar-header pull-right" style="border:black;">
+          <a id="nav-expander" class="nav-expander fixed" style="padding-left: 25px;">FILTER</a>
+        </div>
+    </div>
+
+    <div class="container">
+    <div class="sidebar">
+    <nav>
+        <ul class="list-unstyled main-menu">
+          <li class="text-right">
+            <a href="#" id="nav-close">X</a></li>
+          <div style="padding-top:30px">
+            <label for="logger-type">Logger Type:</label>
+            <select class="form-control" id="logger-type">
+              <option>N/A</option>
+            </select>
+          </div>
+
+          <div>
+            <label for="country">Country:</label>
+            <select class="form-control" id="country">
+              <option>N/A</option>
+            </select>
+          </div>
+
+          <div>
+            <label for="state">State/Province/Region:</label>
+            <select class="form-control" id="state">
+              <option>N/A</option>
+            </select>
+          </div>
+
+          <div>
+            <label for="site">Site:</label>
+            <select class="form-control" id="site">
+              <option>N/A</option>
+            </select>
+          </div>
+
+          <div>
+            <label for="wave">Wave Exposure:</label>
+            <select class="form-control" id="wave">
+              <option>N/A</option>
+            </select>
+          </div>
+
+          <div>
+            <label for="zone">Zone:</label>
+            <select class="form-control" id="zone">
+              <option>N/A</option>
+              <option>High</option>
+              <option>Mid</option>
+              <option>Low</option>
+            </select>
+          </div>
+
+          <div>
+            <label for="sub-zone">Sub Zone:</label>
+            <select class="form-control" id="sub-zone">
+              <option>N/A</option>
+            </select>
+          </div>
+
+          <div>
+            <label for="Surface">Surface:</label>
+            <select class="form-control" id="surface">
+              <option>N/A</option>
+            </select>
+          </div>
+
+          <div>
+            <label for="tidal">Tidal:</label>
+            <select class="form-control" id="tidal">
+              <option>All Tidal</option>
+            </select>
+          </div>
+
+          <div>
+            <label for="interval">Time Interval:</label>
+            <select class="form-control" id="interval">
+              <option>N/A</option>
+
+            </select>
+          </div>
+
+          <div>
+            <label for="start-time">Start Time:</label>
+            <input type = "text" class="form-control" id="start-time">
+            
+            </input>
+          </div>
+
+          <div>
+            <label for="end-time">End Time:</label>
+            <input type = "text" class="form-control" id="end-time">
+             
+            </input>
+          </div>
+
+          <button type="button" class="btn btn-primary">Generate</button>
+        </ul>
+      </nav>
+    </div>
+
+    <!-- Main jumbotron for a primary marketing message or call to action -->
+    <div class="col-md-9" id="wrapper_map" style="height:100%;">
+      <div id="map"/>
+    </div>
+
+    </div>
+    
+    <!-- Javascript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="./js/jquery.min.js"></script>
+    <script>window.jQuery || document.write('<script src="js/jquery-1.10.2.min.js"><\/script>')</script>
+    <script src="./js/bootstrap.min.js"></script>
+    <script src="./js/jquery.navgoco.js"></script>
+    <script src="./js/main.js"></script>
+    <script>
+    $(document).ready(function(){												
+       
+       //Navigation Menu Slider
+        $('#nav-expander').on('click',function(e){
+      		e.preventDefault();
+      		$('body').toggleClass('nav-expanded');
+          activateAndResetFields();
+      	});
+      	$('#nav-close').on('click',function(e){
+      		e.preventDefault();
+      		$('body').removeClass('nav-expanded');
+      	});
+      	
+      	
+      	// Initialize navgoco with default options
+        $(".main-menu").navgoco({
+            caret: '<span class="caret"></span>',
+            accordion: false,
+            openClass: 'open',
+            save: true,
+            cookie: {
+                name: 'navgoco',
+                expires: false,
+                path: '/'
+            },
+            slide: {
+                duration: 300,
+                easing: 'swing'
+            }
+        });
+  
+        	
+      });
+      </script>
+    
+</body></html>
