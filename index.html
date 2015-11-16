@@ -19,13 +19,13 @@
   <script src="http://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.3/leaflet.js"></script>
   <link href='http://fonts.googleapis.com/css?family=Muli:300' rel='stylesheet' type='text/css'>
 
+  <script language="javascript" type="text/javascript" src="datetimepick/datetimepicker.js"></script>
+
 </head>
 
 <body onload="initmap(); initdata();" class="">
   <div class="navbar navbar-inverse navbar-fixed-top">      
         
-        <!--Include your brand here-->
-        <!-- <a class="navbar-brand" href="">Helmuth Lab Database</a> -->
         <div class="navbar-header pull-right" style="border:black;">
           <a id="nav-expander" class="nav-expander fixed" style="padding-left: 25px;">FILTER</a>
         </div>
@@ -59,7 +59,7 @@
           </div>
 
           <div>
-            <label for="site">Site:</label>
+            <label for="site">Location:</label>
             <select class="form-control" id="site">
               <option>N/A</option>
             </select>
@@ -90,36 +90,36 @@
           </div>
 
           <div>
-            <label for="Surface">Surface:</label>
-            <select class="form-control" id="surface">
-              <option>N/A</option>
-            </select>
-          </div>
-
-          <div>
-            <label for="tidal">Tidal:</label>
-            <select class="form-control" id="tidal">
-              <option>All Tidal</option>
-            </select>
-          </div>
-
-          <div>
             <label for="interval">Time Interval:</label>
-            <select class="form-control" id="interval">
+            <div>
+            <select class="form-control interval" id="interval">
               <option>N/A</option>
-
+              <option>10 Min Interval</option>
+              <option>Hourly</option>
+              <option>Daily</option>
+              <option>Weekly</option>
+              <option>Monthly</option>
+              <option>Yearly</option>
             </select>
+            <select class="form-control interval" id="maxmin">
+              <option>N/A</option>
+              <option>Max</option>
+              <option>Min</option>
+              <option>Average</option>
+            </select>
+          </div>
           </div>
 
           <div>
-            <label for="start-time">Start Time:</label>
+            <label for="start-time">From:</label>
+            <!-- <input id="demo3" type="text" size="25"><a href="javascript:NewCal('demo3','ddmmmyyyy',true,24)"><img src="images/cal.gif" width="16" height="16" border="0" alt="Pick a date"></a> -->
             <input type = "text" class="form-control" id="start-time">
             
             </input>
           </div>
 
           <div>
-            <label for="end-time">End Time:</label>
+            <label for="end-time">To:</label>
             <input type = "text" class="form-control" id="end-time">
              
             </input>

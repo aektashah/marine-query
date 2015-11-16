@@ -4,6 +4,10 @@
     float: left
 }
 
+.interval{
+	width:44%;
+}
+
 label {
 	margin-top: 10px;
 	margin-left: 3%;

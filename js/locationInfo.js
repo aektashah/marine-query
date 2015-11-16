@@ -7603,10 +7603,71 @@ var data = [
   }
 ];
 
-function initdata(){
-    var dataString = JSON.stringify(data);
+function toTitleCase(str)
+{
+    return str.replace(/\w\S*/g, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();});
+}
 
+function getOptions(){
+    var dataString = JSON.stringify(data);
     var myData = JSON.parse(dataString);
+    var visited = [];
+    var options = {};
+    var loggerTypes = [];
+    var country = [];
+    var state = [];
+    var locations = [];
+    var wave = [];
+    var subzone = [];
+
+    $(document).ready(function() {
+        $.each(myData, function(){
+            if($.inArray(this.biomimic, visited)<0){
+                console.log(this.biomimic);
+                visited.push(this.biomimic);
+                loggerTypes.push(toTitleCase(this.biomimic));
+            }
+            if($.inArray(this.country, visited)<0){
+                visited.push(this.country);
+                country.push(this.country);
+            }
+            if($.inArray(this.state_province, visited)<0){
+                visited.push(this.state_province);
+                state.push(this.state_province);
+            }
+            if($.inArray(this.location, visited)<0){
+                visited.push(this.location);
+                locations.push(this.location);
+            }
+            if($.inArray(this.wave_exp, visited)<0 && this.wave_exp != 'N/A'){
+                visited.push(this.wave_exp);
+                wave.push(this.wave_exp);
+            }
+            if($.inArray(this.sub_zone, visited)<0 && this.sub_zone != 'N/A'){
+                visited.push(this.sub_zone);
+                subzone.push(this.sub_zone);
+            }
+        })    
+    })
+    options['logger-types'] = loggerTypes.sort();
+    options['country'] = country.sort();
+    options['state'] = state.sort();
+    options['location'] = locations.sort();
+    options['wave'] = wave.sort();
+    options['subzone'] = subzone.sort();
+
+    return options;
+}
+
+function initdata(options){
+    var options = getOptions();
+    console.log(options);
+    var loggerTypes = options['logger-types'];
+    var country = options['country'];
+    var state = options['state'];
+    var locaiton = options['location'];
+    var wave = options['wave'];
+    var subzone = options['subzone'];
 
     var $logger_type = $('#logger-type');
     var $country = $('#country');
@@ -7615,43 +7676,27 @@ function initdata(){
     var $wave = $('#wave');
     var $zone = $('#zone');
     var $sub_zone = $('#sub-zone');
-    var $site = $('#site');
-    var visited = [];
 
-    $(document).ready(function() {
-        $.each(myData, function(){
-            if($.inArray(this.biomimic, visited)<0){
-                visited.push(this.biomimic);
-                $('<option>' + this.biomimic + '</option>').appendTo($logger_type);
-            }
-            if($.inArray(this.country, visited)<0){
-                visited.push(this.country);
-                $('<option>' + this.country + '</option>').appendTo($country);
-            }
-            if($.inArray(this.state_province, visited)<0){
-                visited.push(this.state_province);
-                $('<option>' + this.state_province + '</option>').appendTo($state);
-            }
-            if($.inArray(this.location, visited)<0){
-                visited.push(this.location);
-                $('<option>' + this.location + '</option>').appendTo($site);
-            }
-            if($.inArray(this.wave_exp, visited)<0 && this.wave_exp != 'N/A'){
-                visited.push(this.wave_exp);
-                $('<option>' + this.wave_exp + '</option>').appendTo($wave);
-            }
-            if($.inArray(this.zone, visited)<0){
-                visited.push(this.zone);
-                $('<option>' + this.zone + '</option>').appendTo($zone);
-            }
-            if($.inArray(this.sub_zone, visited)<0 && this.sub_zone != 'N/A'){
-                visited.push(this.sub_zone);
-                $('<option>' + this.sub_zone + '</option>').appendTo($sub_zone);
-            }
-
-        });
-    });
+    for(e in loggerTypes){
+        $('<option>' + loggerTypes[e] + '</option>').appendTo($logger_type);
     }
+    for(e in country){
+        $('<option>' + country[e] + '</option>').appendTo($country);
+    }
+    for(e in state){
+        console.log(state[e]);
+        $('<option>' + state[e] + '</option>').appendTo($state);
+    }
+    for(e in location){
+        $('<option>' + location[e] + '</option>').appendTo($site);
+    }
+    for(e in wave){
+        $('<option>' + wave[e] + '</option>').appendTo($wave);
+    }
+    for(e in subzone){
+        $('<option>' + subzone[e] + '</option>').appendTo($sub_zone);
+    }
+}
 
     // Adds markers to map
     function initMarkers(L, map){
@@ -7707,7 +7752,6 @@ function initdata(){
                     populateField('state', this.state_province);
                     populateField('site', this.site);
                     populateField('wave', this.wave_exp);
-                    populateField('zone', this.zone);
                     populateField('sub-zone', this.sub_zone);
                     deactivateFields();
                 }
