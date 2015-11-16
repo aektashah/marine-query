@@ -7616,14 +7616,13 @@ function getOptions(){
     var loggerTypes = [];
     var country = [];
     var state = [];
-    var locations = [];
+    var location = [];
     var wave = [];
     var subzone = [];
 
     $(document).ready(function() {
         $.each(myData, function(){
             if($.inArray(this.biomimic, visited)<0){
-                console.log(this.biomimic);
                 visited.push(this.biomimic);
                 loggerTypes.push(toTitleCase(this.biomimic));
             }
@@ -7637,11 +7636,11 @@ function getOptions(){
             }
             if($.inArray(this.location, visited)<0){
                 visited.push(this.location);
-                locations.push(this.location);
+                location.push(this.location);
             }
             if($.inArray(this.wave_exp, visited)<0 && this.wave_exp != 'N/A'){
                 visited.push(this.wave_exp);
-                wave.push(this.wave_exp);
+                wave.push(toTitleCase(this.wave_exp));
             }
             if($.inArray(this.sub_zone, visited)<0 && this.sub_zone != 'N/A'){
                 visited.push(this.sub_zone);
@@ -7652,7 +7651,7 @@ function getOptions(){
     options['logger-types'] = loggerTypes.sort();
     options['country'] = country.sort();
     options['state'] = state.sort();
-    options['location'] = locations.sort();
+    options['location'] = location.sort();
     options['wave'] = wave.sort();
     options['subzone'] = subzone.sort();
 
@@ -7661,11 +7660,10 @@ function getOptions(){
 
 function initdata(options){
     var options = getOptions();
-    console.log(options);
     var loggerTypes = options['logger-types'];
     var country = options['country'];
     var state = options['state'];
-    var locaiton = options['location'];
+    var location = options['location'];
     var wave = options['wave'];
     var subzone = options['subzone'];
 
@@ -7684,7 +7682,6 @@ function initdata(options){
         $('<option>' + country[e] + '</option>').appendTo($country);
     }
     for(e in state){
-        console.log(state[e]);
         $('<option>' + state[e] + '</option>').appendTo($state);
     }
     for(e in location){
@@ -7707,7 +7704,7 @@ function initdata(options){
                      opacity: 0.5}).bindPopup("<b>Location: </b>" + 
                      this.location + ", " + this.state_province + ", " + 
                      this.country + 
-                     "<br><b>Logger Type: </b>" + this.biomimic +
+                     "<br><b>Logger Type: </b>" + toTitleCase(this.biomimic) +
                      "<br><b>Logger ID: </b>" + this.microsite_id).addTo(map);
                 marker.on('dblclick', function(e){
                     map.setView([this.field_lat-80, this.field_lon], map.getZoom() + 1, {animate: true});
@@ -7747,11 +7744,11 @@ function initdata(options){
         $(document).ready(function() {
             $.each(data, function(){
                 if(this.microsite_id === markerID){
-                    populateField('logger-type', this.biomimic);
+                    populateField('logger-type', toTitleCase(this.biomimic));
                     populateField('country', this.country);
                     populateField('state', this.state_province);
-                    populateField('site', this.site);
-                    populateField('wave', this.wave_exp);
+                    populateField('site', this.location);
+                    populateField('wave', toTitleCase(this.wave_exp));
                     populateField('sub-zone', this.sub_zone);
                     deactivateFields();
                 }
