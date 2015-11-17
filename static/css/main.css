@@ -74,7 +74,7 @@ a.nav-expander.fixed {
   border-width: 1px;
   border-color:gray;
   border-radius:5px;
-  height:87%;
+  height:87.5%;
   
   transition: left 0.3s ease-in-out 0s;
   -webkit-transition: left 0.3s ease-in-out 0s;
@@ -88,7 +88,7 @@ a.nav-expander.fixed {
 
 .sidebar-expanded>nav {
   left: 0;
-  height: 87%;
+  height: 87.5%;
 }
 
 .sidebar .nav-close {
