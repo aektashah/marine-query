@@ -7612,6 +7612,7 @@ function getOptions(){
     var dataString = JSON.stringify(data);
     var myData = JSON.parse(dataString);
     var visited = [];
+    var locationsVisited = []
     var options = {};
     var loggerTypes = [];
     var country = [];
@@ -7634,8 +7635,8 @@ function getOptions(){
                 visited.push(this.state_province);
                 state.push(this.state_province);
             }
-            if($.inArray(this.location, visited)<0){
-                visited.push(this.location);
+            if($.inArray(this.location, locationsVisited)<0){
+                locationsVisited.push(this.location);
                 location.push(this.location);
             }
             if($.inArray(this.wave_exp, visited)<0 && this.wave_exp != 'N/A'){
@@ -7693,6 +7694,11 @@ function initdata(options){
     for(e in subzone){
         $('<option>' + subzone[e] + '</option>').appendTo($sub_zone);
     }
+
+    $(".bottombar-expanded > nav").resizable({
+        handles: 'n'
+    });
+
 }
 
     // Adds markers to map
@@ -7745,26 +7751,34 @@ function initdata(options){
             $.each(data, function(){
                 if(this.microsite_id === markerID){
                     populateField('logger-type', toTitleCase(this.biomimic));
+                    deactivateField('logger-type');
                     populateField('country', this.country);
+                    deactivateField('country');
                     populateField('state', this.state_province);
+                    deactivateField('state');
                     populateField('site', this.location);
-                    populateField('wave', toTitleCase(this.wave_exp));
-                    populateField('sub-zone', this.sub_zone);
-                    deactivateFields();
+                    deactivateField('site');
+                    if(this.wave_exp =! ""){
+                        populateField('wave', toTitleCase(this.wave_exp));
+                        deactivateField('wave');
+                    }
+                    if(this.zone != ""){
+                        populateField('zone', toTitleCase(this.zone));
+                        deactivateField('zone');
+                    }
+                    if(this.sub_zone != ""){
+                        populateField('sub-zone', this.sub_zone);
+                        deactivateField('sub-zone');
+                    }
+                    
                 }
             })
         })
         }
 
     // Make the auto filled filter fields inactive
-    function deactivateFields(){
-        document.getElementById('logger-type').disabled=true;
-        document.getElementById('country').disabled=true;
-        document.getElementById('state').disabled=true;
-        document.getElementById('site').disabled=true;
-        document.getElementById('wave').disabled=true;
-        document.getElementById('zone').disabled=true;
-        document.getElementById('sub-zone').disabled=true;
+    function deactivateField(fieldName){
+        document.getElementById(fieldName).disabled=true;
     }
 
     // activate and reset the filter fields
