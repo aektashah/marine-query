@@ -18,7 +18,8 @@ function initmap() {
   attribution: 'Tiles Courtesy of <a href="http://www.mapquest.com/">MapQuest</a> &mdash; Map data &copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
   subdomains: '1234', 
   minZoom:2,
-  maxZoom:17
+  maxZoom:17, 
+  maxBounds: [[30.0,-85.0],[50.0,-65.0]]
   }).addTo(map);
 
   map.doubleClickZoom.enable();
