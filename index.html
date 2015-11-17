@@ -19,7 +19,7 @@
   <script src="http://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.3/leaflet.js"></script>
   <link href='http://fonts.googleapis.com/css?family=Muli:300' rel='stylesheet' type='text/css'>
 
-  <script language="javascript" type="text/javascript" src="datetimepick/datetimepicker.js"></script>
+<!--  <script language="javascript" type="text/javascript" src="datetimepick/datetimepicker.js"></script>-->
 
 </head>
 
@@ -129,6 +129,11 @@
         </ul>
       </nav>
     </div>
+    <div class="bottombar">
+        <nav>
+            
+        </nav>
+    </div>
 
     <!-- Main jumbotron for a primary marketing message or call to action -->
     <div class="col-md-9" id="wrapper_map" style="height:100%;">
@@ -141,44 +146,10 @@
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
     <script src="./js/jquery.min.js"></script>
-    <script>window.jQuery || document.write('<script src="js/jquery-1.10.2.min.js"><\/script>')</script>
+<!--    <script>window.jQuery || document.write('<script src="js/jquery-1.10.2.min.js"><\/script>')</script>-->
     <script src="./js/bootstrap.min.js"></script>
     <script src="./js/jquery.navgoco.js"></script>
     <script src="./js/main.js"></script>
-    <script>
-    $(document).ready(function(){												
-       
-       //Navigation Menu Slider
-        $('#nav-expander').on('click',function(e){
-      		e.preventDefault();
-      		$('body').toggleClass('nav-expanded');
-          activateAndResetFields();
-      	});
-      	$('#nav-close').on('click',function(e){
-      		e.preventDefault();
-      		$('body').removeClass('nav-expanded');
-      	});
-      	
-      	
-      	// Initialize navgoco with default options
-        $(".main-menu").navgoco({
-            caret: '<span class="caret"></span>',
-            accordion: false,
-            openClass: 'open',
-            save: true,
-            cookie: {
-                name: 'navgoco',
-                expires: false,
-                path: '/'
-            },
-            slide: {
-                duration: 300,
-                easing: 'swing'
-            }
-        });
-  
-        	
-      });
-      </script>
+
     
 </body></html>
