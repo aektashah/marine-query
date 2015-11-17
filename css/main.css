@@ -95,7 +95,6 @@ a.nav-expander.fixed {
   font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
   font-weight: 300;
   font-size: 24px;
-  padding-right: 10px;
   color:black;
 }
 .bottombar .nav-close{
@@ -205,10 +204,10 @@ a.nav-expander.fixed {
   height: 30%;
   overflow: auto;
   position: fixed;
-  left: 26%;
+  left: 26.5%;
   font-size: 15px;
   bottom: -30%;
-  width: 74%;
+  width: 73%;
   z-index: 2000;
   margin-top: 70px;
   box-shadow: 5px 5px 5px #888888;
@@ -217,7 +216,7 @@ a.nav-expander.fixed {
   border-width: 1px;
   border-color:gray;
   border-radius:5px;
-  
+  resize:north;
   transition: bottom 0.3s ease-in-out 0s;
   -webkit-transition: bottom 0.3s ease-in-out 0s;
   -moz-transition: bottom 0.3s ease-in-out 0s;

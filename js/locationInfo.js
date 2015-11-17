@@ -7605,7 +7605,7 @@ var data = [
 
 function toTitleCase(str)
 {
-    return str.replace(/\w\S*/g, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();});
+    return str//.replace(/\w\S*/g, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();});
 }
 
 function getOptions(){
@@ -7695,9 +7695,9 @@ function initdata(options){
         $('<option>' + subzone[e] + '</option>').appendTo($sub_zone);
     }
 
-    $(".bottombar-expanded > nav").resizable({
-        handles: 'n'
-    });
+    // $(".bottombar-expanded > nav").resizable({
+    //     handles: 'n'
+    // });
 
 }
 
