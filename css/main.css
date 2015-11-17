@@ -86,7 +86,7 @@ a.nav-expander.fixed {
   opacity:1;
 }
 
-.nav-expanded .sidebar>nav {
+.sidebar-expanded>nav {
   left: 0;
   height: 87%;
 }
@@ -220,7 +220,7 @@ a.nav-expander.fixed {
   opacity:1;
 }
 
-.nav-expanded .bottombar>nav {
+.bottombar-expanded>nav {
   bottom: 0;
 }
 

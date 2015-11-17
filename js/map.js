@@ -26,7 +26,8 @@ function initmap() {
   initMarkers(L, map);
 
   map.on('popupopen', function(centerMarker) {
-        $('body').addClass('nav-expanded');
+        $('.sidebar').addClass('sidebar-expanded');
+        $('.bottombar').addClass('bottombar-expanded');
         var cM = map.project(centerMarker.popup._latlng);
         $("nav").scrollTop(0);
         populateAllFields(centerMarker.popup._source._myId);
@@ -36,7 +37,8 @@ function initmap() {
         });
 
   map.on('popupclose', function(){
-    $('body').removeClass('nav-expanded');
+    $('.sidebar').removeClass('sidebar-expanded');
+    $('.bottombar').removeClass('bottombar-expanded');
     activateAndResetFields();
   });
 

@@ -3,14 +3,20 @@ $(document).ready(function () {
   //Navigation Menu Slider
   $('#nav-expander').on('click', function (e) {
     e.preventDefault();
-    $('body').toggleClass('nav-expanded');
+    $('.sidebar').toggleClass('sidebar-expanded');
     activateAndResetFields();
   });
   $('#nav-close').on('click', function (e) {
     e.preventDefault();
-    $('body').removeClass('nav-expanded');
+    $('.sidebar').removeClass('sidebar-expanded');
   });
 
+  $('#generate').on('click', function(e) {
+    e.preventDefault();
+    if ($('.bottombar-expanded').length == 0) {
+      $('.bottombar').addClass('bottombar-expanded');
+    }
+  });
 
   // Initialize navgoco with default options
   $(".main-menu").navgoco({
