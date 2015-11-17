@@ -3,28 +3,43 @@
     contains various utility methods for serializing the data for transfer
 """
 
-from sqlalchemy import Column, Integer, String, Float, Date
+from sqlalchemy import Column, Integer, String, Float, DateTime, ForeignKey
 from database import Base
 from json import dumps
 
 class Device(Base):
+    """ Represents the metadata about a meter and its location"""
+    __tablename__ = "devices"
+    
+    id = Column(String(50), unique=True, primary_key=True, index=True)
+    site = Column(String(50))
+    field_lat = Column(Float)
+    field_lon = Column(Float)
+    location = Column(String(50))
+    state_province = Column(String(50))
+    country = Column(String(50))
+    biomimic = Column(String(50))
+    zone = Column(String(50), nullable=True)
+    sub_zone = Column(String(50), nullable=True)
+    wave_exp = Column(String(50), nullable=True)
+    tide_height = Column(Float, nullable=True)
+
+    def __repr__(self):
+        return "Device %s" % self.id
+
+class Reading(Base):
     """ Represents a robomussell temperature entry """
 
-    __tablename__ = "devs"
-    id = Column(Integer, primary_key=True)
-    name = Column(String(50))
-    date = Column(Date)
+    __tablename__ = "readings"
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    device = Column(ForeignKey("devices.id"))
+    date = Column(DateTime)
     reading = Column(Float)
 
-    def __init__(self, name, date, reading):
-        self.name = name
-        self.date = date
-        self.reading = reading
-   
     def to_json(self):
-        return {"name": self.name, 
+        return {"device": self.device, 
                 "date": self.date.strftime("%Y/%m/%d %H:%M"),
                 "reading": self.reading}
 
     def __repr__(self):
-        return "<Device %s %s %f>" % (self.name, self.date, self.reading)
+        return "Reading %s %s %f" % (self.device, self.date, self.reading)

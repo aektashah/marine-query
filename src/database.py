@@ -17,3 +17,10 @@ db_session = scoped_session(sessionmaker(autocommit=False,
 # Base class for models to subclass
 Base = declarative_base()
 Base.query = db_session.query_property()
+
+def init_db():
+    import models
+    Base.metadata.create_all(bind=engine)
+
+if __name__ == "__main__":
+    init_db()
