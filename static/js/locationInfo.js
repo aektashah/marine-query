@@ -7764,7 +7764,8 @@ function initdata(options){
                         deactivateField('wave');
                     }
                     if(this.zone != "N/A"){
-                        populateField('zone', toTitleCase(this.zone));
+                        zone = getZone(this.zone)
+                        populateField('zone', zone);
                         deactivateField('zone');
                     }
                     if(this.sub_zone != "N/A"){
@@ -7798,6 +7799,20 @@ function initdata(options){
         document.getElementById('wave').disabled=false;
         document.getElementById('zone').disabled=false;
         document.getElementById('sub-zone').disabled=false;
+    }
+
+    // converts meter data for zone height into High, Mid, or Low
+    function getZone(zone){
+        if(zone === "0m" || zone === "2m" || zone === "5m"){
+            return "Low";
+        }
+        if(zone === "10m" || zone === "14m" || zone === "20m"){
+            return "Mid";
+        }
+        if(zone === "30m" || zone === "40m"){
+            return "High";
+        }
+        return zone;
     }
 
     // function filterData(){
