@@ -6,9 +6,13 @@ $(document).ready(function () {
     $('.sidebar').toggleClass('sidebar-expanded');
     activateAndResetFields();
   });
-  $('#nav-close').on('click', function (e) {
+  $('.sidebar .nav-close').on('click', function (e) {
     e.preventDefault();
     $('.sidebar').removeClass('sidebar-expanded');
+  });
+  $('.bottombar .nav-close').on('click', function (e) {
+    e.preventDefault();
+    $('.bottombar').removeClass('bottombar-expanded');
   });
 
   $('#generate').on('click', function(e) {

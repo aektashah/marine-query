@@ -91,13 +91,22 @@ a.nav-expander.fixed {
   height: 87%;
 }
 
-#nav-close {
+.sidebar .nav-close {
   font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
   font-weight: 300;
   font-size: 24px;
   padding-right: 10px;
   color:black;
 }
+.bottombar .nav-close{
+  float: right;
+  padding: 10px;
+  font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+  font-weight: 300;
+  font-size: 24px;
+  color:black;
+}
+
 
 .main-menu li {
   font-size: 18px;
@@ -106,7 +115,7 @@ a.nav-expander.fixed {
   padding-bottom: 0px;
   background:white;
   position:fixed;
-  width:16.5em;
+  width: 25%; /*16.5em;*/
 }
 
 .main-menu li a {
