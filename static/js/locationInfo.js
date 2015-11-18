@@ -7758,15 +7758,15 @@ function initdata(options){
                     deactivateField('state');
                     populateField('site', this.location);
                     deactivateField('site');
-                    if(this.wave_exp =! ""){
+                    if(this.wave_exp =! "N/A"){
                         populateField('wave', toTitleCase(this.wave_exp));
                         deactivateField('wave');
                     }
-                    if(this.zone != ""){
+                    if(this.zone != "N/A"){
                         populateField('zone', toTitleCase(this.zone));
                         deactivateField('zone');
                     }
-                    if(this.sub_zone != ""){
+                    if(this.sub_zone != "N/A"){
                         populateField('sub-zone', this.sub_zone);
                         deactivateField('sub-zone');
                     }
