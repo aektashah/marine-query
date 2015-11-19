@@ -9,6 +9,8 @@ $(document).ready(function () {
   $('.sidebar .nav-close').on('click', function (e) {
     e.preventDefault();
     $('.sidebar').removeClass('sidebar-expanded');
+    $('.bottombar-expanded > nav').width('97%');
+    $('.bottombar-expanded > nav').css('margin-left', '-26%');
   });
   $('.bottombar .nav-close').on('click', function (e) {
     e.preventDefault();

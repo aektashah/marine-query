@@ -202,21 +202,21 @@ a.nav-expander.fixed {
   background: white;
   display: block;
   height: 30%;
+  margin-right:50px;
   overflow: auto;
   position: fixed;
   left: 26.5%;
+  float:right;
   font-size: 15px;
   bottom: -30%;
-  width: 73%;
-  z-index: 2000;
-  margin-top: 70px;
+  width:73%;
+  z-index: 500;
   box-shadow: 5px 5px 5px #888888;
   opacity:.8;
   border-style: solid;
   border-width: 1px;
   border-color:gray;
   border-radius:5px;
-  resize:north;
   transition: bottom 0.3s ease-in-out 0s;
   -webkit-transition: bottom 0.3s ease-in-out 0s;
   -moz-transition: bottom 0.3s ease-in-out 0s;
@@ -230,6 +230,8 @@ a.nav-expander.fixed {
 
 .bottombar-expanded>nav {
   bottom: 0;
+  width:73%;
+  float:right;
 }
 
 

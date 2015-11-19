@@ -28,6 +28,8 @@ function initmap() {
   map.on('popupopen', function(centerMarker) {
         $('.sidebar').addClass('sidebar-expanded');
         $('.bottombar').addClass('bottombar-expanded');
+        $('.bottombar-expanded > nav').width('71%');
+        $('.bottombar-expanded > nav').css('margin-left', '0px');
         var cM = map.project(centerMarker.popup._latlng);
         $("nav").scrollTop(0);
         populateAllFields(centerMarker.popup._source._myId);
@@ -42,9 +44,9 @@ function initmap() {
     activateAndResetFields();
   });
 
-  // map.on('dblclick', function(marker){
-  //   map.setView(marker.latlng, map.getZoom() + 1, {animate: true});
-  // });
+  map.on('dblclick', function(marker){
+    map.setView(marker.latlng, map.getZoom() + 1, {animate: true});
+  });
 
 };
 
