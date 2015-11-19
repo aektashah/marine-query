@@ -40,6 +40,7 @@ function initmap() {
 
   map.on('popupclose', function(){
     $('.sidebar').removeClass('sidebar-expanded');
+    $('.bottombar > nav').height("28%");
     $('.bottombar').removeClass('bottombar-expanded');
     activateAndResetFields();
   });
