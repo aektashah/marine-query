@@ -7608,7 +7608,7 @@ function toTitleCase(str)
     return str//.replace(/\w\S*/g, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();});
 }
 
-function getOptions(){
+function getOptions(loggerId){
     var dataString = JSON.stringify(data);
     var myData = JSON.parse(dataString);
     var visited = [];
@@ -7623,6 +7623,7 @@ function getOptions(){
 
     $(document).ready(function() {
         $.each(myData, function(){
+            if(loggerId != "" && this.microsite_id)
             if($.inArray(this.biomimic, visited)<0){
                 visited.push(this.biomimic);
                 loggerTypes.push(toTitleCase(this.biomimic));
@@ -7695,9 +7696,13 @@ function initdata(options){
         $('<option>' + subzone[e] + '</option>').appendTo($sub_zone);
     }
 
-    // $(".bottombar-expanded > nav").resizable({
-    //     handles: 'n'
-    // });
+    // $('logger-type').on('change', function(){
+    //     var value = document.getElementById("logger-type").value;
+    //     if('logger-type' != "N/A"){
+
+    //     }
+
+    // })
 
 }
 
@@ -7720,24 +7725,6 @@ function initdata(options){
             })
         })
     };
-
-    // filter the markers baised on the filter selections
-    // function filterMarkers(L, map){
-    //     $(document).ready(function() {
-    //         $.each(data, function(){
-    //             var logger = document.getElementById("logger-type");
-    //             var country = document.getElementById("country");
-    //             var location = document.getElementById("location");
-    //             var strUser = e.options[e.selectedIndex].text;
-    //             if(document.getElementById("location") != "N/A"){
-
-
-    //             }
-                
-                
-    //         }
-    //     }
-    // }
 
     // Autofills one field
     function populateField(selectedFiled, selected){
@@ -7763,7 +7750,8 @@ function initdata(options){
                         deactivateField('wave');
                     }
                     if(this.zone != "N/A"){
-                        populateField('zone', toTitleCase(this.zone));
+                        console.log(this.zone)
+                        populateField('zone', this.zone);
                         deactivateField('zone');
                     }
                     if(this.sub_zone != "N/A"){
@@ -7799,6 +7787,10 @@ function initdata(options){
         document.getElementById('sub-zone').disabled=false;
     }
 
+    function filterSelector(){
+
+    }
+
     // function filterData(){
     //      $(document).ready(function() {
     //         var logger = document.getElementById("logger-type");
@@ -7811,6 +7803,24 @@ function initdata(options){
     //         var locationStr = location.options[location.selectedIndex].text;
 
     //         if(loggerStr != "N/A"){
+                
+    //         }
+    //     }
+    // }
+
+    // filter the markers baised on the filter selections
+    // function filterMarkers(L, map){
+    //     $(document).ready(function() {
+    //         $.each(data, function(){
+    //             var logger = document.getElementById("logger-type");
+    //             var country = document.getElementById("country");
+    //             var location = document.getElementById("location");
+    //             var strUser = e.options[e.selectedIndex].text;
+    //             if(document.getElementById("location") != "N/A"){
+
+
+    //             }
+                
                 
     //         }
     //     }
