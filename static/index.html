@@ -10,6 +10,7 @@
   <link rel="stylesheet" href="css/bootstrap.min.css">
   <link rel="stylesheet" href="css/main.css">
   <link rel="stylesheet" href="css/filter.css">
+  <link rel="stylesheet" href="css/onoffswitch.css">
   <link rel="stylesheet" href="css/vendor/leaflet.css" />
   <link rel='stylesheet' href='css/vendor/muli.css'/>
 
@@ -135,6 +136,7 @@
     <div class="bottombar">
         <nav style="dislplay:inline-block;">
             <a href="#" class="nav-close">X</a>
+
             <div class="data">
 
             </div>
@@ -142,6 +144,14 @@
             </div>
 
             <div id='drag'></div>
+
+            <div class="onoffswitch" style="margin-left:5px">
+                <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="myonoffswitch" checked>
+                <label class="onoffswitch-label" for="myonoffswitch">
+                    <span class="onoffswitch-inner"></span>
+                    <span class="onoffswitch-switch"></span>
+                </label>
+            </div>
         </nav>
     </div>
   </span>
