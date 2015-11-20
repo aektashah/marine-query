@@ -7619,6 +7619,7 @@ function getOptions(loggerId){
     var state = [];
     var location = [];
     var wave = [];
+    var zone = [];
     var subzone = [];
 
     $(document).ready(function() {
@@ -7644,6 +7645,10 @@ function getOptions(loggerId){
                 visited.push(this.wave_exp);
                 wave.push(toTitleCase(this.wave_exp));
             }
+            if($.inArray(this.zone, visited)<0 && this.zone != 'N/A'){
+                visited.push(this.zone);
+                zone.push(this.zone);
+            }
             if($.inArray(this.sub_zone, visited)<0 && this.sub_zone != 'N/A'){
                 visited.push(this.sub_zone);
                 subzone.push(this.sub_zone);
@@ -7655,6 +7660,7 @@ function getOptions(loggerId){
     options['state'] = state.sort();
     options['location'] = location.sort();
     options['wave'] = wave.sort();
+    options['zone'] = zone.sort();
     options['subzone'] = subzone.sort();
 
     return options;
@@ -7667,6 +7673,7 @@ function initdata(options){
     var state = options['state'];
     var location = options['location'];
     var wave = options['wave'];
+    var zone = options['zone'];
     var subzone = options['subzone'];
 
     var $logger_type = $('#logger-type');
@@ -7692,17 +7699,20 @@ function initdata(options){
     for(e in wave){
         $('<option>' + wave[e] + '</option>').appendTo($wave);
     }
+    for(e in zone){
+        $('<option>' + zone[e] + '</option>').appendTo($zone);
+    }
     for(e in subzone){
         $('<option>' + subzone[e] + '</option>').appendTo($sub_zone);
     }
 
-    // $('logger-type').on('change', function(){
-    //     var value = document.getElementById("logger-type").value;
-    //     if('logger-type' != "N/A"){
+    $('logger-type').on('change', function(){
+        var value = document.getElementById("logger-type").value;
+        if('logger-type' != "N/A"){
 
-    //     }
+        }
 
-    // })
+    })
 
 }
 
