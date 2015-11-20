@@ -137,16 +137,18 @@
         <nav style="dislplay:inline-block;">
             <a href="#" class="nav-close">X</a>
 
-            <div class="data">
+            <div class="data" id="data" style="display:inline">
+              <h1> I am data!</h1>
 
             </div>
-            <div class="graphs">
+            <div class="graphs" id="graphs" style="display:none">
+              <h1>I am a graph!</h1>
             </div>
 
             <div id='drag'></div>
 
             <div class="onoffswitch" style="margin-left:5px">
-                <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="myonoffswitch" checked>
+                <input onClick="graphToggle()" type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="myonoffswitch" checked>
                 <label class="onoffswitch-label" for="myonoffswitch">
                     <span class="onoffswitch-inner"></span>
                     <span class="onoffswitch-switch"></span>
@@ -172,4 +174,15 @@
     <script src="./js/main.js"></script>
 
     
+    <script>
+        function graphToggle () {            
+            if(document.getElementById("data").style.display == "inline") {
+                document.getElementById("data").style.display = "none";
+                document.getElementById("graphs").style.display = "inline";
+            } else {
+                document.getElementById("data").style.display = "inline";
+                document.getElementById("graphs").style.display = "none";
+            }
+        }
+    </script>
 </body></html>
