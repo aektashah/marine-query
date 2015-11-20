@@ -97,6 +97,11 @@ a.nav-expander.fixed {
   font-size: 24px;
   color:black;
 }
+
+.sidebar .nav-close:hover{
+  text-decoration:underline;
+}
+
 .bottombar .nav-close{
   float: right;
   padding: 10px;
