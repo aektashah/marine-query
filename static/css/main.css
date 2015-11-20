@@ -217,6 +217,7 @@ a.nav-expander.fixed {
   border-width: 1px;
   border-color:gray;
   border-radius:5px;
+  max-height:89%;
   transition: bottom 0.3s ease-in-out 0s;
   -webkit-transition: bottom 0.3s ease-in-out 0s;
   -moz-transition: bottom 0.3s ease-in-out 0s;

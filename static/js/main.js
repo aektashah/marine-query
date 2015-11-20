@@ -33,6 +33,7 @@ $(document).ready(function () {
   });
   $('.bottombar .nav-close').on('click', function (e) {
     e.preventDefault();
+    $('.bottombar-expanded > nav').height('27%');
     $('.bottombar').removeClass('bottombar-expanded');
   });
 
