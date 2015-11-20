@@ -6,14 +6,12 @@ $(document).ready(function () {
       $('.sidebar').toggleClass('sidebar-expanded');
     });
 
-  $('#nav-expander').on('click', function (e) {
+  $('#nav-expander').on('click', function () {
     if($('.sidebar-expanded').length <= 0) {
-      console.log("i am here");
       $('.bottombar-expanded > nav').width('97%');
       $('.bottombar-expanded > nav').css('margin-left', '-26%');
     }
     if($('.sidebar-expanded').length > 0) {
-      console.log("nope, i am here");
       $('.bottombar-expanded > nav').width('71%');
       $('.bottombar-expanded > nav').css('margin-left', '0px');
     }
