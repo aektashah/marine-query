@@ -48,6 +48,7 @@ class Reading(Base):
     device = Column(ForeignKey("devices.id"))
     date = Column(DateTime)
     reading = Column(Float)
+  
 
     def to_json(self):
         return {"device": self.device, 

@@ -19,7 +19,7 @@ app.config["SECRET_KEY"] = urandom(24)
 
 # API configuration
 api = Api(app)
-api.add_resource(ReadingResource, "/api/reading/<string:dev_name>")
+api.add_resource(ReadingResource, "/api/reading")
 api.add_resource(DeviceResource, "/api/dev/<string:site_name>")
 
 # Admin configuration
