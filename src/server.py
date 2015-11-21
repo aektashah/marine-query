@@ -10,7 +10,7 @@ from flask.ext.restful import Api
 
 from models import Device, Reading
 from database import db_session
-from api import ReadingResource 
+from api import DeviceResource, ReadingResource 
 from admin import HomeView
 
 # App configuration
@@ -19,7 +19,8 @@ app.config["SECRET_KEY"] = urandom(24)
 
 # API configuration
 api = Api(app)
-api.add_resource(ReadingResource, "/api/dev/<string:dev_name>")
+api.add_resource(ReadingResource, "/api/reading/<string:dev_name>")
+api.add_resource(DeviceResource, "/api/dev/<string:site_name>")
 
 # Admin configuration
 admin = Admin(index_view=HomeView("Helmuth"))
@@ -28,4 +29,4 @@ admin.register(Reading, session=db_session)
 admin.init_app(app)
 
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=5000, debug=True)
+    app.run(host="0.0.0.0", port=8000, debug=True)

@@ -23,6 +23,19 @@ class Device(Base):
     sub_zone = Column(String(50), nullable=True)
     wave_exp = Column(String(50), nullable=True)
     tide_height = Column(Float, nullable=True)
+	
+    def to_json(self):
+	return {"site": self.site,
+		"field_lat": self.field_lat,
+		"field_lon": self.field_lon,
+		"location": self.location,
+		"state_province": self.state_province,
+		"country": self.country,
+		"biomimic": self.biomimic,
+		"zone": self.zone,
+		"sub_zone": self.sub_zone,
+		"wave_exp": self.wave_exp,
+		"tide_height": self.tide_height}
 
     def __repr__(self):
         return "Device %s" % self.id
