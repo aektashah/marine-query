@@ -78,7 +78,15 @@ $(document).ready(function () {
         });
                 
     });
-
-
+	
+		$("#myonoffswitch").on("click", function(e) {            
+				if($("#data").css("display") == "inline") {
+						$("#data").css("display", "none");
+						$("#graphs").css("display", "inline");
+				} else {
+						$("#data").css("display", "inline");
+						$("#graphs").css("display", "none");
+				}
+		});
 
 });
