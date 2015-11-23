@@ -248,6 +248,6 @@ a.nav-expander.fixed {
   cursor: row-resize
 }
 
-
-
-
+.jasmine_html-reporter {
+  display: none;
+}

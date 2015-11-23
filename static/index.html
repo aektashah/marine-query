@@ -18,7 +18,9 @@
   <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.2/jquery-ui.js"></script>
   <link rel="stylesheet" type="text/css" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.1/themes/base/jquery-ui.css"/>
   <script src="js/vendor/leaflet.js"></script>
-
+  <script src="js/vendor/react.js"></script>
+  <script src="js/vendor/react-dom.js"></script>
+  <script src="js/vendor/browser.min.js"></script>
   <script src="js/locationInfo.js"></script>
   <script src="js/map.js"></script>
 
@@ -138,14 +140,18 @@
             <a href="#" class="nav-close">X</a>
             <div id='drag'></div>
 
-            <div class="onoffswitch" style="margin-left:5px">
+            <div class="onoffswitch" id="onoffswitch" style="margin-left:5px">
+                
                 <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="myonoffswitch" checked>
                 <label class="onoffswitch-label" for="myonoffswitch">
                     <span class="onoffswitch-inner"></span>
                     <span class="onoffswitch-switch"></span>
                 </label>
             </div>
-            
+           
+           <div class="bottom-content" style="display: inline">
+
+           </div>
             <div class="data" id="data" style="display:inline">
               <h1> I am data!</h1>
 
@@ -171,5 +177,10 @@
     <script src="./js/bootstrap.min.js"></script>
     <script src="./js/jquery.navgoco.js"></script>
     <script src="./js/main.js"></script>
-
+    <script src="./js/vendor/jasmine/lib/jasmine-2.3.4/jasmine.js"></script>
+    <script src="./js/vendor/jasmine/lib/jasmine-2.3.4/jasmine-html.js"></script>
+    <script src="./js/vendor/jasmine/lib/jasmine-2.3.4/boot.js"></script>
+    <script src="./test/jasmine-jquery.js"></script>
+    <script src="./test/test.js"></script>
+    <!--<script src="./js/main-react.js"></script>-->
 </body></html>
