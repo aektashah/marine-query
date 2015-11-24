@@ -18,18 +18,39 @@ describe("show sidebar by clicking FILTER", function() {
         filterButton.click();
         expect("click").toHaveBeenTriggeredOn("#nav-expander");
         expect(spyEvent).toHaveBeenTriggered();
-        //expect($('.sidebar')).toHaveClass("sidebar-expanded");
     });
 });
 
-describe("init navgoco", function() {
+describe("toggleSidebar()", function() {
     var fixture;
     beforeEach(function() {
         loadFixtures("../../../index.html");
     });
-    console.log($(".caret"));
     it ("should toggle", function() {
         toggleSidebar();
         expect($(".sidebar")).toHaveClass("sidebar-expanded");
+    });
+});
+describe("generate()", function() {
+    var fixture;
+    beforeEach(function() {
+        loadFixtures("../../../index.html");
+    });
+    it ("should addclass bottombar-expanded", function() {
+        generate();
+        expect($(".bottombar")).toHaveClass("bottombar-expanded");
+    });
+});
+
+describe("sidebarCollapsed()", function() {
+    var fixture;
+    beforeEach(function() {
+        loadFixtures("../../../index.html");
+    });
+    it ("should set width to 97%", function() { //aka 692 px
+        toggleSidebar();
+        generate();
+        sidebarCollapse();
+        expect($(".bottombar-expanded > nav")).toHaveCss({width: "692px"});
     });
 });
