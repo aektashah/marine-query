@@ -8,8 +8,8 @@ $(document).ready(function () {
             $('.bottombar-expanded > nav').css('margin-left', '-26%');
         }
         if($('.sidebar-expanded').length > 0) {
-            $('.bottombar-expanded > nav').width('71%');
-            $('.bottombar-expanded > nav').css('margin-left', '0px');
+            $('.bottombar-expanded > nav').width('70%');
+            $('.bottombar-expanded > nav').css('margin-left', '1%');
         }
     }
 
