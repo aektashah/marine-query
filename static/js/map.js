@@ -28,8 +28,8 @@ function initmap() {
   map.on('popupopen', function(centerMarker) {
         $('.sidebar').addClass('sidebar-expanded');
         $('.bottombar').addClass('bottombar-expanded');
-        $('.bottombar-expanded > nav').width('71%');
-        $('.bottombar-expanded > nav').css('margin-left', '0px');
+        $('.bottombar-expanded > nav').width('70%');
+        $('.bottombar-expanded > nav').css('margin-left', '1%');
         var cM = map.project(centerMarker.popup._latlng);
         $("nav").scrollTop(0);
         populateAllFields(centerMarker.popup._source._myId);
