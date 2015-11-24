@@ -2,7 +2,6 @@
 * Front end Javascript code
 **/
 
-<<<<<<< HEAD
   //Navigation Menu Slider
     function toggleSidebar() {
         $('.sidebar').toggleClass('sidebar-expanded');
@@ -14,8 +13,7 @@
             $('.bottombar-expanded > nav').width('70%');
             $('.bottombar-expanded > nav').css('margin-left', '1%');
         }
-=======
-<<<<<<< HEAD
+
 //Navigation Menu Slider
 function toggleSidebar() {
     $('.sidebar').toggleClass('sidebar-expanded');
@@ -26,7 +24,6 @@ function toggleSidebar() {
     if($('.sidebar-expanded').length > 0) {
         $('.bottombar-expanded > nav').width('71%');
         $('.bottombar-expanded > nav').css('margin-left', '0px');
->>>>>>> origin/frontend2.0
     }
 }
 
@@ -72,33 +69,9 @@ function toggleSidebar() {
         if ($('.bottombar-expanded').length == 0) {
             $('.bottombar').addClass('bottombar-expanded');
         }
->>>>>>> a9b530f70eac692ad0ead5a629dff81f6123e284
     }
 });
-*/
-function sidebarCollapse() {
-    $('.bottombar-expanded > nav').width('97%');
-    $('.bottombar-expanded > nav').css('margin-left', '-26%')
-    activateAndResetFields();
-}
-function removeSidebar() {
-    $('.sidebar').removeClass('sidebar-expanded');
-    $('.bottombar-expanded > nav').width('97%');
-    $('.bottombar-expanded > nav').css('margin-left', '-26%');
-    console.log("remove");
-}
-function bottombarCollapse() {
-    $('.bottombar-expanded > nav').height('27%');
-    $('.bottombar').removeClass('bottombar-expanded');
-}
 
-function generate() {
-    if ($('.bottombar-expanded').length == 0) {
-        $('.bottombar').addClass('bottombar-expanded');
-    }
-}
-
-<<<<<<< HEAD
 // Initialize navgoco with default options
 function initNavgoco() {
     $(".main-menu").navgoco({
@@ -114,7 +87,6 @@ function initNavgoco() {
         slide: {
             duration: 300,
             easing: 'swing'
-=======
     // toggle between graph and data
     function bottombarContent() {
         if($("#data").css("display") == "inline") {
@@ -123,7 +95,6 @@ function initNavgoco() {
         } else {
             $("#data").css("display", "inline");
             $("#graphs").css("display", "none");
->>>>>>> a9b530f70eac692ad0ead5a629dff81f6123e284
         }
     });
 }
@@ -136,7 +107,6 @@ function bottombarContent() {
         $("#data").css("display", "inline");
         $("#graphs").css("display", "none");
     }
-<<<<<<< HEAD
 }
 
 function main() {
@@ -144,14 +114,12 @@ function main() {
         e.preventDefault();
         toggleSidebar();
     });
-=======
     
     function main() {
         $('#nav-expander').on('click', function (e) {
             e.preventDefault();
             toggleSidebar();
         });
->>>>>>> a9b530f70eac692ad0ead5a629dff81f6123e284
 
     $('.sidebar-expanded').on('collapse', function(){
         sidebarCollapse();
