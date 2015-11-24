@@ -1,14 +1,15 @@
 describe("show sidebar by clicking FILTER", function() {
     var spyEvent;
+    var fixture;
     beforeEach(function() {
-        load
+        loadFixtures("../../../index.html");
+        fixture = $("#nav-expander");
     });
-    it ("should show the sidebar", function(done) {
+    it ("should show the sidebar", function() {
         spyEvent = spyOnEvent("#nav-expander", "click");
-        $("#nav-expander").trigger("click");
+        $("#nav-expander").click();
         expect("click").toHaveBeenTriggeredOn("#nav-expander");
         expect(spyEvent).toHaveBeenTriggered();
-        done();
     });
 });
 /*
