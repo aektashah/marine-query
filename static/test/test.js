@@ -3,11 +3,12 @@ describe("show sidebar by clicking FILTER", function() {
     var fixture;
     beforeEach(function() {
         loadFixtures("../../../index.html");
-        fixture = $("#nav-expander");
+        fixture = $("#nav-expander");//[0].outerHTML;
+        console.log(fixture);
     });
     it ("should show the sidebar", function() {
         spyEvent = spyOnEvent("#nav-expander", "click");
-        $("#nav-expander").click();
+        $("#nav-expander")[0].click();
         expect("click").toHaveBeenTriggeredOn("#nav-expander");
         expect(spyEvent).toHaveBeenTriggered();
     });
