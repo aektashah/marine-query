@@ -65,7 +65,7 @@ a.nav-expander.fixed {
   left: -26%; /*used to be 20em*/
   font-size: 15px;
   top: 0;
-  width: 27%; /*used to be 20em*/
+  width: 25%; /*used to be 20em*/
   z-index: 2000;
   margin-top: 70px;
   box-shadow: 5px 5px 5px #888888;
@@ -119,7 +119,7 @@ a.nav-expander.fixed {
   padding-bottom: 0px;
   background:white;
   position:fixed;
-  width: 25%; /*16.5em;*/
+  width: 26%; 
 }
 
 .main-menu li a {

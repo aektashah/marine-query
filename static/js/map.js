@@ -29,6 +29,7 @@ function initmap() {
         $('.sidebar').addClass('sidebar-expanded');
         $('.bottombar').addClass('bottombar-expanded');
         $('.bottombar-expanded > nav').width('70%');
+        $('.sidebar-expanded > nav').width("25%");
         $('.bottombar-expanded > nav').css('margin-left', '1%');
         var cM = map.project(centerMarker.popup._latlng);
         $("nav").scrollTop(0);
@@ -39,6 +40,7 @@ function initmap() {
         });
 
   map.on('popupclose', function(){
+    $('.sidebar > nav').width("20%");
     $('.sidebar').removeClass('sidebar-expanded');
     $('.bottombar > nav').height("28%");
     $('.bottombar').removeClass('bottombar-expanded');
