@@ -52,3 +52,8 @@ li a #reset {
 	height:2px;
 	border-radius:1px;
 }
+
+
+span select {
+  height: 34px;
+}

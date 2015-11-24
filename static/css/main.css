@@ -74,7 +74,7 @@ a.nav-expander.fixed {
   border-width: 1px;
   border-color:gray;
   border-radius:5px;
-  height:87%;
+  height:89%;
   
   transition: left 0.3s ease-in-out 0s;
   -webkit-transition: left 0.3s ease-in-out 0s;
@@ -88,7 +88,7 @@ a.nav-expander.fixed {
 
 .sidebar-expanded>nav {
   left: 0;
-  height: 87%;
+  height: 89%;
 }
 
 .sidebar .nav-close {
@@ -97,6 +97,11 @@ a.nav-expander.fixed {
   font-size: 24px;
   color:black;
 }
+
+.sidebar .nav-close:hover{
+  text-decoration:underline;
+}
+
 .bottombar .nav-close{
   float: right;
   padding: 10px;
@@ -202,21 +207,22 @@ a.nav-expander.fixed {
   background: white;
   display: block;
   height: 30%;
+  margin-right:50px;
   overflow: auto;
   position: fixed;
   left: 26.5%;
+  float:right;
   font-size: 15px;
   bottom: -30%;
-  width: 73%;
-  z-index: 2000;
-  margin-top: 70px;
+  width:73%;
+  z-index: 500;
   box-shadow: 5px 5px 5px #888888;
   opacity:.8;
   border-style: solid;
   border-width: 1px;
   border-color:gray;
   border-radius:5px;
-  resize:north;
+  max-height:89%;
   transition: bottom 0.3s ease-in-out 0s;
   -webkit-transition: bottom 0.3s ease-in-out 0s;
   -moz-transition: bottom 0.3s ease-in-out 0s;
@@ -230,9 +236,22 @@ a.nav-expander.fixed {
 
 .bottombar-expanded>nav {
   bottom: 0;
+  width:73%;
+  float:right;
 }
 
+.bottombar #drag{
+  position: absolute;
+  width: 100%;
+  height: 3px;
+  background-color: gray;
+  cursor: row-resize
+}
 
+.jasmine_html-reporter {
+  display: none;
+}
 
-
-
+.form-control #start-time{
+  padding-left:0px;
+}
