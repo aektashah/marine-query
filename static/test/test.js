@@ -21,3 +21,15 @@ describe("show sidebar by clicking FILTER", function() {
         //expect($('.sidebar')).toHaveClass("sidebar-expanded");
     });
 });
+
+describe("init navgoco", function() {
+    var fixture;
+    beforeEach(function() {
+        loadFixtures("../../../index.html");
+    });
+    console.log($(".caret"));
+    it ("should toggle", function() {
+        toggleSidebar();
+        expect($(".sidebar")).toHaveClass("sidebar-expanded");
+    });
+});
