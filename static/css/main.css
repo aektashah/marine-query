@@ -251,3 +251,7 @@ a.nav-expander.fixed {
 .jasmine_html-reporter {
   display: none;
 }
+
+.form-control #start-time{
+  padding-left:0px;
+}
