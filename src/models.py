@@ -3,7 +3,9 @@
     contains various utility methods for serializing the data for transfer
 """
 
-from sqlalchemy import Column, Integer, String, Float, DateTime, ForeignKey
+from flask.ext.security import UserMixin, RoleMixin
+from sqlalchemy import Column, Integer, String, Float, DateTime, ForeignKey, Boolean
+from sqlalchemy.orm import relationship, backref
 from database import Base
 from json import dumps
 
@@ -43,3 +45,32 @@ class Reading(Base):
 
     def __repr__(self):
         return "Reading %s %s %f" % (self.device, self.date, self.reading)
+
+
+class User(Base, UserMixin):
+    """ Represents admin users of the system """
+    __tablename__ = "users"
+
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    email = Column(String(255), unique=True)
+    password = Column(String(255))
+    active = Column(Boolean())
+    roles = relationship('Role', secondary="user_roles",
+            backref=backref('users', lazy='dynamic'))
+
+
+class Role(Base, RoleMixin):
+    """ Represents te different permissions a user can have in the system """
+
+    __tablename__ = "roles"
+    id = Column(Integer(), primary_key=True)
+    name = Column(String(80), unique=True)
+    description = Column(String(255))
+
+
+class UserRoles(Base):
+    """ Roles for a user, such as admin-read-write or admin-read"""
+    __tablename__ = "user_roles"
+    user_id = Column(ForeignKey("users.id"), primary_key=True)
+    role_id = Column(ForeignKey("roles.id"), primary_key=True)
+
