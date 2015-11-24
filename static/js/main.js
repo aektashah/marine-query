@@ -24,22 +24,24 @@ $(document).ready(function () {
         }
     });
 */
+    // expand bottom bar when sidebar collapse
     function sidebarCollapse() {
         $('.bottombar-expanded > nav').width('97%');
         $('.bottombar-expanded > nav').css('margin-left', '-26%')
         activateAndResetFields();
     }
+    // remove sidebar from screen
     function removeSidebar() {
         $('.sidebar').removeClass('sidebar-expanded');
         $('.bottombar-expanded > nav').width('97%');
         $('.bottombar-expanded > nav').css('margin-left', '-26%');
-        console.log("remove");
     }
+    // collapse bottom bar
     function bottombarCollapse() {
         $('.bottombar-expanded > nav').height('27%');
         $('.bottombar').removeClass('bottombar-expanded');
     }
-
+    // expand bottom bar when generate is clicked
     function generate() {
         if ($('.bottombar-expanded').length == 0) {
             $('.bottombar').addClass('bottombar-expanded');
@@ -65,6 +67,7 @@ $(document).ready(function () {
         });
     }
 
+    // toggle between graph and data
     function bottombarContent() {
         if($("#data").css("display") == "inline") {
             $("#data").css("display", "none");
@@ -74,7 +77,7 @@ $(document).ready(function () {
             $("#graphs").css("display", "none");
         }
     }
-
+    
     function main() {
         $('#nav-expander').on('click', function (e) {
             e.preventDefault();
