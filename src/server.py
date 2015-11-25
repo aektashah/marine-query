@@ -23,8 +23,8 @@ app.add_url_rule("/", "root", lambda: app.send_static_file("index.html"))
 
 # API configuration
 api = Api(app)
-api.add_resource(ReadingResource, "/api/reading")
-api.add_resource(DeviceResource, "/api/dev/<string:site_name>")
+api.add_resource(ReadingResource, "/api/reading/")
+api.add_resource(DeviceResource, "/api/dev/")
 
 # Admin and Security configuration
 admin = Admin(index_view=HomeView("Helmuth"))

@@ -9,13 +9,13 @@ from models import Reading, Device
 class DeviceResource(Resource):
     """
         The device resource handles API requests relating to robomussel data.
-	Will output all device information.
+        Will output all device information.
     """
-    def get(self, site_name):
-   	"""
+    def get(self):
+        """
             Returns all information about each device 
-   	"""
-	return map(Device.to_json, Device.query.all()) 
+        """
+        return map(Device.to_json, Device.query.all()) 
 
 class ReadingResource(Resource):
     """
@@ -28,8 +28,7 @@ class ReadingResource(Resource):
             Filters the database by the given device id, and returns a JSON
             string to the requester
         """
-        return map(Reading.to_json, 
-                self.filter(Reading.query))
+        return map(Reading.to_json, self.filter(Reading.query))
 
     def filter(self, readings):
         """
@@ -73,5 +72,11 @@ class ReadingResource(Resource):
         parser = RequestParser()
         parser.add_argument('start_date', type=str, location='args')
         parser.add_argument('end_date', type=str, location='args')
+        parser.add_argument('country', type=str, location='args')
+        parser.add_argument('state_province', type=str, location='args')
+        parser.add_argument('location', type=str, location='args')
+        parser.add_argument('wave_exp', type=str, location='args')
+        parser.add_argument('zone', type=str, location='args')
+        parser.add_argument('sub_zone', type=str, location='args')
         return parser.parse_args()
 
