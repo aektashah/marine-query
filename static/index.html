@@ -1,0 +1,410 @@
+
+<html lang="en"><head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta charset="utf-8">
+  <title>Database</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  
+  <!-- Styles -->
+  <link rel="stylesheet" href="css/font-awesome.min.css">
+  <link rel="stylesheet" href="css/bootstrap.min.css">
+  <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="css/filter.css">
+  <link rel="stylesheet" href="css/onoffswitch.css">
+  <link rel="stylesheet" href="css/vendor/leaflet.css" />
+  <link rel='stylesheet' href='css/vendor/muli.css'/>
+
+  <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js"></script>
+  <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.2/jquery-ui.js"></script>
+  <link rel="stylesheet" type="text/css" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.1/themes/base/jquery-ui.css"/>
+  <script src="js/vendor/leaflet.js"></script>
+  <!--<script src="js/vendor/react.js"></script>
+  <script src="js/vendor/react-dom.js"></script>
+  <script src="js/vendor/browser.min.js"></script>-->
+  <script src="js/locationInfo.js"></script>
+  <script src="js/map.js"></script>
+
+</head>
+
+<body onload="initmap(); initdata();" class="">
+  <div class="navbar navbar-inverse navbar-fixed-top">      
+        
+        <div class="navbar-header pull-right" style="border:black;">
+          <a id="nav-expander" class="nav-expander fixed" style="padding-left: 25px;">FILTER</a>
+        </div>
+    </div>
+
+    <span>
+    <div class="container">
+    <div class="sidebar">
+    <nav>
+        <ul class="list-unstyled main-menu">
+          <li class="text-right">
+            <a href="#" class="nav-close">X</a></li>
+          <div style="padding-top:30px">
+            <label for="logger-type">Logger Type:</label>
+            <select class="form-control" id="logger-type">
+              <option>N/A</option>
+            </select>
+          </div>
+
+          <div>
+            <label for="country">Country:</label>
+            <select class="form-control" id="country">
+              <option>N/A</option>
+            </select>
+          </div>
+
+          <div>
+            <label for="state">State/Province/Region:</label>
+            <select class="form-control" id="state">
+              <option>N/A</option>
+            </select>
+          </div>
+
+          <div>
+            <label for="site">Location:</label>
+            <select class="form-control" id="site">
+              <option>N/A</option>
+            </select>
+          </div>
+
+          <div>
+            <label for="wave">Wave Exposure:</label>
+            <select class="form-control" id="wave">
+              <option>N/A</option>
+            </select>
+          </div>
+
+          <div>
+            <label for="zone">Zone:</label>
+            <select class="form-control" id="zone">
+              <option>N/A</option>
+            </select>
+          </div>
+
+          <div>
+            <label for="sub-zone">Sub Zone:</label>
+            <select class="form-control" id="sub-zone">
+              <option>N/A</option>
+              <option>High</option>
+              <option>Mid</option>
+              <option>Low</option>
+
+            </select>
+          </div>
+
+          <div>
+            <label for="interval">Time Interval:</label>
+            <div>
+            <select class="form-control interval" id="interval">
+              <option>N/A</option>
+              <option>10 Min Interval</option>
+              <option>Hourly</option>
+              <option>Daily</option>
+              <option>Weekly</option>
+              <option>Monthly</option>
+              <option>Yearly</option>
+            </select>
+            <select class="form-control interval" id="maxmin">
+              <option>N/A</option>
+              <option>Max</option>
+              <option>Min</option>
+              <option>Average</option>
+            </select>
+          </div>
+          </div>
+
+          <div>
+            <label for="start-time">From:</label>
+            <span class="form-control" id="start-time" style="padding-left:0;padding-right:0;border:none;box-shadow:none">
+            <select>
+              <option>DD</option>
+              <option>01</option>       
+              <option>02</option>       
+              <option>03</option>       
+              <option>04</option>       
+              <option>05</option>       
+              <option>06</option>       
+              <option>07</option>       
+              <option>08</option>       
+              <option>09</option>       
+              <option>10</option>       
+              <option>11</option>       
+              <option>12</option>       
+              <option>13</option>       
+              <option>14</option>       
+              <option>15</option>       
+              <option>16</option>       
+              <option>17</option>       
+              <option>18</option>       
+              <option>19</option>       
+              <option>20</option>       
+              <option>21</option>       
+              <option>22</option>       
+              <option>23</option>       
+              <option>24</option>       
+              <option>25</option>       
+              <option>26</option>       
+              <option>27</option>       
+              <option>28</option>       
+              <option>29</option>       
+              <option>30</option>       
+              <option>31</option>  
+            </select>
+            <select>
+              <option>MM</option>
+              <option>Jan</option>       
+              <option>Feb</option>       
+              <option>Mar</option>       
+              <option>Apr</option>       
+              <option>May</option>       
+              <option>Jun</option>       
+              <option>Jul</option>       
+              <option>Aug</option>       
+              <option>Sep</option>       
+              <option>Oct</option>       
+              <option>Nov</option>       
+              <option>Dec</option>      
+            </select>
+            <select>
+              <option>YYYY</option>
+              <option>2000</option>       
+              <option>2001</option>       
+              <option>2002</option>       
+              <option>2003</option>       
+              <option>2004</option>       
+              <option>2005</option>       
+              <option>2006</option>       
+              <option>2007</option> 
+              <option>2008</option>         
+              <option>2009</option>         
+              <option>2010</option>         
+              <option>2011</option>         
+              <option>2012</option>         
+              <option>2013</option>         
+              <option>2014</option>         
+              <option>2015</option>        
+            </select>
+            <select>
+              <option>HH</option>
+              <option>01</option>        
+              <option>02</option>       
+              <option>03</option>       
+              <option>04</option>       
+              <option>05</option>       
+              <option>06</option>       
+              <option>07</option> 
+              <option>08</option>  
+              <option>08</option>  
+              <option>10</option>  
+              <option>11</option>  
+              <option>12</option>  
+              <option>13</option>  
+              <option>14</option>  
+              <option>15</option>  
+              <option>16</option>  
+              <option>17</option>  
+              <option>18</option>  
+              <option>19</option>  
+              <option>20</option>  
+              <option>21</option>  
+              <option>22</option>  
+              <option>23</option>  
+              <option>24</option>  
+            </select>
+            :
+            <select>
+              <option>MM</option>
+              <option>00</option>       
+              <option>10</option>        
+              <option>20</option>       
+              <option>30</option>       
+              <option>40</option>       
+              <option>50</option>       
+            </select>
+          </span>
+          </div>
+
+          <div>
+            <label for="end-time">To:</label>
+            <span class="form-control" id="end-time" style="padding-left:0;padding-right:0;border:none;box-shadow:none">
+            <select>
+              <option>DD</option>
+              <option>01</option>       
+              <option>02</option>       
+              <option>03</option>       
+              <option>04</option>       
+              <option>05</option>       
+              <option>06</option>       
+              <option>07</option>       
+              <option>08</option>       
+              <option>09</option>       
+              <option>10</option>       
+              <option>11</option>       
+              <option>12</option>       
+              <option>13</option>       
+              <option>14</option>       
+              <option>15</option>       
+              <option>16</option>       
+              <option>17</option>       
+              <option>18</option>       
+              <option>19</option>       
+              <option>20</option>       
+              <option>21</option>       
+              <option>22</option>       
+              <option>23</option>       
+              <option>24</option>       
+              <option>25</option>       
+              <option>26</option>       
+              <option>27</option>       
+              <option>28</option>       
+              <option>29</option>       
+              <option>30</option>       
+              <option>31</option>  
+            </select>
+            <select>
+              <option>MM</option>
+              <option>Jan</option>       
+              <option>Feb</option>       
+              <option>Mar</option>       
+              <option>Apr</option>       
+              <option>May</option>       
+              <option>Jun</option>       
+              <option>Jul</option>       
+              <option>Aug</option>       
+              <option>Sep</option>       
+              <option>Oct</option>       
+              <option>Nov</option>       
+              <option>Dec</option>      
+            </select>
+            <select>
+              <option>YYYY</option>
+              <option>2000</option>       
+              <option>2001</option>       
+              <option>2002</option>       
+              <option>2003</option>       
+              <option>2004</option>       
+              <option>2005</option>       
+              <option>2006</option>       
+              <option>2007</option> 
+              <option>2008</option>         
+              <option>2009</option>         
+              <option>2010</option>         
+              <option>2011</option>         
+              <option>2012</option>         
+              <option>2013</option>         
+              <option>2014</option>         
+              <option>2015</option>        
+            </select>
+             <select>
+              <option>HH</option>
+              <option>01</option>        
+              <option>02</option>       
+              <option>03</option>       
+              <option>04</option>       
+              <option>05</option>       
+              <option>06</option>       
+              <option>07</option> 
+              <option>08</option>  
+              <option>08</option>  
+              <option>10</option>  
+              <option>11</option>  
+              <option>12</option>  
+              <option>13</option>  
+              <option>14</option>  
+              <option>15</option>  
+              <option>16</option>  
+              <option>17</option>  
+              <option>18</option>  
+              <option>19</option>  
+              <option>20</option>  
+              <option>21</option>  
+              <option>22</option>  
+              <option>23</option>  
+              <option>24</option>  
+            </select>
+            :
+            <select>
+              <option>MM</option>
+              <option>00</option>       
+              <option>10</option>        
+              <option>20</option>       
+              <option>30</option>       
+              <option>40</option>       
+              <option>50</option>       
+            </select>
+          </span>
+          </div>
+
+          <button type="button" class="btn btn-primary" id="generate">Generate</button>
+        </ul>
+      </nav>
+    </div>
+  </span>
+  <span>
+    <div class="bottombar">
+        <nav style="dislplay:inline-block;">
+            <a href="#" class="nav-close">X</a>
+            <div id='drag'></div>
+
+            <div class="onoffswitch" id="onoffswitch" style="margin-left:5px">
+                
+                <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="myonoffswitch" checked>
+                <label class="onoffswitch-label" for="myonoffswitch">
+                    <span class="onoffswitch-inner"></span>
+                    <span class="onoffswitch-switch"></span>
+                </label>
+            </div>
+           
+           <div class="bottom-content" style="display: inline">
+
+           </div>
+            <div class="data" id="data" style="display:inline">
+              <table class="table">
+                <thead>
+                <tr>
+                  <td>Logger ID</td>
+                  <td>Logger Type</td>
+                  <td>Latitude</td>
+                  <td>Longitude</td>
+                  <td>Location</td>
+                  <td>State/Province</td>
+                  <td>Country</td>
+                  <td>Datetime</td>
+                  <td>Temperature</td>
+                </tr>
+                </thead>
+                <tbody>
+                </tbody>
+              </table>
+
+            </div>
+            <div class="graphs" id="graphs" style="display:none">
+              <h1>I am a graph!</h1>
+            </div>
+        </nav>
+    </div>
+  </span>
+
+    <!-- Main jumbotron for a primary marketing message or call to action -->
+    <div class="col-md-9" id="wrapper_map" style="height:100%;">
+      <div id="map"/>
+    </div>
+
+    </div>
+    
+    <!-- Javascript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="./js/jquery.min.js"></script>
+    <script src="./js/bootstrap.min.js"></script>
+    <script src="./js/jquery.navgoco.js"></script>
+    <script src="./js/main.js"></script>
+    <!-- <script src="./js/vendor/jasmine/lib/jasmine-2.3.4/jasmine.js"></script>
+    <script src="./js/vendor/jasmine/lib/jasmine-2.3.4/jasmine-html.js"></script>
+    <script src="./js/vendor/jasmine/lib/jasmine-2.3.4/boot.js"></script>
+    <script src="./test/jasmine-jquery.js"></script>
+    <script src="./test/test.js"></script>-->
+    <!--<script src="./js/main-react.js"></script>-->
+</body></html>
