@@ -41,9 +41,9 @@ class ReadingResource(Resource):
             readings = readings.filter(Reading.date.between(args["start_date"], 
                                                             args["end_date"]))
 
-	# http://159.203.111.95:port/api/reading?country=<country>
+        # http://159.203.111.95:port/api/reading?country=<country>
         if args["country"]:
-	    readings = readings.join(Device).filter(Device.country == args["country"])
+            readings = readings.join(Device).filter(Device.country == args["country"])
        
         # http://159.203.111.95:port/api/reading?state_province=<state_province>&country=<country>
         if args["state_province"] and args["country"]:
@@ -63,7 +63,7 @@ class ReadingResource(Resource):
            readings = readings.join(Device).filter(Reading.device == args["device"]).filter(Device.zone == args["zone"]) 
         
         # http://159.203.111.95:port/api/reading?device=<device>&sub_zone=<sub_zone>
-        if args["device"] and args["sub_zone"]
+        if args["device"] and args["sub_zone"]:
            readings = readings.join(Device).filter(Reading.device == args["device"]).filter(Device.sub_zone == args["sub_zone"])
         return readings
 
