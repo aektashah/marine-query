@@ -78,5 +78,6 @@ class ReadingResource(Resource):
         parser.add_argument('wave_exp', type=str, location='args')
         parser.add_argument('zone', type=str, location='args')
         parser.add_argument('sub_zone', type=str, location='args')
+        parser.add_argument('device', type=str, location='args')
         return parser.parse_args()
 
