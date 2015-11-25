@@ -50,7 +50,9 @@ describe("sidebarCollapsed()", function() {
     it ("should set width to 97%", function() { //aka 692 px
         toggleSidebar();
         generate();
+        var initWidth = $(".bottombar-expanded > nav").width();
+        var newWidth = initWidth * 0.97;
         sidebarCollapse();
-        expect($(".bottombar-expanded > nav")).toHaveCss({width: "692px"});
+        expect($(".bottombar-expanded > nav")).toHaveCss({width: newWidth + "px"});
     });
 });
