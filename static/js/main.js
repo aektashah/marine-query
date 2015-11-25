@@ -3,12 +3,14 @@
 function toggleSidebar() {
     $('.sidebar').toggleClass('sidebar-expanded');
     if($('.sidebar-expanded').length <= 0) {
+        $('.sidebar > nav').width('20%');
         $('.bottombar-expanded > nav').width('97%');
         $('.bottombar-expanded > nav').css('margin-left', '-26%');
     }
     if($('.sidebar-expanded').length > 0) {
-        $('.bottombar-expanded > nav').width('71%');
-        $('.bottombar-expanded > nav').css('margin-left', '0px');
+        $('.sidebar > nav').width('25%');
+        $('.bottombar-expanded > nav').width('70%');
+        $('.bottombar-expanded > nav').css('margin-left', '1%');
     }
 }
 
@@ -25,12 +27,14 @@ function toggleSidebar() {
 */
 // expand bottom bar when sidebar collapse
 function sidebarCollapse() {
+    $('.sidebar > nav').width('20%');
     $('.bottombar-expanded > nav').width('97%');
     $('.bottombar-expanded > nav').css('margin-left', '-26%')
     activateAndResetFields();
 }
 // remove sidebar from screen
 function removeSidebar() {
+    $('.sidebar > nav').width('20%');
     $('.sidebar').removeClass('sidebar-expanded');
     $('.bottombar-expanded > nav').width('97%');
     $('.bottombar-expanded > nav').css('margin-left', '-26%');
@@ -76,6 +80,7 @@ function bottombarContent() {
         $("#graphs").css("display", "none");
     }
 }
+
 // Main function 
 function main() {
     $('#nav-expander').on('click', function (e) {
