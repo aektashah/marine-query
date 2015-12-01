@@ -8,7 +8,10 @@ var plotlayers=[];
 function initmap() {
 	// set up the map
 	// initialize the map
-  var map = L.map('map').setView([-8.407168, 26.015625], 2);
+  var map = L.map('map', {
+    worldCopyJump: true,
+    inertia: false
+  }).setView([-8.407168, 26.015625], 2);
 
   // load a tile layer
 
