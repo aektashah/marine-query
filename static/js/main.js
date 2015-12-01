@@ -96,6 +96,12 @@ function main() {
         e.preventDefault();
         removeSidebar();
     });
+
+    $('.main-menu li span').on('click', function (e) {
+        e.preventDefault();
+        activateAndResetFields();
+    });
+
     
     $('.bottombar .nav-close').on('click', function (e) {
         e.preventDefault();

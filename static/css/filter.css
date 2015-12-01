@@ -68,3 +68,14 @@ span select {
     -webkit-transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
     transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
 }
+
+.main-menu li span {
+    float:left;
+    margin-top:5px;
+    font-size:14px;
+}
+
+.main-menu li span:hover {
+    text-decoration:underline;
+    cursor:pointer;
+}

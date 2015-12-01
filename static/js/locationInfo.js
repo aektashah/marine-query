@@ -7780,13 +7780,13 @@ function initdata(options){
 
     // activate and reset the filter fields
     function activateAndResetFields(){
-        populateField('logger-type', 'N/A');
-        populateField('country', 'N/A');
-        populateField('state', 'N/A');
-        populateField('site', 'N/A');
-        populateField('wave', 'N/A');
-        populateField('zone', 'N/A');
-        populateField('sub-zone', 'N/A');
+        populateField('logger-type', 'ALL');
+        populateField('country', 'ALL');
+        populateField('state', 'ALL');
+        populateField('site', 'ALL');
+        populateField('wave', 'ALL');
+        populateField('zone', 'ALL');
+        populateField('sub-zone', 'ALL');
         document.getElementById('logger-type').disabled=false;
         document.getElementById('country').disabled=false;
         document.getElementById('state').disabled=false;
