@@ -156,6 +156,34 @@ function main() {
             $('#zone').html('<option>ALL</option><option>High</option><option>Mid</option><option>Low</option>');
         }
     })
+
+    // changes the states/provinces based on country selection
+    $('#country').change(function(){
+        var val = $(this).val();
+        console.log(val);
+        var states = getStates(val);
+        
+        var statesString = '<option>ALL</option>';
+        for(e in states){
+            statesString = statesString + '<option>' + states[e] + '</option>';
+        }
+        console.log(statesString);
+        $('#state').html(statesString);
+    })
+
+    // changes the location based on state/province selection
+    $('#state').change(function(){
+        var val = $(this).val();
+        console.log(val);
+        var locations = getLocations(val);
+        console.log(locations);
+        var locationsString = '<option>ALL</option>';
+        for(e in locations){
+            locationsString = locationsString + '<option>' + locations[e] + '</option>';
+        }
+        console.log('string = ' + locationsString);
+        $('#site').html(locationsString);
+    })
 })
 }
 

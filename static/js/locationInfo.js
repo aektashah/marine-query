@@ -7796,54 +7796,39 @@ function initdata(options){
         }
     }
 
-    function getStates(){
+    // get the states given a country
+    function getStates(country){
         var dataString = JSON.stringify(data);
         var myData = JSON.parse(dataString);
-        var states = {}
+        var states = [];
         $(document).ready(function() {
             $.each(myData, function(){
-                states[this.country] = this.state_province;
+                console.log($.inArray(this.zone, states));
+                if(country === this.country && $.inArray(this.state_province, states)<0){
+                    states.push(this.state_province);
+                }
             })
         })
-        return states;
+        console.log(states);
+        return states.sort();
     }
 
-    function getLocations(){
+    // get the locations given the state
+    function getLocations(state){
         var dataString = JSON.stringify(data);
         var myData = JSON.parse(dataString);
-        var locations = {}
+        var locations = []
         $(document).ready(function() {
             $.each(myData, function(){
-                locations[this.state_province] = this.location;
+                if(state === this.state_province && $.inArray(this.location, locations)<0){
+                    console.log(this.location);
+                    locations.push(this.location);
+                }
             })
         })
-        return locations;
+        return locations.sort();
     }
 
-    function setZones(loggerType){
-        var $zone = $('#zone');
-        var zones = '';
-        if(loggerType != 'robocoral'){
-           
-        }
-        else {
-            var dataString = JSON.stringify(data);
-            var myData = JSON.parse(dataString);
-            $(document).ready(function() {
-                $.each(myData, function(){
-                    if(this.biomimic === 'robocoral'){
-                        zones += '<option>' + this.zone + '</option>'; 
-                    }
-                })
-            })
-            $zone.html(zones);
-
-        }
-
-        $('#zone option').css('display', 'inline');
-
-        return zone;
-    }
 
 
 
