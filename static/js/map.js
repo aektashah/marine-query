@@ -64,6 +64,12 @@ function initmap() {
     map.setView(marker.latlng, map.getZoom() + 1, {animate: true});
   });
 
+$('#location option').click(function(){
+        var val = $(this).val();
+        var latlong = getLatLong(val);
+        console.log(latlong);
+        L.map('map').setView(latlong, 5, {animate: true});
+    })
 };
 
 
