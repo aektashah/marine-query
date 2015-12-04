@@ -47,6 +47,8 @@ function bottombarCollapse() {
 // expand bottom bar when generate is clicked
 function generate() {
     if ($('.bottombar-expanded').length == 0) {
+        $('.bottombar-expanded > nav').width('70%');
+        $('.bottombar-expanded > nav').css('margin-left', '1%');
         $('.bottombar').addClass('bottombar-expanded');
     }
 }
@@ -137,6 +139,24 @@ function main() {
     $("#myonoffswitch").on("click", function() {
         bottombarContent();
     });
+
+    // changes the zones based on logger type selection
+    $(document).ready(function () {
+    $('#logger-type').change(function(){
+        var val = $(this).val();
+        if(val === 'robocoral'){
+            $('#zone').html('<option>ALL</option><option>0m</option><option>1m</option><option>2m</option><option>5m</option><option>10m</option><option>14m</option><option>20m</option><option>30m</option><option>40m</option>');
+            $('#zone option').css('display', 'inline');
+        }
+        else if(val == 'ALL'){
+            ('#zone').html('<option>ALL</option>');
+            $('#zone option').css('display', 'none');
+        }
+        else {
+            $('#zone').html('<option>ALL</option><option>High</option><option>Mid</option><option>Low</option>');
+        }
+    })
+})
 }
 
 $(document).ready(function () {

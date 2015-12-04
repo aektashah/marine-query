@@ -7701,18 +7701,11 @@ function initdata(options){
     }
     for(e in zone){
         $('<option>' + zone[e] + '</option>').appendTo($zone);
+        $('#zone option').css('display', 'none');
     }
     for(e in subzone){
         $('<option>' + subzone[e] + '</option>').appendTo($sub_zone);
     }
-
-    $('logger-type').on('change', function(){
-        var value = document.getElementById("logger-type").value;
-        if('logger-type' != "N/A"){
-
-        }
-
-    })
 
 }
 
@@ -7794,6 +7787,62 @@ function initdata(options){
         document.getElementById('wave').disabled=false;
         document.getElementById('zone').disabled=false;
         document.getElementById('sub-zone').disabled=false;
+
+        if($("#graphs").css("display") == "inline") {
+            $("#graphs").css("display", "none");
+            $("#data").css("display", "inline");
+            $('.onoffswitch-inner:before').hide();
+            $('.onoffswitch-inner:after').show();
+        }
+    }
+
+    function getStates(){
+        var dataString = JSON.stringify(data);
+        var myData = JSON.parse(dataString);
+        var states = {}
+        $(document).ready(function() {
+            $.each(myData, function(){
+                states[this.country] = this.state_province;
+            })
+        })
+        return states;
+    }
+
+    function getLocations(){
+        var dataString = JSON.stringify(data);
+        var myData = JSON.parse(dataString);
+        var locations = {}
+        $(document).ready(function() {
+            $.each(myData, function(){
+                locations[this.state_province] = this.location;
+            })
+        })
+        return locations;
+    }
+
+    function setZones(loggerType){
+        var $zone = $('#zone');
+        var zones = '';
+        if(loggerType != 'robocoral'){
+           
+        }
+        else {
+            var dataString = JSON.stringify(data);
+            var myData = JSON.parse(dataString);
+            $(document).ready(function() {
+                $.each(myData, function(){
+                    if(this.biomimic === 'robocoral'){
+                        zones += '<option>' + this.zone + '</option>'; 
+                    }
+                })
+            })
+            $zone.html(zones);
+
+        }
+
+        $('#zone option').css('display', 'inline');
+
+        return zone;
     }
 
 
