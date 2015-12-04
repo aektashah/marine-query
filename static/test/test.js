@@ -42,6 +42,7 @@ describe("generate()", function() {
     });
 });
 
+/*
 describe("sidebarCollapsed()", function() {
     var fixture;
     beforeEach(function() {
@@ -54,5 +55,18 @@ describe("sidebarCollapsed()", function() {
         var newWidth = initWidth * 0.97;
         sidebarCollapse();
         expect($(".bottombar-expanded > nav")).toHaveCss({width: newWidth + "px"});
+    });
+});
+*/
+
+describe("removeSidebar()", function() {
+    var fixture;
+    beforeEach(function() {
+	loadFixtures("../../../index.html");
+    });
+    it ("should remove the sidebar", function() {
+	toggleSidebar();
+	removeSidebar();
+	expect($(".sidebar")).not.toHaveClass("sidebar-expanded");
     });
 });
