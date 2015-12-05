@@ -24,6 +24,8 @@
   <script src="js/vendor/browser.min.js"></script>-->
   <script src="js/locationInfo.js"></script>
   <script src="js/map.js"></script>
+  <script src="//d3js.org/d3.v3.min.js" charset="utf-8"></script>
+
 
 </head>
 
@@ -380,7 +382,11 @@
                 <button type="button" class="btn btn-primary" id="download">Download</button>
             </div>
             <div class="graphs" id="graphs" style="display:none">
-              <h1>I am a graph!</h1>
+              
+	      <svg id="visualisation" width="1000" height="600" style="margin-left: 30px";></svg>
+	      
+	       <script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+	       <script src="./js/graphs.js"></script>
             </div>
              
         </nav>
