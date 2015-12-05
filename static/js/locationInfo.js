@@ -7730,9 +7730,15 @@ function initdata(options){
     };
 
     // Autofills one field
-    function populateField(selectedFiled, selected){
-        var field = document.getElementById(selectedFiled);
-        field.value = selected;
+    function populateField(selectedField, selected){
+        var field = document.getElementById(selectedField);
+        if(selectedField != 'site'){
+            $('#' + selectedField).html('<option>' + selected + '</option>');
+            field.value = selected;
+        }
+        else {
+            field.value = selected;
+        }
      }
 
     // Autofills the drop downs in the filter
@@ -7803,13 +7809,11 @@ function initdata(options){
         var states = [];
         $(document).ready(function() {
             $.each(myData, function(){
-                console.log($.inArray(this.zone, states));
                 if(country === this.country && $.inArray(this.state_province, states)<0){
                     states.push(this.state_province);
                 }
             })
         })
-        console.log(states);
         return states.sort();
     }
 
@@ -7821,12 +7825,27 @@ function initdata(options){
         $(document).ready(function() {
             $.each(myData, function(){
                 if(state === this.state_province && $.inArray(this.location, locations)<0){
-                    console.log(this.location);
                     locations.push(this.location);
                 }
             })
         })
         return locations.sort();
+    }
+
+    // get the lat and long of the location
+    function getLatLong(location){
+        var dataString = JSON.stringify(data);
+        var myData = JSON.parse(dataString);
+        var locations = []
+        $(document).ready(function() {
+            $.each(myData, function(){
+                if(location === this.location){
+                    console.log([this.field_lat, this.field_lon]);
+                    return [this.field_lat, this.field_lon];
+                }
+            })
+        })
+
     }
 
 

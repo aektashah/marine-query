@@ -42,3 +42,15 @@ describe("generate()", function() {
     });
 });
 
+
+describe("removeSidebar()", function() {
+    var fixture;
+    beforeEach(function() {
+	loadFixtures("../../../index.html");
+    });
+    it ("should remove the sidebar", function() {
+	toggleSidebar();
+	removeSidebar();
+	expect($(".sidebar")).not.toHaveClass("sidebar-expanded");
+    });
+});
