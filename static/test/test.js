@@ -46,6 +46,7 @@ describe("removeSidebar()", function() {
     });
 });
 
+
 describe("bottombarCollapse()", function() {
     var fixture;
     beforeEach(function() {
