@@ -6,7 +6,7 @@
 from flask.ext.security import UserMixin, RoleMixin
 from sqlalchemy import Column, Integer, String, Float, DateTime, ForeignKey, Boolean, BigInteger
 from sqlalchemy.orm import relationship, backref
-from database import Base
+from database import Base, db_session
 from json import dumps
 
 class Device(Base):
@@ -44,9 +44,15 @@ class Device(Base):
         return "Device %s" % self.id
 
     @staticmethod
-    def add_from_file(file):
-        pass
+    def add_from_file(upload, device_name):
+        values = [line.split("\t") for line in upload.split("\n")]
+        for date, reading in values[1:]:
+            r = Reading(device=device_name,date=date,reading=float(reading))
+	    db_session.add(r)
+        db_session.commit()
+        return True
 
+"""            
 def load_readings():
     ids = set()
     for line in open(expanduser("~/device_data.csv")):
@@ -58,7 +64,7 @@ def load_readings():
             r = Reading(dev_id, date, float(reading))
             db_session.add(r)
     db_session.commit()
-
+"""
 class Reading(Base):
     """ Represents a robomussell temperature entry """
 
