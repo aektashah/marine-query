@@ -2,7 +2,7 @@
 * Unit test for front end
 * go to http://159.203.111.95:5000/test.html to see results
 **/
-describe("show sidebar by clicking FILTER", function() {
+describe("Filter button sidebar toggle", function() {
     var spyEvent;
     var fixture;
     beforeEach(function() {
@@ -31,33 +31,8 @@ describe("toggleSidebar()", function() {
         expect($(".sidebar")).toHaveClass("sidebar-expanded");
     });
 });
-describe("generate()", function() {
-    var fixture;
-    beforeEach(function() {
-        loadFixtures("../../../index.html");
-    });
-    it ("should addclass bottombar-expanded", function() {
-        generate();
-        expect($(".bottombar")).toHaveClass("bottombar-expanded");
-    });
-});
 
-/*
-describe("sidebarCollapsed()", function() {
-    var fixture;
-    beforeEach(function() {
-        loadFixtures("../../../index.html");
-    });
-    it ("should set width to 97%", function() { //aka 692 px
-        toggleSidebar();
-        generate();
-        var initWidth = $(".bottombar-expanded > nav").width();
-        var newWidth = initWidth * 0.97;
-        sidebarCollapse();
-        expect($(".bottombar-expanded > nav")).toHaveCss({width: newWidth + "px"});
-    });
-});
-*/
+/*sidebarCollapse?*/
 
 describe("removeSidebar()", function() {
     var fixture;
@@ -68,5 +43,47 @@ describe("removeSidebar()", function() {
 	toggleSidebar();
 	removeSidebar();
 	expect($(".sidebar")).not.toHaveClass("sidebar-expanded");
+    });
+});
+
+describe("bottombarCollapse()", function() {
+    var fixture;
+    beforeEach(function() {
+	loadFixtures("../../../index.html");
+    });
+    it ("should remove the bottom bar", function() {
+	toggleSidebar();
+	generate();
+	bottombarCollapse();
+	expect($(".bottombar")).not.toHaveClass("bottombar-expanded");
+    });
+});
+
+describe("generate()", function() {
+    var fixture;
+    beforeEach(function() {
+        loadFixtures("../../../index.html");
+    });
+    it ("should add class bottombar-expanded", function() {
+        generate();
+        expect($(".bottombar")).toHaveClass("bottombar-expanded");
+    });
+});
+
+/*initNavgoco*/
+
+describe("bottombarContent()", function() {
+    var fixture;
+    beforeEach(function() {
+	loadFixtures("../../../index.html");
+    });
+    it ("should toggle between graph and data", function() { 
+	expect($('.data')).toHaveCss({display: "inline"});
+	bottombarContent();
+	expect($('.data')).toHaveCss({display: "none"});
+	expect($('.graphs')).toHaveCss({display: "inline"});
+	bottombarContent();
+	expect($('.data')).toHaveCss({display: "inline"});
+	expect($('.graphs')).toHaveCss({display: "none"});
     });
 });
