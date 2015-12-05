@@ -51,6 +51,28 @@ function generate() {
         $('.bottombar-expanded > nav').css('margin-left', '1%');
         $('.bottombar').addClass('bottombar-expanded');
     }
+    // send query to the server
+    sendQuery();
+}
+
+function sendQuery() {
+    console.log("clicked");
+    var loggerType = $("#logger-type").val();
+    var country = $("#country").val();
+    var state = $("#state").val();
+    var loc = $("#site").val();
+    var wave = $("#wave").val();
+    var zone = $("#zone").val();
+    var subzone = $("#sub-zone").val();
+    var interval = $("#interval").val();
+    var intervalMaxmin = $("#maxmin").val();
+    var startTime = $("#start-time > select");
+    var endTime = $("#end-time > select");
+    var query = {"loggerType": loggerType, "country": country, "state": state, "location": loc, "wave": wave, "zone": zone, "subzone": subzone, "interval": interval, "intervalMaxmin": intervalMaxmin, "startTime": startTime, "endTime": endTime};
+    console.log(query);
+    $.ajax({"url": "http://159.203.111.95:8000/api/dev", "context": query}).done(function() {
+        console.log("done");
+    });
 }
 
 // Initialize navgoco with default options
