@@ -6,6 +6,10 @@ from flask_restful.reqparse import RequestParser
 
 from models import Reading, Device
 
+from StringIO import StringIO
+
+import csv
+
 class DeviceResource(Resource):
     """
         The device resource handles API requests relating to robomussel data.
@@ -28,7 +32,14 @@ class ReadingResource(Resource):
             Filters the database by the given device id, and returns a JSON
             string to the requester
         """
-        return map(Reading.to_json, self.filter(Reading.query))
+	readings, download = self.filter(Reading.query)
+	readings = map(Reading.to_json, readings)
+	if download:
+            readings = self.to_csv(readings)
+            print readings
+            return readings, 200, {"Content-Disposition":"attachment; filename=download.csv", "Content-Type":"text/csv"}
+	else:
+       	    return readings
 
     def filter(self, readings):
         """
@@ -65,7 +76,9 @@ class ReadingResource(Resource):
         # http://159.203.111.95:port/api/reading?device=<device>&sub_zone=<sub_zone>
         if args["device"] and args["sub_zone"]:
            readings = readings.join(Device).filter(Reading.device == args["device"]).filter(Device.sub_zone == args["sub_zone"])
-        return readings
+
+        # allow user to download csv files of data
+        return readings, args["download"]
 
     def query_parse(self):
         """ Parses dates from the query string """
@@ -79,5 +92,28 @@ class ReadingResource(Resource):
         parser.add_argument('zone', type=str, location='args')
         parser.add_argument('sub_zone', type=str, location='args')
         parser.add_argument('device', type=str, location='args')
+        parser.add_argument('download', type=bool, location='args')
         return parser.parse_args()
+    
+    # http://159.203.111.95:6969/api/reading/?location=Colins%20Cove&download=True     
+    def to_csv(self, json):
+        """Converts json to csv"""
+        """
+        string_buffer = StringIO()
+        json = json.replace("\r", "").replace("\n", "")
+        convert = csv.writer(string_buffer)
+        convert.writerow(["device", "date", "reading"])
 
+        for x in json:
+            convert.writerow([x["device"],
+                              x["date"],
+                              x["reading"]])
+        return string_buffer.getvalue()
+        """
+        csv = "device,date,reading\n"
+        for x in json:
+            csv += (
+            str(x["device"])+ "," +
+            str(x["date"]) + "," +
+            str(x["reading"]) + "\n")
+        return csv
