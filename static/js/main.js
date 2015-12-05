@@ -141,7 +141,6 @@ function main() {
     });
 
     // changes the zones based on logger type selection
-    $(document).ready(function () {
     $('#logger-type').change(function(){
         var val = $(this).val();
         if(val === 'robocoral'){
@@ -184,7 +183,6 @@ function main() {
         console.log('string = ' + locationsString);
         $('#site').html(locationsString);
     })
-})
 }
 
 $(document).ready(function () {
