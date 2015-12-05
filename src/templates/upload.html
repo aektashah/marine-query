@@ -1,0 +1,13 @@
+{% extends 'admin/layout.html' %}
+{% block body %}
+<form action={{ url_for('uploadview.upload', self=uploader) }} method="POST" enctype="multipart/form-data">
+        <h3>Device Name: </h3> <select name="dev">
+            <option value="infer">Infer from file name</option>
+            {% for dev in devs %}
+                <option value={{dev}}>{{dev}}</option>
+            {% endfor %}
+        </select> </br></br>
+        <h3>File: </h3> <input type="file" name="data" accept=".csv"></br></br>
+        <input type="submit" value="Upload">
+    </form>
+{% endblock %}
