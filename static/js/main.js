@@ -60,7 +60,7 @@ function sendQuery() {
     var loggerType = $("#logger-type").val();
     var country = $("#country").val();
     var state = $("#state").val();
-    var loc = $("#site").val();
+    var loc = $("#site").val()[0];
     var wave = $("#wave").val();
     var zone = $("#zone").val();
     var subzone = $("#sub-zone").val();
@@ -68,11 +68,25 @@ function sendQuery() {
     var intervalMaxmin = $("#maxmin").val();
     var startTime = $("#start-time > select");
     var endTime = $("#end-time > select");
-    var query = {"loggerType": loggerType, "country": country, "state": state, "location": loc, "wave": wave, "zone": zone, "subzone": subzone, "interval": interval, "intervalMaxmin": intervalMaxmin, "startTime": startTime, "endTime": endTime};
-    console.log(query);
-    $.ajax({"url": "http://159.203.111.95:8000/api/dev", "context": query}).done(function() {
-        console.log("done");
+    var query = {"country": country, "biomimic": loggerType};
+    var devices = newData[loc][loggerType];
+    console.log(devices);
+    //var query = {"biomimic": loggerType, "country": country, "state_province": state, "location": loc, "wave_exp": wave, "zone": zone, "sub_zone": subzone}// "interval": interval, "intervalMaxmin": intervalMaxmin, "start_date": startTime, "end_date": endTime};
+    $.each(query, function(key, val) {
+        if (val == "ALL"){
+            console.log(key);
+            delete query[key]
+        }
     });
+    $.each(devices, function(i, device) {
+        $.ajax({"url": "http://159.203.111.95:8000/api/reading", "data": {"device": device}, function() {
+            console.log("done");
+        }});
+    });
+    /*
+    $.ajax({"url": "http://159.203.111.95:8000/api/reading", "data": {"device": "BMRMUSORFC1"}, function() {
+        console.log("done");
+    }});*/
 }
 
 // Initialize navgoco with default options
