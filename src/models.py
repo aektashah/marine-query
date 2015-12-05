@@ -4,7 +4,7 @@
 """
 
 from flask.ext.security import UserMixin, RoleMixin
-from sqlalchemy import Column, Integer, String, Float, DateTime, ForeignKey, Boolean
+from sqlalchemy import Column, Integer, String, Float, DateTime, ForeignKey, Boolean, BigInteger
 from sqlalchemy.orm import relationship, backref
 from database import Base
 from json import dumps
@@ -13,7 +13,7 @@ class Device(Base):
     """ Represents the metadata about a meter and its location"""
     __tablename__ = "devices"
     
-    id = Column(String(50), unique=True, primary_key=True, index=True)
+    id = Column(String(50), unique=True, index=True)
     site = Column(String(50))
     field_lat = Column(Float)
     field_lon = Column(Float)
@@ -25,6 +25,7 @@ class Device(Base):
     sub_zone = Column(String(50), nullable=True)
     wave_exp = Column(String(50), nullable=True)
     tide_height = Column(Float, nullable=True)
+    dev_id = Column(BigInteger, primary_key=True, autoincrement=True)
     
     def to_json(self):
         return {"site": self.site,
