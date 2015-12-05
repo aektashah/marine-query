@@ -34,6 +34,7 @@ class UploadView(AuthMixin, BaseView):
     def upload(self):
         if request.method == "POST":
             data = request.files["data"]
+            Device.add_from_file(data.stream.read())
         return "hello" 
 
 # Subclass of a model view which requires authentication

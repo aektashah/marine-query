@@ -43,6 +43,22 @@ class Device(Base):
     def __repr__(self):
         return "Device %s" % self.id
 
+    @staticmethod
+    def add_from_file(file):
+        pass
+
+def load_readings():
+    ids = set()
+    for line in open(expanduser("~/device_data.csv")):
+        row = line.strip().split("\t") 
+        ids.add(row[0])
+    for line in open(expanduser("~/robomussel_raw/big_file.txt")): 
+        dev_id, date, reading = line.strip().split(",")
+        if dev_id in ids:
+            r = Reading(dev_id, date, float(reading))
+            db_session.add(r)
+    db_session.commit()
+
 class Reading(Base):
     """ Represents a robomussell temperature entry """
 
