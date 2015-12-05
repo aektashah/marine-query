@@ -7,12 +7,11 @@ from flask import Flask
 from flask.ext.security import Security, SQLAlchemyUserDatastore, login_required
 from flask.ext.sqlalchemy import SQLAlchemy
 from flask.ext.superadmin import Admin
-from flask.ext.restful import Api
 
 from models import Device, Reading, User, Role
 from database import db_session, SQLALCHEMY_DATABASE_URI
 from admin import HomeView, AuthModelView
-from api import DeviceResource, ReadingResource 
+from api import MultiApi, DeviceResource, ReadingResource 
 
 # App configuration
 app = Flask(__name__, static_url_path='', static_folder='../static')
@@ -22,7 +21,7 @@ app.config["SQLALCHEMY_DATABASE_URI"] = SQLALCHEMY_DATABASE_URI
 app.add_url_rule("/", "root", lambda: app.send_static_file("index.html"))
 
 # API configuration
-api = Api(app)
+api = MultiApi(app)
 api.add_resource(ReadingResource, "/api/reading/")
 api.add_resource(DeviceResource, "/api/dev/")
 
