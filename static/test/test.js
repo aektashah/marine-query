@@ -42,17 +42,3 @@ describe("generate()", function() {
     });
 });
 
-describe("sidebarCollapsed()", function() {
-    var fixture;
-    beforeEach(function() {
-        loadFixtures("../../../index.html");
-    });
-    it ("should set width to 97%", function() { //aka 692 px
-        toggleSidebar();
-        generate();
-        var initWidth = $(".bottombar-expanded > nav").width();
-        var newWidth = initWidth * 0.97;
-        sidebarCollapse();
-        expect($(".bottombar-expanded > nav")).toHaveCss({width: newWidth + "px"});
-    });
-});
