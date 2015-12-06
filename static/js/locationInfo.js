@@ -198,6 +198,9 @@ function initdata(options){
         var states = [];
         $(document).ready(function() {
             $.each(myData, function(){
+                if(country === 'ALL' && $.inArray(this.state_province, states)<0){
+                    states.push(this.state_province);
+                }
                 if(country === this.country && $.inArray(this.state_province, states)<0){
                     states.push(this.state_province);
                 }
@@ -213,7 +216,28 @@ function initdata(options){
         var locations = []
         $(document).ready(function() {
             $.each(myData, function(){
+                if(state === 'ALL' && $.inArray(this.location, locations)<0){
+                    locations.push(this.location);
+                }
                 if(state === this.state_province && $.inArray(this.location, locations)<0){
+                    locations.push(this.location);
+                }
+            })
+        })
+        return locations.sort();
+    }
+
+     // get the locations given the state
+    function getLocations(country){
+        var dataString = JSON.stringify(data);
+        var myData = JSON.parse(dataString);
+        var locations = []
+        $(document).ready(function() {
+            $.each(myData, function(){
+                if(country === 'ALL' && $.inArray(this.location, locations)<0){
+                    locations.push(this.location);
+                }
+                if(country === this.country && $.inArray(this.location, locations)<0){
                     locations.push(this.location);
                 }
             })

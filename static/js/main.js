@@ -199,12 +199,16 @@ function main() {
         var val = $(this).val();
         console.log(val);
         var states = getStates(val);
-        
+        var locations = getLocations(val);
         var statesString = '<option>ALL</option>';
+        var locationsString = '<option>ALL</option>';
         for(e in states){
             statesString = statesString + '<option>' + states[e] + '</option>';
         }
-        console.log(statesString);
+        for(e in locations){
+            locationsString = locationsString + '<option>' + locations[e] + '</option>';
+        }
+        $('#site').html(locationsString);
         $('#state').html(statesString);
     })
 
