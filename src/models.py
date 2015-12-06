@@ -31,7 +31,7 @@ class Device(Base):
     dev_id = Column(BigInteger, primary_key=True, autoincrement=True)
     
     def to_json(self):
-        return {"site": self.site,
+        return dumps({"site": self.site,
             "field_lat": self.field_lat,
             "field_lon": self.field_lon,
             "location": self.location,
@@ -41,7 +41,7 @@ class Device(Base):
             "zone": self.zone,
             "sub_zone": self.sub_zone,
             "wave_exp": self.wave_exp,
-            "tide_height": self.tide_height}
+            "tide_height": self.tide_height})
 
     def __repr__(self):
         return "Device %s" % self.id
@@ -51,7 +51,7 @@ class Device(Base):
         values = [line.split("\t") for line in upload.split("\n")]
         for date, reading in values[1:]:
             r = Reading(device=device_name,date=date,reading=float(reading))
-	    db_session.add(r)
+            db_session.add(r)
         db_session.commit()
         return True
 
@@ -79,9 +79,9 @@ class Reading(Base):
   
 
     def to_json(self):
-        return {"device": self.device, 
+        return dumps({"device": self.device, 
                 "date": self.date.strftime("%Y/%m/%d %H:%M"),
-                "reading": self.reading}
+                "reading": self.reading})
 
     def __repr__(self):
         return "Reading %s %s %f" % (self.device, self.date, self.reading)
@@ -99,6 +99,9 @@ class User(Base, UserMixin):
             backref=backref('users', lazy='dynamic'))
 
 
+    def __repr__(self):
+        return "User %s" % (self.email)
+
 class Role(Base, RoleMixin):
     """ Represents te different permissions a user can have in the system """
 
@@ -107,6 +110,8 @@ class Role(Base, RoleMixin):
     name = Column(String(80), unique=True)
     description = Column(String(255))
 
+    def __repr__(self):
+        return "Role %s" % self.name
 
 class UserRoles(Base):
     """ Roles for a user, such as admin-read-write or admin-read"""

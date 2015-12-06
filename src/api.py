@@ -7,15 +7,12 @@ from flask_restful.reqparse import RequestParser
 
 from models import Reading, Device
 
-from StringIO import StringIO
-
-import csv
 
 class MultiApi(Api):
     def __init__(self, *args, **kwargs):
         super(MultiApi, self).__init__(*args, **kwargs)
         self.representations["text/csv"] = MultiApi.output_csv
-    
+
     @staticmethod
     def output_csv(csv, status, headers):
         resp = make_response(csv, status)
@@ -45,13 +42,13 @@ class ReadingResource(Resource):
             Filters the database by the given device id, and returns a JSON
             string to the requester
         """
-    readings, download = self.filter(Reading.query)
-    readings = map(Reading.to_json, readings)
-    if download:
+        readings, download = self.filter(Reading.query)
+        readings = map(Reading.to_json, readings)
+        if download:
             readings = self.to_csv(readings)
             return readings, 200, {"Content-Disposition":"attachment; filename=download.csv", "Content-Type":"text/csv"}
-    else:
-               return readings
+        else:
+            return readings
 
     def filter(self, readings):
         """
