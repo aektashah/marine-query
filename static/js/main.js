@@ -57,28 +57,21 @@ function generate() {
 
 function sendQuery() {
     var loggerType = $("#logger-type").val();
-    var country = $("#country").val();
-    var state = $("#state").val();
     var loc = $("#site").val()[0];
-    var wave = $("#wave").val();
-    var zone = $("#zone").val();
-    var subzone = $("#sub-zone").val();
-    var interval = $("#interval").val();
-    var intervalMaxmin = $("#maxmin").val();
-    var startTime = $("#start-time > select");
-    var endTime = $("#end-time > select");
-    var query = {"country": country, "biomimic": loggerType};
-    var devices = newData[loc][loggerType];
+    var devices = [];//newData[loc][loggerType];
+    if (loggerType == "ALL") {
+        $.each(newData[loc], function(type, subdevices) {
+            devices = devices.concat(subdevices);
+        });
+    }
     var result;
-    console.log(devices);
-    //var query = {"biomimic": loggerType, "country": country, "state_province": state, "location": loc, "wave_exp": wave, "zone": zone, "sub_zone": subzone}// "interval": interval, "intervalMaxmin": intervalMaxmin, "start_date": startTime, "end_date": endTime};
+    
     $.each(devices, function(i, device) {
         $.ajax({"headers": {Accept: "application/json"}, "url": "http://159.203.111.95:8000/api/reading", "data": {"device": device},"success": function(resp) {
             console.log(resp);
             result = resp;
         }});
     });
-    filterData(result, wave, zone, subzone, interval, intervalMaxmin, startTime, endTime);
 }
 function filterData(result, wave, zone, subzone, interval, intervalMaxmin, startTime, endTime) {
     var final = [];

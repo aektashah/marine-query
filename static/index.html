@@ -23,6 +23,7 @@
   <script src="js/vendor/react-dom.js"></script>
   <script src="js/vendor/browser.min.js"></script>-->
   <script src="js/new_data.js"></script>
+  <script src="js/locationData.js"></script>
   <script src="js/locationInfo.js"></script>
   <script src="js/map.js"></script>
   <script src="//d3js.org/d3.v3.min.js" charset="utf-8"></script>
@@ -123,7 +124,7 @@
           <div>
             <label for="start-time">From:</label>
             <span class="form-control" id="start-time" style="height: 70px;padding-left:0;padding-right:0;border:none;box-shadow:none">
-            <select>
+            <select id="start-day">
               <option>DD</option>
               <option>01</option>       
               <option>02</option>       
@@ -157,7 +158,7 @@
               <option>30</option>       
               <option>31</option>  
             </select>
-            <select>
+            <select id="start-month">
               <option>MM</option>
               <option>Jan</option>       
               <option>Feb</option>       
@@ -172,7 +173,7 @@
               <option>Nov</option>       
               <option>Dec</option>      
             </select>
-            <select>
+            <select id="start-year">
               <option>YYYY</option>
               <option>2000</option>       
               <option>2001</option>       
@@ -191,7 +192,7 @@
               <option>2014</option>         
               <option>2015</option>        
             </select>
-            <select>
+            <select id="start-hour">
               <option>HH</option>
               <option>01</option>        
               <option>02</option>       
@@ -219,7 +220,7 @@
               <option>24</option>  
             </select>
             :
-            <select>
+            <select id="start-min">
               <option>MM</option>
               <option>00</option>       
               <option>10</option>        
@@ -234,7 +235,7 @@
           <div>
             <label for="end-time">To:</label>
             <span class="form-control" id="end-time" style="padding-left:0;height: 70px;padding-right:0;border:none;box-shadow:none">
-            <select>
+            <select id="end-day">
               <option>DD</option>
               <option>01</option>       
               <option>02</option>       
@@ -268,7 +269,7 @@
               <option>30</option>       
               <option>31</option>  
             </select>
-            <select>
+            <select id="end-month">
               <option>MM</option>
               <option>Jan</option>       
               <option>Feb</option>       
@@ -283,7 +284,7 @@
               <option>Nov</option>       
               <option>Dec</option>      
             </select>
-            <select>
+            <select id="end-year">
               <option>YYYY</option>
               <option>2000</option>       
               <option>2001</option>       
@@ -302,7 +303,7 @@
               <option>2014</option>         
               <option>2015</option>        
             </select>
-             <select>
+             <select id="end-hour">
               <option>HH</option>
               <option>01</option>        
               <option>02</option>       
@@ -330,7 +331,7 @@
               <option>24</option>  
             </select>
             :
-            <select>
+            <select id="end-min">
               <option>MM</option>
               <option>00</option>       
               <option>10</option>        
