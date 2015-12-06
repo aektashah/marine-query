@@ -1,7 +1,3 @@
-function toTitleCase(str)
-{
-    return str//.replace(/\w\S*/g, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();});
-}
 
 function getOptions(loggerId){
     var myData = data;
@@ -21,7 +17,7 @@ function getOptions(loggerId){
             if(loggerId != "" && this.microsite_id)
             if($.inArray(this.biomimic, visited)<0){
                 visited.push(this.biomimic);
-                loggerTypes.push(toTitleCase(this.biomimic));
+                loggerTypes.push(this.biomimic);
             }
             if($.inArray(this.country, visited)<0){
                 visited.push(this.country);
@@ -37,7 +33,7 @@ function getOptions(loggerId){
             }
             if($.inArray(this.wave_exp, visited)<0 && this.wave_exp != 'N/A'){
                 visited.push(this.wave_exp);
-                wave.push(toTitleCase(this.wave_exp));
+                wave.push(this.wave_exp);
             }
             if($.inArray(this.zone, visited)<0 && this.zone != 'N/A'){
                 visited.push(this.zone);
@@ -112,7 +108,7 @@ function initdata(options){
                      opacity: 0.5}).bindPopup("<b>Location: </b>" + 
                      this.location + ", " + this.state_province + ", " + 
                      this.country + 
-                     "<br><b>Logger Type: </b>" + toTitleCase(this.biomimic) +
+                     "<br><b>Logger Type: </b>" + this.biomimic +
                      "<br><b>Logger ID: </b>" + this.microsite_id).addTo(map);
                 marker.on('dblclick', function(e){
                     map.setView([this.field_lat-80, this.field_lon], map.getZoom() + 1, {animate: true});
@@ -140,7 +136,7 @@ function initdata(options){
         $(document).ready(function() {
             $.each(data, function(){
                 if(this.microsite_id === markerID){
-                    populateField('logger-type', toTitleCase(this.biomimic));
+                    populateField('logger-type', this.biomimic);
                     deactivateField('logger-type');
                     populateField('country', this.country);
                     deactivateField('country');
@@ -149,7 +145,7 @@ function initdata(options){
                     populateField('site', this.location);
                     deactivateField('site');
                     if(this.wave_exp =! "N/A"){
-                        populateField('wave', toTitleCase(this.wave_exp));
+                        populateField('wave', this.wave_exp);
                         deactivateField('wave');
                     }
                     if(this.zone != "N/A"){
