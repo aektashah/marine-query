@@ -1,5 +1,5 @@
 
-function getOptions(loggerId){
+function getOptions(){
     var myData = data;
     var visited = [];
     var locationsVisited = []
@@ -14,7 +14,7 @@ function getOptions(loggerId){
 
     $(document).ready(function() {
         $.each(myData, function(){
-            if(loggerId != "" && this.microsite_id)
+            if(this.microsite_id)
             if($.inArray(this.biomimic, visited)<0){
                 visited.push(this.biomimic);
                 loggerTypes.push(this.biomimic);
@@ -65,6 +65,20 @@ function initdata(){
     var wave = options['wave'];
     var zone = options['zone'];
     var subzone = options['subzone'];
+    var interval = ['10 Min Interval', 'Hourly', 'Daily', 'Weekly', 'Monthly', 'Yearly'];
+    var maxmin = ['Max', 'Min', 'Average'];
+    var days = ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '24', '25', '26', '27', '28', '29', '30', '31']; 
+    var months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']; 
+    var d = new Date();
+    var currentYear = d.getFullYear();
+    var years = [];
+    while (currentYear != 1999){
+        years.push(currentYear)
+        currentYear -= 1;
+    }
+
+    var hours = ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '24'];
+    var mins = ['00', '10', '20', '30', '40', '50'];
 
     var $logger_type = $('#logger-type');
     var $country = $('#country');
@@ -73,6 +87,19 @@ function initdata(){
     var $wave = $('#wave');
     var $zone = $('#zone');
     var $sub_zone = $('#sub-zone');
+    var $interval = $('#interval');
+    var $maxmin = $('#maxmin');
+    var $startday = $('#start-day');
+    var $startmonth = $('#start-month');
+    var $startyear = $('#start-year');
+    var $starthour = $('#start-hour');
+    var $startmin = $('#start-min');
+    var $endday = $('#end-day');
+    var $endmonth = $('#end-month');
+    var $endyear = $('#end-year');
+    var $endhour = $('#end-hour');
+    var $endmin = $('#end-min');
+
     for(e in loggerTypes){
         $('<option>' + loggerTypes[e] + '</option>').appendTo($logger_type);
     }
@@ -95,7 +122,32 @@ function initdata(){
     for(e in subzone){
         $('<option>' + subzone[e] + '</option>').appendTo($sub_zone);
     }
-
+    for(e in interval){
+        $('<option>' + interval[e] + '</option>').appendTo($interval);
+    }
+    for(e in maxmin){
+        $('<option>' + maxmin[e] + '</option>').appendTo($maxmin);
+    }
+    for(e in days){
+        $('<option>' + days[e] + '</option>').appendTo($startday);
+        $('<option>' + days[e] + '</option>').appendTo($endday);
+    }
+    for(e in months){
+        $('<option>' + months[e] + '</option>').appendTo($startmonth);
+        $('<option>' + months[e] + '</option>').appendTo($endmonth);
+    }
+    for(e in years.reverse()){
+        $('<option>' + years[e] + '</option>').appendTo($startyear);
+        $('<option>' + years[e] + '</option>').appendTo($endyear);
+    }
+    for(e in hours){
+        $('<option>' + hours[e] + '</option>').appendTo($starthour);
+        $('<option>' + hours[e] + '</option>').appendTo($endhour);
+    }
+    for(e in mins){
+        $('<option>' + mins[e] + '</option>').appendTo($startmin);
+        $('<option>' + mins[e] + '</option>').appendTo($endmin);
+    }
 }
 
     // Adds markers to map
@@ -174,6 +226,19 @@ function initdata(){
         populateField('wave', 'ALL');
         populateField('zone', 'ALL');
         populateField('sub-zone', 'ALL');
+        populateField('interval', 'ALL');
+        populateField('maxmin', 'ALL');
+        populateField('start-day', 'DD');
+        populateField('start-month', 'MM');
+        populateField('start-year', 'YYYY');
+        populateField('start-hour', 'HH');
+        populateField('start-min', 'mm');
+        populateField('end-day', 'DD');
+        populateField('end-month', 'MM');
+        populateField('end-year', 'YYYY');
+        populateField('end-hour', 'HH');
+        populateField('end-min', 'mm');
+
         initdata();
         document.getElementById('logger-type').disabled=false;
         document.getElementById('country').disabled=false;

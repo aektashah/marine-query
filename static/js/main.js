@@ -186,8 +186,7 @@ function main() {
             $('#zone option').css('display', 'inline');
         }
         else if(val == 'ALL'){
-            // $('#zone option').css('display', 'none');
-            ('#zone').html('<option>ALL</option>');
+            $('#zone option').css('display', 'none');
         }
         else {
             $('#zone').html('<option>ALL</option><option>High</option><option>Mid</option><option>Low</option>');
@@ -208,7 +207,7 @@ function main() {
         }
         $('#state').html(statesString);
         $('#site').html(locationsString);
-        
+
     })
 
     // changes the location based on state/province selection
