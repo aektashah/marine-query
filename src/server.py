@@ -1,23 +1,35 @@
 """ 
     Runs the server and parsers API requests 
 """
-import os
+from os import urandom, environ
 
 from flask import Flask
 from flask.ext.security import Security, SQLAlchemyUserDatastore, login_required
 from flask.ext.sqlalchemy import SQLAlchemy
 from flask.ext.superadmin import Admin
 
+# Connection URL to communicate with the local database
+SQLALCHEMY_DATABASE_URI = "postgresql://james:fishes@localhost/marine"
+TESTING_URI = "postgresql://james:fishes@localhost/testing"
+if environ.get("TESTING", False) == "true":
+    environ["SQLALCHEMY_DATABASE_URI"] = TESTING_URI
+else:
+    environ["SQLALCHEMY_DATABASE_URI"] = SQLALCHEMY_DATABASE_URI
+
+
 from models import Device, Reading, User, Role
-from database import db_session, SQLALCHEMY_DATABASE_URI
 from api import MultiApi, DeviceResource, ReadingResource 
 from admin import HomeView, AuthModelView, UploadView
+from database import make_db_utils
+
+# Database Connection
+_, db_session, _ = make_db_utils()
 
 # App configuration
 app = Flask(__name__, static_url_path='', static_folder='../static')
-app.config["SECRET_KEY"] = os.urandom(24)
+app.config["SECRET_KEY"] = urandom(24)
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
-app.config["SQLALCHEMY_DATABASE_URI"] = SQLALCHEMY_DATABASE_URI
+app.config["SQLALCHEMY_DATABASE_URI"] = environ["SQLALCHEMY_DATABASE_URI"] 
 app.add_url_rule("/", "root", lambda: app.send_static_file("index.html"))
 
 # API configuration

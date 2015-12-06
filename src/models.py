@@ -2,12 +2,15 @@
     Models contains the python representations for our database tables and 
     contains various utility methods for serializing the data for transfer
 """
+import os
 
 from flask.ext.security import UserMixin, RoleMixin
 from sqlalchemy import Column, Integer, String, Float, DateTime, ForeignKey, Boolean, BigInteger
 from sqlalchemy.orm import relationship, backref
-from database import Base, db_session
+from database import make_db_utils 
 from json import dumps
+
+_, _, Base = make_db_utils()
 
 class Device(Base):
     """ Represents the metadata about a meter and its location"""
