@@ -73,7 +73,7 @@ function sendQuery() {
     console.log(devices);
     //var query = {"biomimic": loggerType, "country": country, "state_province": state, "location": loc, "wave_exp": wave, "zone": zone, "sub_zone": subzone}// "interval": interval, "intervalMaxmin": intervalMaxmin, "start_date": startTime, "end_date": endTime};
     $.each(devices, function(i, device) {
-        $.ajax({"url": "http://159.203.111.95:6969/api/reading", "data": {"device": "BMRMUSORFC1"},"success": function(resp) {
+        $.ajax({"headers": {Accept: "application/json"}, "url": "http://159.203.111.95:8000/api/reading", "data": {"device": device},"success": function(resp) {
             console.log(resp);
             result = resp;
         }});
