@@ -1,7 +1,8 @@
 """ 
     Class based approach to RESTful API endpoints
 """
-from flask.ext.restful import Resource
+from flask import make_response
+from flask.ext.restful import Api, Resource
 from flask_restful.reqparse import RequestParser
 
 from models import Reading, Device
@@ -9,6 +10,18 @@ from models import Reading, Device
 from StringIO import StringIO
 
 import csv
+
+class MultiApi(Api):
+    def __init__(self, *args, **kwargs):
+        super(MultiApi, self).__init__(*args, **kwargs)
+        self.representations["text/csv"] = MultiApi.output_csv
+    
+    @staticmethod
+    def output_csv(csv, status, headers):
+        resp = make_response(csv, status)
+        resp.headers.extend(headers)
+        return resp
+
 
 class DeviceResource(Resource):
     """
@@ -36,7 +49,6 @@ class ReadingResource(Resource):
 	readings = map(Reading.to_json, readings)
 	if download:
             readings = self.to_csv(readings)
-            print readings
             return readings, 200, {"Content-Disposition":"attachment; filename=download.csv", "Content-Type":"text/csv"}
 	else:
        	    return readings
