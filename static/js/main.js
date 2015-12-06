@@ -56,7 +56,6 @@ function generate() {
 }
 
 function sendQuery() {
-    console.log("clicked");
     var loggerType = $("#logger-type").val();
     var country = $("#country").val();
     var state = $("#state").val();
@@ -70,25 +69,35 @@ function sendQuery() {
     var endTime = $("#end-time > select");
     var query = {"country": country, "biomimic": loggerType};
     var devices = newData[loc][loggerType];
+    var result;
     console.log(devices);
     //var query = {"biomimic": loggerType, "country": country, "state_province": state, "location": loc, "wave_exp": wave, "zone": zone, "sub_zone": subzone}// "interval": interval, "intervalMaxmin": intervalMaxmin, "start_date": startTime, "end_date": endTime};
-    $.each(query, function(key, val) {
-        if (val == "ALL"){
-            console.log(key);
-            delete query[key]
-        }
-    });
     $.each(devices, function(i, device) {
-        $.ajax({"url": "http://159.203.111.95:8000/api/reading", "data": {"device": device}, function() {
-            console.log("done");
+        $.ajax({"url": "http://159.203.111.95:8000/api/reading", "data": {"device": "BMRMUSORFC1"},"success": function(resp) {
+            console.log(resp);
+            result = resp;
         }});
     });
-    /*
-    $.ajax({"url": "http://159.203.111.95:8000/api/reading", "data": {"device": "BMRMUSORFC1"}, function() {
-        console.log("done");
-    }});*/
+    filterData(result, wave, zone, subzone, interval, intervalMaxmin, startTime, endTime);
 }
+function filterData(result, wave, zone, subzone, interval, intervalMaxmin, startTime, endTime) {
+    var final = [];
+    //console.log(parseDate(startTime));
+    parseDate(startTime); 
+    $.each(result, function(i, item) {
+        
+    });
+}
+function parseDate(date) {
+    var finalDate = "";
+    $.each(date, function(i, d){ 
+        console.log(d);
+        //finalDate + d + " ";
+    });
+    $.trim(finalDate);
+    return finalDate;
 
+}
 // Initialize navgoco with default options
 function initNavgoco() {
     $(".main-menu").navgoco({
