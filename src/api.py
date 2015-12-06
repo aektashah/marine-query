@@ -7,15 +7,12 @@ from flask_restful.reqparse import RequestParser
 
 from models import Reading, Device
 
-from StringIO import StringIO
-
-import csv
 
 class MultiApi(Api):
     def __init__(self, *args, **kwargs):
         super(MultiApi, self).__init__(*args, **kwargs)
         self.representations["text/csv"] = MultiApi.output_csv
-    
+
     @staticmethod
     def output_csv(csv, status, headers):
         resp = make_response(csv, status)
