@@ -45,13 +45,13 @@ class ReadingResource(Resource):
             Filters the database by the given device id, and returns a JSON
             string to the requester
         """
-    readings, download = self.filter(Reading.query)
-    readings = map(Reading.to_json, readings)
-    if download:
+        readings, download = self.filter(Reading.query)
+        readings = map(Reading.to_json, readings)
+        if download:
             readings = self.to_csv(readings)
             return readings, 200, {"Content-Disposition":"attachment; filename=download.csv", "Content-Type":"text/csv"}
-    else:
-               return readings
+        else:
+            return readings
 
     def filter(self, readings):
         """
