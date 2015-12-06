@@ -143,7 +143,6 @@ function initdata(options){
                     populateField('state', this.state_province);
                     deactivateField('state');
                     populateField('site', this.location);
-                    deactivateField('site');
                     if(this.wave_exp =! "N/A"){
                         populateField('wave', this.wave_exp);
                         deactivateField('wave');
