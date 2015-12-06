@@ -2,12 +2,16 @@
     Models contains the python representations for our database tables and 
     contains various utility methods for serializing the data for transfer
 """
+import os
 
 from flask.ext.security import UserMixin, RoleMixin
 from sqlalchemy import Column, Integer, String, Float, DateTime, ForeignKey, Boolean
 from sqlalchemy.orm import relationship, backref
-from database import Base
+from database import make_db_utils 
 from json import dumps
+
+_, _, Base = make_db_utils()
+print "in models: %s" % os.environ["SQLALCHEMY_DATABASE_URI"]
 
 class Device(Base):
     """ Represents the metadata about a meter and its location"""
@@ -25,19 +29,19 @@ class Device(Base):
     sub_zone = Column(String(50), nullable=True)
     wave_exp = Column(String(50), nullable=True)
     tide_height = Column(Float, nullable=True)
-	
+    
     def to_json(self):
-	return {"site": self.site,
-		"field_lat": self.field_lat,
-		"field_lon": self.field_lon,
-		"location": self.location,
-		"state_province": self.state_province,
-		"country": self.country,
-		"biomimic": self.biomimic,
-		"zone": self.zone,
-		"sub_zone": self.sub_zone,
-		"wave_exp": self.wave_exp,
-		"tide_height": self.tide_height}
+        return {"site": self.site,
+            "field_lat": self.field_lat,
+            "field_lon": self.field_lon,
+            "location": self.location,
+            "state_province": self.state_province,
+            "country": self.country,
+            "biomimic": self.biomimic,
+            "zone": self.zone,
+            "sub_zone": self.sub_zone,
+            "wave_exp": self.wave_exp,
+            "tide_height": self.tide_height}
 
     def __repr__(self):
         return "Device %s" % self.id
