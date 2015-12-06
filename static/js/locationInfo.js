@@ -56,7 +56,7 @@ function getOptions(loggerId){
     return options;
 }
 
-function initdata(options){
+function initdata(){
     var options = getOptions();
     var loggerTypes = options['logger-types'];
     var country = options['country'];
@@ -73,7 +73,6 @@ function initdata(options){
     var $wave = $('#wave');
     var $zone = $('#zone');
     var $sub_zone = $('#sub-zone');
-
     for(e in loggerTypes){
         $('<option>' + loggerTypes[e] + '</option>').appendTo($logger_type);
     }
@@ -175,6 +174,7 @@ function initdata(options){
         populateField('wave', 'ALL');
         populateField('zone', 'ALL');
         populateField('sub-zone', 'ALL');
+        initdata();
         document.getElementById('logger-type').disabled=false;
         document.getElementById('country').disabled=false;
         document.getElementById('state').disabled=false;
@@ -210,7 +210,7 @@ function initdata(options){
     }
 
     // get the locations given the state
-    function getLocations(state){
+    function getLocationsFromState(state){
         var dataString = JSON.stringify(data);
         var myData = JSON.parse(dataString);
         var locations = []
@@ -228,7 +228,7 @@ function initdata(options){
     }
 
      // get the locations given the state
-    function getLocations(country){
+    function getLocationsFromCountry(country){
         var dataString = JSON.stringify(data);
         var myData = JSON.parse(dataString);
         var locations = []
@@ -253,7 +253,6 @@ function initdata(options){
         $(document).ready(function() {
             $.each(myData, function(){
                 if(location === this.location){
-                    console.log([this.field_lat, this.field_lon]);
                     return [this.field_lat, this.field_lon];
                 }
             })

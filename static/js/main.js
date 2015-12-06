@@ -186,8 +186,8 @@ function main() {
             $('#zone option').css('display', 'inline');
         }
         else if(val == 'ALL'){
+            // $('#zone option').css('display', 'none');
             ('#zone').html('<option>ALL</option>');
-            $('#zone option').css('display', 'none');
         }
         else {
             $('#zone').html('<option>ALL</option><option>High</option><option>Mid</option><option>Low</option>');
@@ -197,25 +197,24 @@ function main() {
     // changes the states/provinces based on country selection
     $('#country').change(function(){
         var val = $(this).val();
-        console.log(val);
         var states = getStates(val);
-        var locations = getLocations(val);
+        var locations = getLocationsFromCountry(val);
+        console.log(locations);
         var statesString = '<option>ALL</option>';
         var locationsString = '<option>ALL</option>';
         for(e in states){
             statesString = statesString + '<option>' + states[e] + '</option>';
-        }
-        for(e in locations){
             locationsString = locationsString + '<option>' + locations[e] + '</option>';
         }
-        $('#site').html(locationsString);
         $('#state').html(statesString);
+        $('#site').html(locationsString);
+        
     })
 
     // changes the location based on state/province selection
     $('#state').change(function(){
         var val = $(this).val();
-        var locations = getLocations(val);
+        var locations = getLocationsFromState(val);
         var locationsString = '<option>ALL</option>';
         for(e in locations){
             locationsString = locationsString + '<option>' + locations[e] + '</option>';
