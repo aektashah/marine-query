@@ -36,7 +36,6 @@ function initmap() {
         $('.bottombar-expanded > nav').css('margin-left', '1%');
         var cM = map.project(centerMarker.popup._latlng);
         $("nav").scrollTop(0);
-        console.log(centerMarker.popup._source._myId);
         populateAllFields(centerMarker.popup._source._myId);
         cM.y -= centerMarker.popup._container.clientHeight-200;
         cM.x -= centerMarker.popup._container.clientWidth-180;
@@ -64,8 +63,14 @@ function initmap() {
   map.on('dblclick', function(marker){
     map.setView(marker.latlng, map.getZoom() + 1, {animate: true});
   });
-};
 
+$('#location option').click(function(){
+        var val = $(this).val();
+        var latlong = getLatLong(val);
+        console.log(latlong);
+        L.map('map').setView(latlong, 5, {animate: true});
+    })
+};
 
 
 
