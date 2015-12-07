@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 
 var data;
 $.ajax({"headers": {Accept: "application/json"}, "url":"http://159.203.111.95:8000/api/dev", "data": {}, "success": function(result) {  
@@ -6,6 +7,23 @@ $.ajax({"headers": {Accept: "application/json"}, "url":"http://159.203.111.95:80
 });
 
 function getOptions(result){
+=======
+var data;
+$.ajax({"headers": {Accept: "application/json"}, "url":"http://159.203.111.95:8000/api/dev", "data": {}, "success": function(result) {
+    //console.log(result);   
+    data = result;
+    }
+});
+console.log(data);
+
+function toTitleCase(str)
+{
+    return str//.replace(/\w\S*/g, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();});
+}
+
+function getOptions(result){
+    var myData = result;
+>>>>>>> origin/graphs
     data = result;
     var visited = [];
     var locationsVisited = []
@@ -18,7 +36,11 @@ function getOptions(result){
     var zone = [];
     var subzone = [];
 
+<<<<<<< HEAD
     $.each(data, function(i, d){
+=======
+    $.each(myData, function(i, d){
+>>>>>>> origin/graphs
         var data = JSON.parse(d);
         if($.inArray(data.biomimic, visited)<0){
             console.log(data.biomimic);
@@ -37,6 +59,7 @@ function getOptions(result){
             locationsVisited.push(data.location);
             location.push(data.location);
         }
+<<<<<<< HEAD
         if($.inArray(data.wave_exp, visited)<0 && data.wave_exp != 'ALL'){
             visited.push(data.wave_exp);
             wave.push(toTitleCase(data.wave_exp));
@@ -46,6 +69,17 @@ function getOptions(result){
             zone.push(data.zone);
         }
         if($.inArray(data.sub_zone, visited)<0 && data.sub_zone != 'ALL'){
+=======
+        if($.inArray(data.wave_exp, visited)<0 && data.wave_exp != 'N/A'){
+            visited.push(data.wave_exp);
+            wave.push(toTitleCase(data.wave_exp));
+        }
+        if($.inArray(data.zone, visited)<0 && data.zone != 'N/A'){
+            visited.push(data.zone);
+            zone.push(data.zone);
+        }
+        if($.inArray(data.sub_zone, visited)<0 && data.sub_zone != 'N/A'){
+>>>>>>> origin/graphs
             visited.push(data.sub_zone);
             subzone.push(data.sub_zone);
         }
@@ -60,7 +94,20 @@ function getOptions(result){
 
     return options;
 }
+function initData() {
+    $("body").ready(function() {
+        $.ajax({"headers": {Accept: "application/json"}, "url":"http://159.203.111.95:8000/api/dev/", "data": {}, "success": function(result) {
+            //console.log(result);   
+            var options = getOptions(result);
+            var loggerTypes = options['logger-types'];
+            var country = options['country'];
+            var state = options['state'];
+            var location = options['location'];
+            var wave = options['wave'];
+            var zone = options['zone'];
+            var subzone = options['subzone'];
 
+<<<<<<< HEAD
 function initData() {
     $("body").ready(function() {
         $.ajax({"headers": {Accept: "application/json"}, "url":"http://159.203.111.95:8000/api/dev/", "data": {}, "success": function(result) {
@@ -156,6 +203,38 @@ function initData() {
             $('<option>' + mins[e] + '</option>').appendTo($startmin);
             $('<option>' + mins[e] + '</option>').appendTo($endmin);
         }
+=======
+            var $logger_type = $('#logger-type');
+            var $country = $('#country');
+            var $state= $('#state');
+            var $site = $('#site');
+            var $wave = $('#wave');
+            var $zone = $('#zone');
+            var $sub_zone = $('#sub-zone');
+
+            for(e in loggerTypes){
+                $('<option>' + loggerTypes[e] + '</option>').appendTo($logger_type);
+            }
+            for(e in country){
+                $('<option>' + country[e] + '</option>').appendTo($country);
+            }
+            for(e in state){
+                $('<option>' + state[e] + '</option>').appendTo($state);
+            }
+            for(e in location){
+                $('<option>' + location[e] + '</option>').appendTo($site);
+            }
+            for(e in wave){
+                $('<option>' + wave[e] + '</option>').appendTo($wave);
+            }
+            for(e in zone){
+                $('<option>' + zone[e] + '</option>').appendTo($zone);
+                $('#zone option').css('display', 'none');
+            }
+            for(e in subzone){
+                $('<option>' + subzone[e] + '</option>').appendTo($sub_zone);
+            }
+>>>>>>> origin/graphs
         }});
     });
 }
@@ -187,6 +266,10 @@ function initMarkers(L, map){
 // Autofills one field
 function populateField(selectedField, selected){
     var field = document.getElementById(selectedField);
+<<<<<<< HEAD
+=======
+    //console.log(selected);
+>>>>>>> origin/graphs
     if(selectedField != 'site'){
         $('#' + selectedField).html('<option>' + selected + '</option>');
         field.value = selected;
@@ -195,6 +278,33 @@ function populateField(selectedField, selected){
         field.value = selected;
     }
  }
+<<<<<<< HEAD
+=======
+/*
+map.on('popupopen', function(centerMarker) {
+        $('.sidebar').addClass('sidebar-expanded');
+        $('.bottombar').addClass('bottombar-expanded');
+        $('.bottombar-expanded > nav').width('70%');
+        $('.sidebar-expanded > nav').width("25%");
+        $('.bottombar-expanded > nav').css('margin-left', '1%');
+        var cM = map.project(centerMarker.popup._latlng);
+        $("nav").scrollTop(0);
+        populateAllFields(centerMarker.popup._source._myId);
+        cM.y -= centerMarker.popup._container.clientHeight-200;
+        cM.x -= centerMarker.popup._container.clientWidth-180;
+        map.panTo(map.unproject(cM), {animate: true});
+        if($("#graphs").css("display") == "inline") {
+            $("#graphs").css("display", "none");
+            $("#data").css("display", "inline");
+            console.log('this' + $(".onoffswitch-inner:after").css("content"));
+            if($(".onoffswitch-inner:after").css("content") == "GRAPH"){
+              console.log($(".onoffswitch-inner:after").css("content"));
+                $(".onoffswitch-inner:before").css("content", "DATA")
+            }
+        }
+
+});*/
+>>>>>>> origin/graphs
 
 // Autofills the drop downs in the filter
 function populateAllFields(markerID){
@@ -204,17 +314,39 @@ function populateAllFields(markerID){
             $.each(result, function(i, d){
                 var data = JSON.parse(d);
                 if(data.microsite_id === markerID){
+<<<<<<< HEAD
+=======
+                    //populateField('logger-type', toTitleCase(data.biomimic));
+                    //deactivateField('logger-type');
+>>>>>>> origin/graphs
                     populateField('country', data.country);
                     deactivateField('country');
                     populateField('state', data.state_province);
                     deactivateField('state');
                     populateField('site', data.location);
                     deactivateField('site');
+<<<<<<< HEAD
+=======
+                    /*if(data.wave_exp =! "N/A"){
+                        populateField('wave', toTitleCase(data.wave_exp));
+                        deactivateField('wave');
+                    }
+                    if(data.zone != "N/A"){
+                        populateField('zone', data.zone);
+                        deactivateField('zone');
+                    }
+                    if(data.sub_zone != "N/A"){
+                        populateField('sub-zone', data.sub_zone);
+                        deactivateField('sub-zone');
+                    }*/
+                    
+>>>>>>> origin/graphs
                 }
             });
         }});
     });
 }
+<<<<<<< HEAD
 
 // activate and reset the filter fields
 function activateAndResetFields(){
@@ -238,6 +370,16 @@ function activateAndResetFields(){
     populateField('end-hour', 'HH');
     populateField('end-min', 'mm');
 
+=======
+
+// Make the auto filled filter fields inactive
+function deactivateField(fieldName){
+    document.getElementById(fieldName).disabled=true;
+}
+
+// activate and reset the filter fields
+function activateAndResetFields(){
+>>>>>>> origin/graphs
     initData();
     document.getElementById('logger-type').disabled=false;
     document.getElementById('country').disabled=false;
@@ -256,11 +398,29 @@ function activateAndResetFields(){
 
 }
 
+<<<<<<< HEAD
 // Make the auto filled filter fields inactive
 function deactivateField(fieldName){
     document.getElementById(fieldName).disabled=true;
 }
 
+// get the states given a country
+$(document).ready(function() {
+    $("#country").change(function() {
+        console.log("change");
+        var country = $("#country").val();
+        $.ajax({"headers": {Accept: "application/json"}, "url":"http://159.203.111.95:8000/api/dev/", "data": {}, "success": function(result) {
+            console.log(result);
+            var states = [];
+            $.each(result, function(i, d){
+                var data = JSON.parse(d);
+                if(country === data.country && $.inArray(data.state_province, states)<0){
+                    states.push(data.state_province);
+                }
+            });
+            console.log(states);
+            changeCountry(states.sort());
+=======
 // get the states given a country
 $(document).ready(function() {
     $("#country").change(function() {
@@ -297,10 +457,34 @@ $(document).ready(function() {
             });
             console.log(locations);
             changeState(locations.sort());
+>>>>>>> origin/graphs
         }});
         
     });
 });
+
+<<<<<<< HEAD
+$(document).ready(function() {
+    $("#state").change(function() {
+        console.log("state");
+        var state = $("#state").val();
+        $.ajax({"headers": {Accept: "application/json"}, "url":"http://159.203.111.95:8000/api/dev/", "data": {}, "success": function(result) {
+            console.log(result);
+            var locations = [];
+            $.each(result, function(i, d){
+                var data = JSON.parse(d);
+                if(state === data.state_province && $.inArray(data.location, locations)<0){
+                    locations.push(data.location);
+                }
+            });
+            console.log(locations);
+            changeState(locations.sort());
+        }});
+        
+    });
+});
+=======
+>>>>>>> origin/graphs
 
 
 
