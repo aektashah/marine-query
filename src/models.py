@@ -31,7 +31,7 @@ class Device(Base):
     dev_id = Column(BigInteger, primary_key=True, autoincrement=True)
     
     def to_json(self):
-        return dumps({"site": self.site,
+        return {"site": self.site,
             "field_lat": self.field_lat,
             "field_lon": self.field_lon,
             "location": self.location,
@@ -41,7 +41,7 @@ class Device(Base):
             "zone": self.zone,
             "sub_zone": self.sub_zone,
             "wave_exp": self.wave_exp,
-            "tide_height": self.tide_height})
+            "tide_height": self.tide_height}
 
     def __repr__(self):
         return "Device %s" % self.id
@@ -79,9 +79,9 @@ class Reading(Base):
   
 
     def to_json(self):
-        return dumps({"device": self.device, 
-                "date": self.date.strftime("%Y/%m/%d %H:%M"),
-                "reading": self.reading})
+        return {"device": self.device, 
+                "date": self.date.ftime("%Y/%m/%d %H:%M"),
+                "reading": self.reading}
 
     def __repr__(self):
         return "Reading %s %s %f" % (self.device, self.date, self.reading)
