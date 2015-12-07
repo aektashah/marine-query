@@ -52,10 +52,10 @@ function generate() {
         $('.bottombar').addClass('bottombar-expanded');
     }
     // send query to the server
-    sendQuery();
+    sendQuery(false);
 }
 
-function sendQuery() {
+function sendQuery(download) {
     var loggerType = $("#logger-type").val();
     var loc = $("#site").val()[0];
     var wave_exp = $("#wave").val();
@@ -81,30 +81,47 @@ function sendQuery() {
     });
     // parsing date
     console.log(query);
-    var devices = [];//newData[loc][loggerType];
-    /*if (loggerType == "ALL") {
-        $.each(newData[loc], function(type, subdevices) {
-            devices = devices.concat(subdevices);
-        });
-    }*/
-    $.ajax({"headers": {Accept: "application/json"}, "url": "http://159.203.111.95:8000/api/reading/", "data": query,"success": function(resp) {
-        result = resp;
-        console.log(resp);
-        var data = [];
-        $.each(resp, function(i, d) {
-            var item = JSON.parse(d);
-            var coordinates = {"x": i, "y": item["reading"]};
-            data = data.concat(coordinates);
-        });
-        console.log(data);
-        initChart(data);
-    }});
-    /*$.each(devices, function(i, device) {
+    //submit download
+    if (download) {
+        query["download"] = true; 
+        $.ajax({"headers": {Accept: "application/json"}, "url": "http://159.203.111.95:8000/api/reading/", "data": query,"success": function(resp) {
+            console.log(resp);
+            console.log("successfully downloaded the file");
+        }});
+
+    }
+    else {
+        // just querying without download
         $.ajax({"headers": {Accept: "application/json"}, "url": "http://159.203.111.95:8000/api/reading/", "data": query,"success": function(resp) {
             result = resp;
-            console.log(resp.length);
+            console.log(resp);
+            var data = [];
+            // RENDERING GRAPH
+            $.each(resp, function(i, d) {
+                var item = JSON.parse(d);
+                var coordinates = {"x": i, "y": item["reading"]};
+                data = data.concat(coordinates);
+            });
+            //console.log(data);
+            initChart(data);
+            // RENDERING TABLE
+            var tbody = $(".table > tbody");
+            console.log(tbody);
+            $.each(resp, function(i, d) {
+                var tr = "<tr>";
+                var item = JSON.parse(d);
+                var loggerIdTD = "<td>" + item.device + "</td>";
+                var locationTD = "<td>meow" + "</td>";
+                var stateTD = "<td>meow" + "</td>";
+                var countryTD = "<td>meow" + "</td>";
+                var dateTD = "<td>" + item.date + "</td>";
+                var temperatureTD = "<td>meow" + item.reading + "</td>";
+                tr = tr + loggerIdTD + locationTD + stateTD + countryTD + dateTD + temperatureTD; 
+                tr = tr + "</tr>";
+                tbody.append(tr);
+            });
         }});
-    });*/
+    }
 }
 function parseDate(day, month, year, hour, min) {
     var result = "";
@@ -217,6 +234,10 @@ function main() {
     $('#generate').on('click', function(e) {
         e.preventDefault();
         generate();
+    });
+    $("#download").on("click", function(e) {
+        e.preventDefault();
+        sendQuery(true);
     });
     
     initNavgoco();
