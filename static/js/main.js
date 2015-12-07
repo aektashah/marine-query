@@ -57,47 +57,92 @@ function generate() {
 
 function sendQuery() {
     var loggerType = $("#logger-type").val();
-    var country = $("#country").val();
-    var state = $("#state").val();
     var loc = $("#site").val()[0];
-    var wave = $("#wave").val();
-    var zone = $("#zone").val();
-    var subzone = $("#sub-zone").val();
-    var interval = $("#interval").val();
-    var intervalMaxmin = $("#maxmin").val();
-    var startTime = $("#start-time > select");
-    var endTime = $("#end-time > select");
-    var query = {"country": country, "biomimic": loggerType};
-    var devices = newData[loc][loggerType];
-    var result;
-    console.log(devices);
-    //var query = {"biomimic": loggerType, "country": country, "state_province": state, "location": loc, "wave_exp": wave, "zone": zone, "sub_zone": subzone}// "interval": interval, "intervalMaxmin": intervalMaxmin, "start_date": startTime, "end_date": endTime};
-    $.each(devices, function(i, device) {
-        $.ajax({"headers": {Accept: "application/json"}, "url": "http://159.203.111.95:8000/api/reading", "data": {"device": device},"success": function(resp) {
-            console.log(resp);
+    var wave_exp = $("#wave").val();
+    var sub_zone = $("#sub-zone").val();
+    var startDay = $("#start-day").val();
+    var startMonth = $("#start-month").val();
+    var startYear = $("#start-year").val();
+    var startHour = $("#start-hour").val();
+    var startMin = $("#start-min").val();
+    var endDay = $("#end-day").val();
+    var endMonth = $("#end-month").val();
+    var endYear = $("#end-year").val();
+    var endHour = $("#end-hour").val();
+    var endMin = $("#end-min").val();
+    var startDate = parseDate(startDay, startMonth, startYear, startHour, startMin);
+    var endDate = parseDate(endDay, endMonth, endYear, endHour, endMin);
+    var query = {"start_date": startDate,"end_date": endDate, "location": loc, "sub_zone": sub_zone};
+    // parsing ALL
+    $.each(query, function(k, v) {
+        if (v == "ALL"){
+            delete query[k];
+        }
+    });
+    // parsing date
+    console.log(query);
+    var devices = [];//newData[loc][loggerType];
+    /*if (loggerType == "ALL") {
+        $.each(newData[loc], function(type, subdevices) {
+            devices = devices.concat(subdevices);
+        });
+    }*/
+    $.ajax({"headers": {Accept: "application/json"}, "url": "http://159.203.111.95:8000/api/reading/", "data": query,"success": function(resp) {
+        result = resp;
+        console.log(resp);
+        var data = [];
+        $.each(resp, function(i, d) {
+            var item = JSON.parse(d);
+            var coordinates = {"x": i, "y": item["reading"]};
+            data = data.concat(coordinates);
+        });
+        console.log(data);
+        initChart(data);
+    }});
+    /*$.each(devices, function(i, device) {
+        $.ajax({"headers": {Accept: "application/json"}, "url": "http://159.203.111.95:8000/api/reading/", "data": query,"success": function(resp) {
             result = resp;
+            console.log(resp.length);
         }});
-    });
-    filterData(result, wave, zone, subzone, interval, intervalMaxmin, startTime, endTime);
+    });*/
 }
-function filterData(result, wave, zone, subzone, interval, intervalMaxmin, startTime, endTime) {
-    var final = [];
-    //console.log(parseDate(startTime));
-    parseDate(startTime); 
-    $.each(result, function(i, item) {
-        
-    });
-}
-function parseDate(date) {
-    var finalDate = "";
-    $.each(date, function(i, d){ 
-        console.log(d);
-        //finalDate + d + " ";
-    });
-    $.trim(finalDate);
-    return finalDate;
+function parseDate(day, month, year, hour, min) {
+    var result = "";
+    if (year != "YYYY") {
+        result = result + year + "/";
+        if (month != "MM") {
+            result = result + month + "/";
+        }
+        else if (month == "MM") {
+            result = result + "01" + "/";
+        }
+        if (day != "DD"){
+            result = result + day + " ";
+        }
+        else if (day == "DD") {
+            result = result + "01" + " ";
+        }
+        if (hour == "HH") {
+            result = result + "00:";
+        }
+        else if (hour != "HH") {
+            result = result + hour + ":";
+        }
+        if (min == "MM") {
+            result = result + "00";
+        }
+        else if (min != "MM") {
+            result = result + min;
+        }
+    }
+    else {
+        result = "ALL";
+    }
+    console.log(result);
+    return result;
 
 }
+
 // Initialize navgoco with default options
 function initNavgoco() {
     $(".main-menu").navgoco({
@@ -127,7 +172,21 @@ function bottombarContent() {
         $("#graphs").css("display", "none");
     }
 }
+function changeCountry(states) {
+    var statesString = '<option>ALL</option>';
+    for(e in states){
+        statesString = statesString + '<option>' + states[e] + '</option>';
+    }
+    $('#state').html(statesString);
+}
 
+function changeState(locations) {
+    var locationsString = '<option>ALL</option>';
+    for(e in locations){
+        locationsString = locationsString + '<option>' + locations[e] + '</option>';
+    }
+    $('#site').html(locationsString);
+}
 // Main function 
 function main() {
     $('#nav-expander').on('click', function (e) {
@@ -200,35 +259,11 @@ function main() {
             $('#zone').html('<option>ALL</option><option>High</option><option>Mid</option><option>Low</option>');
         }
     })
-
-    // changes the states/provinces based on country selection
-    $('#country').change(function(){
-        var val = $(this).val();
-        console.log(val);
-        var states = getStates(val);
-        
-        var statesString = '<option>ALL</option>';
-        for(e in states){
-            statesString = statesString + '<option>' + states[e] + '</option>';
-        }
-        console.log(statesString);
-        $('#state').html(statesString);
-    })
-
-    // changes the location based on state/province selection
-    $('#state').change(function(){
-        var val = $(this).val();
-        var locations = getLocations(val);
-        var locationsString = '<option>ALL</option>';
-        for(e in locations){
-            locationsString = locationsString + '<option>' + locations[e] + '</option>';
-        }
-        $('#site').html(locationsString);
-    })
 }
 
 $(document).ready(function () {
     main();
+    console.log("asdf");
 });
 
 

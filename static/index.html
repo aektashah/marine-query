@@ -23,12 +23,16 @@
   <script src="js/vendor/react-dom.js"></script>
   <script src="js/vendor/browser.min.js"></script>-->
   <script src="js/new_data.js"></script>
-  <script src="js/locationInfo.js"></script>
   <script src="js/map.js"></script>
+  <script src="./js/jquery.min.js"></script>
+    <script src="./js/bootstrap.min.js"></script>
+    <script src="./js/jquery.navgoco.js"></script>
+  <script src="//d3js.org/d3.v3.min.js" charset="utf-8"></script>
+
 
 </head>
 
-<body onload="initmap(); initdata();" class="">
+<body onload="initmap(); " class="">
   <div class="navbar navbar-inverse navbar-fixed-top">      
         
         <div class="navbar-header pull-right" style="border:black;">
@@ -121,7 +125,7 @@
           <div>
             <label for="start-time">From:</label>
             <span class="form-control" id="start-time" style="height: 70px;padding-left:0;padding-right:0;border:none;box-shadow:none">
-            <select>
+            <select id="start-day">
               <option>DD</option>
               <option>01</option>       
               <option>02</option>       
@@ -155,22 +159,22 @@
               <option>30</option>       
               <option>31</option>  
             </select>
-            <select>
+            <select id="start-month">
               <option>MM</option>
-              <option>Jan</option>       
-              <option>Feb</option>       
-              <option>Mar</option>       
-              <option>Apr</option>       
-              <option>May</option>       
-              <option>Jun</option>       
-              <option>Jul</option>       
-              <option>Aug</option>       
-              <option>Sep</option>       
-              <option>Oct</option>       
-              <option>Nov</option>       
-              <option>Dec</option>      
+              <option>01</option>       
+              <option>02</option>       
+              <option>03</option>       
+              <option>04</option>       
+              <option>05</option>       
+              <option>06</option>       
+              <option>07</option>       
+              <option>08</option>       
+              <option>09</option>       
+              <option>10</option>       
+              <option>11</option>       
+              <option>12</option>      
             </select>
-            <select>
+            <select id="start-year">
               <option>YYYY</option>
               <option>2000</option>       
               <option>2001</option>       
@@ -189,7 +193,7 @@
               <option>2014</option>         
               <option>2015</option>        
             </select>
-            <select>
+            <select id="start-hour">
               <option>HH</option>
               <option>01</option>        
               <option>02</option>       
@@ -217,7 +221,7 @@
               <option>24</option>  
             </select>
             :
-            <select>
+            <select id="start-min">
               <option>MM</option>
               <option>00</option>       
               <option>10</option>        
@@ -232,7 +236,7 @@
           <div>
             <label for="end-time">To:</label>
             <span class="form-control" id="end-time" style="padding-left:0;height: 70px;padding-right:0;border:none;box-shadow:none">
-            <select>
+            <select id="end-day">
               <option>DD</option>
               <option>01</option>       
               <option>02</option>       
@@ -266,22 +270,22 @@
               <option>30</option>       
               <option>31</option>  
             </select>
-            <select>
+            <select id="end-month">
               <option>MM</option>
-              <option>Jan</option>       
-              <option>Feb</option>       
-              <option>Mar</option>       
-              <option>Apr</option>       
-              <option>May</option>       
-              <option>Jun</option>       
-              <option>Jul</option>       
-              <option>Aug</option>       
-              <option>Sep</option>       
-              <option>Oct</option>       
-              <option>Nov</option>       
-              <option>Dec</option>      
+              <option>01</option>       
+              <option>02</option>       
+              <option>03</option>       
+              <option>04</option>       
+              <option>05</option>       
+              <option>06</option>       
+              <option>07</option>       
+              <option>08</option>       
+              <option>09</option>       
+              <option>10</option>       
+              <option>11</option>       
+              <option>12</option>      
             </select>
-            <select>
+            <select id="end-year">
               <option>YYYY</option>
               <option>2000</option>       
               <option>2001</option>       
@@ -300,7 +304,7 @@
               <option>2014</option>         
               <option>2015</option>        
             </select>
-             <select>
+             <select id="end-hour">
               <option>HH</option>
               <option>01</option>        
               <option>02</option>       
@@ -328,7 +332,7 @@
               <option>24</option>  
             </select>
             :
-            <select>
+            <select id="end-min">
               <option>MM</option>
               <option>00</option>       
               <option>10</option>        
@@ -381,7 +385,11 @@
                 <button type="button" class="btn btn-primary" id="download">Download</button>
             </div>
             <div class="graphs" id="graphs" style="display:none">
-              <h1>I am a graph!</h1>
+              
+	      <svg id="visualisation" width="1000" height="600" style="margin-left: 30px";></svg>
+	      
+	       <script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+	       <script src="./js/graphs.js"></script>
             </div>
              
         </nav>
@@ -394,13 +402,11 @@
     </div>
     </div>
     
+    <script src="./js/main.js"></script>
+  <script src="js/locationInfo.js"></script>
     <!-- Javascript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
-    <script src="./js/jquery.min.js"></script>
-    <script src="./js/bootstrap.min.js"></script>
-    <script src="./js/jquery.navgoco.js"></script>
-    <script src="./js/main.js"></script>
     <!-- <script src="./js/vendor/jasmine/lib/jasmine-2.3.4/jasmine.js"></script>
     <script src="./js/vendor/jasmine/lib/jasmine-2.3.4/jasmine-html.js"></script>
     <script src="./js/vendor/jasmine/lib/jasmine-2.3.4/boot.js"></script>
