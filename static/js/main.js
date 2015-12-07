@@ -72,24 +72,11 @@ function sendQuery() {
             result = resp;
         }});
     });
+    filterData(result);
 }
-function filterData(result, wave, zone, subzone, interval, intervalMaxmin, startTime, endTime) {
+function filterData(result) {
     var final = [];
-    //console.log(parseDate(startTime));
-    parseDate(startTime); 
-    $.each(result, function(i, item) {
-        
-    });
-}
-function parseDate(date) {
-    var finalDate = "";
-    $.each(date, function(i, d){ 
-        console.log(d);
-        //finalDate + d + " ";
-    });
-    $.trim(finalDate);
-    return finalDate;
-
+    console.log(result);
 }
 // Initialize navgoco with default options
 function initNavgoco() {
@@ -120,7 +107,21 @@ function bottombarContent() {
         $("#graphs").css("display", "none");
     }
 }
+function changeCountry(states) {
+    var statesString = '<option>ALL</option>';
+    for(e in states){
+        statesString = statesString + '<option>' + states[e] + '</option>';
+    }
+    $('#state').html(statesString);
+}
 
+function changeState(locations) {
+    var locationsString = '<option>ALL</option>';
+    for(e in locations){
+        locationsString = locationsString + '<option>' + locations[e] + '</option>';
+    }
+    $('#site').html(locationsString);
+}
 // Main function 
 function main() {
     $('#nav-expander').on('click', function (e) {
@@ -193,35 +194,11 @@ function main() {
             $('#zone').html('<option>ALL</option><option>High</option><option>Mid</option><option>Low</option>');
         }
     })
-
-    // changes the states/provinces based on country selection
-    $('#country').change(function(){
-        var val = $(this).val();
-        console.log(val);
-        var states = getStates(val);
-        
-        var statesString = '<option>ALL</option>';
-        for(e in states){
-            statesString = statesString + '<option>' + states[e] + '</option>';
-        }
-        console.log(statesString);
-        $('#state').html(statesString);
-    })
-
-    // changes the location based on state/province selection
-    $('#state').change(function(){
-        var val = $(this).val();
-        var locations = getLocations(val);
-        var locationsString = '<option>ALL</option>';
-        for(e in locations){
-            locationsString = locationsString + '<option>' + locations[e] + '</option>';
-        }
-        $('#site').html(locationsString);
-    })
 }
 
 $(document).ready(function () {
     main();
+    console.log("asdf");
 });
 
 
