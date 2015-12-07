@@ -8,7 +8,10 @@ var plotlayers=[];
 function initmap() {
 	// set up the map
 	// initialize the map
-  var map = L.map('map').setView([-8.407168, 26.015625], 2);
+  var map = L.map('map', {
+    worldCopyJump: true,
+    inertia: false
+  }).setView([-8.407168, 26.015625], 2);
 
   // load a tile layer
 
@@ -37,6 +40,16 @@ function initmap() {
         cM.y -= centerMarker.popup._container.clientHeight-200;
         cM.x -= centerMarker.popup._container.clientWidth-180;
         map.panTo(map.unproject(cM), {animate: true});
+        if($("#graphs").css("display") == "inline") {
+            $("#graphs").css("display", "none");
+            $("#data").css("display", "inline");
+            console.log('this' + $(".onoffswitch-inner:after").css("content"));
+            if($(".onoffswitch-inner:after").css("content") == "GRAPH"){
+              console.log($(".onoffswitch-inner:after").css("content"));
+                $(".onoffswitch-inner:before").css("content", "DATA")
+            }
+        }
+        
         });
 
   map.on('popupclose', function(){
@@ -51,6 +64,12 @@ function initmap() {
     map.setView(marker.latlng, map.getZoom() + 1, {animate: true});
   });
 
+$('#location option').click(function(){
+        var val = $(this).val();
+        var latlong = getLatLong(val);
+        console.log(latlong);
+        L.map('map').setView(latlong, 5, {animate: true});
+    })
 };
 
 

@@ -7,23 +7,20 @@ from flask import Flask
 from flask.ext.security import Security, SQLAlchemyUserDatastore, login_required
 from flask.ext.sqlalchemy import SQLAlchemy
 from flask.ext.superadmin import Admin
-from flask.ext.restful import Api
 
 # Connection URL to communicate with the local database
 SQLALCHEMY_DATABASE_URI = "postgresql://james:fishes@localhost/marine"
 TESTING_URI = "postgresql://james:fishes@localhost/testing"
 if environ.get("TESTING", False) == "true":
-    print "testing"
     environ["SQLALCHEMY_DATABASE_URI"] = TESTING_URI
 else:
-    print "production"
     environ["SQLALCHEMY_DATABASE_URI"] = SQLALCHEMY_DATABASE_URI
 
 
 from models import Device, Reading, User, Role
+from api import MultiApi, DeviceResource, ReadingResource 
+from admin import HomeView, AuthModelView, UploadView
 from database import make_db_utils
-from admin import HomeView, AuthModelView
-from api import DeviceResource, ReadingResource 
 
 # Database Connection
 _, db_session, _ = make_db_utils()
@@ -36,7 +33,7 @@ app.config["SQLALCHEMY_DATABASE_URI"] = environ["SQLALCHEMY_DATABASE_URI"]
 app.add_url_rule("/", "root", lambda: app.send_static_file("index.html"))
 
 # API configuration
-api = Api(app)
+api = MultiApi(app)
 api.add_resource(ReadingResource, "/api/reading/")
 api.add_resource(DeviceResource, "/api/dev/")
 
@@ -44,6 +41,8 @@ api.add_resource(DeviceResource, "/api/dev/")
 admin = Admin(index_view=HomeView("Helmuth"))
 admin.register(Device, AuthModelView, session=db_session)
 admin.register(Reading, AuthModelView, session=db_session)
+admin.register(User, AuthModelView, session=db_session)
+admin.add_view(UploadView(name="upload"))
 admin.init_app(app)
 db = SQLAlchemy(app)
 user_datastore = SQLAlchemyUserDatastore(db, User, Role) 

@@ -255,3 +255,8 @@ a.nav-expander.fixed {
 .form-control #start-time{
   padding-left:0px;
 }
+
+#download {
+  width: 120px;
+  margin-left: 7px;
+}

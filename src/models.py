@@ -5,19 +5,18 @@
 import os
 
 from flask.ext.security import UserMixin, RoleMixin
-from sqlalchemy import Column, Integer, String, Float, DateTime, ForeignKey, Boolean
+from sqlalchemy import Column, Integer, String, Float, DateTime, ForeignKey, Boolean, BigInteger
 from sqlalchemy.orm import relationship, backref
 from database import make_db_utils 
 from json import dumps
 
 _, _, Base = make_db_utils()
-print "in models: %s" % os.environ["SQLALCHEMY_DATABASE_URI"]
 
 class Device(Base):
     """ Represents the metadata about a meter and its location"""
     __tablename__ = "devices"
     
-    id = Column(String(50), unique=True, primary_key=True, index=True)
+    id = Column(String(50), unique=True, index=True)
     site = Column(String(50))
     field_lat = Column(Float)
     field_lon = Column(Float)
@@ -29,6 +28,7 @@ class Device(Base):
     sub_zone = Column(String(50), nullable=True)
     wave_exp = Column(String(50), nullable=True)
     tide_height = Column(Float, nullable=True)
+    dev_id = Column(BigInteger, primary_key=True, autoincrement=True)
     
     def to_json(self):
         return {"site": self.site,
@@ -46,6 +46,28 @@ class Device(Base):
     def __repr__(self):
         return "Device %s" % self.id
 
+    @staticmethod
+    def add_from_file(upload, device_name):
+        values = [line.split("\t") for line in upload.split("\n")]
+        for date, reading in values[1:]:
+            r = Reading(device=device_name,date=date,reading=float(reading))
+            db_session.add(r)
+        db_session.commit()
+        return True
+
+"""            
+def load_readings():
+    ids = set()
+    for line in open(expanduser("~/device_data.csv")):
+        row = line.strip().split("\t") 
+        ids.add(row[0])
+    for line in open(expanduser("~/robomussel_raw/big_file.txt")): 
+        dev_id, date, reading = line.strip().split(",")
+        if dev_id in ids:
+            r = Reading(dev_id, date, float(reading))
+            db_session.add(r)
+    db_session.commit()
+"""
 class Reading(Base):
     """ Represents a robomussell temperature entry """
 
@@ -77,6 +99,9 @@ class User(Base, UserMixin):
             backref=backref('users', lazy='dynamic'))
 
 
+    def __repr__(self):
+        return "User %s" % (self.email)
+
 class Role(Base, RoleMixin):
     """ Represents te different permissions a user can have in the system """
 
@@ -85,6 +110,8 @@ class Role(Base, RoleMixin):
     name = Column(String(80), unique=True)
     description = Column(String(255))
 
+    def __repr__(self):
+        return "Role %s" % self.name
 
 class UserRoles(Base):
     """ Roles for a user, such as admin-read-write or admin-read"""
