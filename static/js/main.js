@@ -89,7 +89,15 @@ function sendQuery() {
     }*/
     $.ajax({"headers": {Accept: "application/json"}, "url": "http://159.203.111.95:8000/api/reading/", "data": query,"success": function(resp) {
         result = resp;
-        console.log(resp.length);
+        console.log(resp);
+        var data = [];
+        $.each(resp, function(i, d) {
+            var item = JSON.parse(d);
+            var coordinates = {"x": i, "y": item["reading"]};
+            data = data.concat(coordinates);
+        });
+        console.log(data);
+        initChart(data);
     }});
     /*$.each(devices, function(i, device) {
         $.ajax({"headers": {Accept: "application/json"}, "url": "http://159.203.111.95:8000/api/reading/", "data": query,"success": function(resp) {
