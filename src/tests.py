@@ -29,6 +29,12 @@ def destroy_db():
     Reading.__table__.drop(engine)
     Device.__table__.drop(engine)
 
+def json_to_unicode(json):
+    for dev in json:
+        for key, value in dev.iteritems():
+            if isinstance(value, str):
+                dev[key] = unicode(value)
+
 class ApiTest(LiveServerTestCase):
     def create_app(self):
         app.config["TESTING"] = True
@@ -39,10 +45,7 @@ class ApiTest(LiveServerTestCase):
         devs = self.app.test_client().get(self.get_server_url() + "/api/dev/")
         devs = json.loads(devs.data)
         should_be = map(Device.to_json, Device.query.all())
-        for dev in should_be:
-            for key, value in dev.iteritems():
-                if isinstance(value, str):
-                    dev[key] = unicode(value)
+        json_to_unicode(should_be)
         self.assertEqual(devs, should_be)
 
 if __name__ == "__main__":
