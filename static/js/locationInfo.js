@@ -6,7 +6,8 @@ $.ajax({"headers": {Accept: "application/json"}, "url":"http://159.203.111.95:80
 });
 
 function getOptions(result){
-    var myData = data;
+    var myData = result;
+    result = data;
     var visited = [];
     var locationsVisited = []
     var options = {};
