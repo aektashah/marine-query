@@ -57,19 +57,53 @@ function generate() {
 function sendQuery() {
     var loggerType = $("#logger-type").val();
     var loc = $("#site").val()[0];
+    var wave_exp = $("#wave").val();
+    var sub_zone = $("#sub-zone").val();
+    var startDay = $("#start-day").val();
+    var startMonth = $("#start-month").val();
+    var startYear = $("#start-year").val();
+    var startHour = $("#start-hour").val();
+    var startMin = $("#start-min").val();
+    var endDay = $("#end-day").val();
+    var endMonth = $("#end-month").val();
+    var endYear = $("#end-year").val();
+    var endHour = $("#end-hour").val();
+    var endMin = $("#end-min").val();
+    var startDate = parseDate(startDay, startMonth, startYear, startHour, startMin);
+    var endDate = parseDate(endDay, endMonth, endYear, endHour, endMin);
+    var query = {"start_date": startDate,"end_date": endDate, "location": loc, "sub_zone": sub_zone};
+    // parsing ALL
+    $.each(query, function(k, v) {
+        if (v == "ALL"){
+            delete query[k];
+        }
+    });
+    // parsing date
+    console.log(query);
     var devices = [];//newData[loc][loggerType];
-    if (loggerType == "ALL") {
+    /*if (loggerType == "ALL") {
         $.each(newData[loc], function(type, subdevices) {
             devices = devices.concat(subdevices);
         });
-    }
-    var result;
-    
-    $.each(devices, function(i, device) {
-        $.ajax({"headers": {Accept: "application/json"}, "url": "http://159.203.111.95:8000/api/reading", "data": {"device": device},"success": function(resp) {
-            console.log(resp);
+    }*/
+    $.ajax({"headers": {Accept: "application/json"}, "url": "http://159.203.111.95:8000/api/reading/", "data": query,"success": function(resp) {
+        result = resp;
+        console.log(resp);
+        var data = [];
+        $.each(resp, function(i, d) {
+            var item = JSON.parse(d);
+            var coordinates = {"x": i, "y": item["reading"]};
+            data = data.concat(coordinates);
+        });
+        console.log(data);
+        initChart(data);
+    }});
+    /*$.each(devices, function(i, device) {
+        $.ajax({"headers": {Accept: "application/json"}, "url": "http://159.203.111.95:8000/api/reading/", "data": query,"success": function(resp) {
             result = resp;
+            console.log(resp.length);
         }});
+<<<<<<< HEAD
     });
 }
 function filterData(result, wave, zone, subzone, interval, intervalMaxmin, startTime, endTime) {
@@ -88,8 +122,47 @@ function parseDate(date) {
     });
     $.trim(finalDate);
     return finalDate;
+=======
+    });*/
+}
+function parseDate(day, month, year, hour, min) {
+    var result = "";
+    if (year != "YYYY") {
+        result = result + year + "/";
+        if (month != "MM") {
+            result = result + month + "/";
+        }
+        else if (month == "MM") {
+            result = result + "01" + "/";
+        }
+        if (day != "DD"){
+            result = result + day + " ";
+        }
+        else if (day == "DD") {
+            result = result + "01" + " ";
+        }
+        if (hour == "HH") {
+            result = result + "00:";
+        }
+        else if (hour != "HH") {
+            result = result + hour + ":";
+        }
+        if (min == "MM") {
+            result = result + "00";
+        }
+        else if (min != "MM") {
+            result = result + min;
+        }
+    }
+    else {
+        result = "ALL";
+    }
+    console.log(result);
+    return result;
+>>>>>>> origin/graphs
 
 }
+
 // Initialize navgoco with default options
 function initNavgoco() {
     $(".main-menu").navgoco({

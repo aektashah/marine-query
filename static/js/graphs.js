@@ -1,7 +1,7 @@
 
-function InitChart() {
+function initChart(lineData) {
 
-  var lineData = [{
+  /*var lineData = [{
     'x': 1,
     'y': 5
   }, {
@@ -19,7 +19,7 @@ function InitChart() {
   }, {
     'x': 200,
     'y': 60
-  }];
+  }];*/
     
 var data2 = [{
     'x': 1,
@@ -120,12 +120,12 @@ vis.append("svg:path")
   .attr("stroke-width", 2)
   .attr("fill", "none");
 
-vis.append('svg:path')
+/*vis.append('svg:path')
   .attr('d', lineFunc(data2))
   .attr('stroke','green' )
   .attr('stroke-width', 2)
-  .attr('fill', 'none');
+  .attr('fill', 'none');*/
     
 }
-InitChart();
+//InitChart();
 
