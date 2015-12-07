@@ -6,8 +6,7 @@ $.ajax({"headers": {Accept: "application/json"}, "url":"http://159.203.111.95:80
 });
 
 function getOptions(result){
-    var myData = result;
-    data = result;
+    var myData = data;
     var visited = [];
     var locationsVisited = []
     var options = {};
@@ -159,7 +158,7 @@ function initData() {
         }});
     });
 }
-initData();
+// initData();
 
 // Adds markers to map
 function initMarkers(L, map){
