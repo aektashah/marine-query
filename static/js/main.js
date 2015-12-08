@@ -185,11 +185,16 @@ function bottombarContent() {
         $("#graphs").css("display", "none");
     }
 }
-function changeCountry(states) {
+function changeCountry(states, locations) {
     var statesString = '<option>ALL</option>';
+    var locationsString = '<option>ALL</option>';
     for(e in states){
         statesString = statesString + '<option>' + states[e] + '</option>';
     }
+    for(e in locations){
+        locationsString = locationsString + '<option>' + locations[e] + '</option>';
+    }
+    $('#site').html(locationsString);
     $('#state').html(statesString);
 }
 

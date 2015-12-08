@@ -212,14 +212,28 @@ $(document).ready(function() {
         $.ajax({"headers": {Accept: "application/json"}, "url":"http://159.203.111.95:8000/api/dev/", "data": {}, "success": function(result) {
             console.log(result);
             var states = [];
+            var locations = [];
             $.each(result, function(i, d){
                 var data =d;
-                if(country === data.country && $.inArray(data.state_province, states)<0){
-                    states.push(data.state_province);
+                if(country === 'ALL'){
+                    if($.inArray(data.state_province, states)<0){
+                        states.push(data.state_province);
+                    }
+                    if($.inArray(data.location, locations)<0){
+                        locations.push(data.location);
+                    }
+                }
+                if(country === data.country){
+                    if($.inArray(data.state_province, states)<0){
+                        states.push(data.state_province);
+                    }
+                    if($.inArray(data.location, locations)<0){
+                        locations.push(data.location);
+                    }
                 }
             });
             //console.log(states);
-            changeCountry(states.sort());
+            changeCountry(states.sort(), locations.sort());
         }});
         
     });
@@ -234,6 +248,9 @@ $(document).ready(function() {
             var locations = [];
             $.each(result, function(i, d){
                 var data = d;
+                if(state === 'ALL' && $.inArray(data.location, locations)<0){
+                    locations.push(data.location);
+                }
                 if(state === data.state_province && $.inArray(data.location, locations)<0){
                     locations.push(data.location);
                 }
