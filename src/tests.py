@@ -4,7 +4,8 @@ import os
 import unittest
 
 from flask.ext.testing import LiveServerTestCase, TestCase
-from requests import get, post
+from selenium.webdriver import PhantomJS
+from selenium.webdriver.common.keys import Keys
 
 os.environ["TESTING"] = "true"
 
@@ -37,8 +38,8 @@ def json_to_unicode(json):
 
 class ApiTest(LiveServerTestCase):
     def create_app(self):
-        app.config["TESTING"] = True
-        app.config["LIVESERVER_PORT"] = 3498
+        app.config["testing"] = true
+        app.config["liveserver_port"] = 3498
         return app
 
     def test_dev_api(self):
@@ -47,6 +48,20 @@ class ApiTest(LiveServerTestCase):
         should_be = map(Device.to_json, Device.query.all())
         json_to_unicode(should_be)
         self.assertEqual(devs, should_be)
+
+
+class IntegrationTesting(LiveServerTestCase):
+    def create_app(self):
+        app.config["testing"] = true
+        app.config["liveserver_port"] = 3498
+        self.client = PhantomJS()
+        return app
+
+    def test_generate(self):
+        self.client.get(self.get_server_url())
+        self.client.find_element_by_id("nav-expander").click()
+
+
 
 if __name__ == "__main__":
     destroy_db()
