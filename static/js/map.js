@@ -32,9 +32,7 @@ function initmap() {
         $('.sidebar').addClass('sidebar-expanded');
         $('.sidebar-expanded > nav').width("25%");
         populateAllFields(centerMarker.popup._source._myId);
-        $('#generate').trigger('click');
-        $('.bottombar').addClass('bottombar-expanded');
-        $('.bottombar-expanded > nav').height("37%");
+        generate();
         var cM = map.project(centerMarker.popup._latlng);
         $("nav").scrollTop(0);
         cM.y -= centerMarker.popup._container.clientHeight-200;
