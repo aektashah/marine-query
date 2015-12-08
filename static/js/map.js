@@ -51,7 +51,7 @@ function initmap() {
         });
 
   map.on('popupclose', function(){
-    $('.sidebar > nav').width("20%");
+    $('.sidebar > nav').width("15%");
     $('.sidebar').removeClass('sidebar-expanded');
     $('.bottombar > nav').height("28%");
     $('.bottombar').removeClass('bottombar-expanded');
