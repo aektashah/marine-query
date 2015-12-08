@@ -10,7 +10,7 @@ from sqlalchemy.orm import relationship, backref
 from database import make_db_utils 
 from json import dumps
 
-_, _, Base = make_db_utils()
+_, db_session, Base = make_db_utils()
 
 class Device(Base):
     """ Represents the metadata about a meter and its location"""
@@ -56,19 +56,7 @@ class Device(Base):
         db_session.commit()
         return True
 
-"""            
-def load_readings():
-    ids = set()
-    for line in open(expanduser("~/device_data.csv")):
-        row = line.strip().split("\t") 
-        ids.add(row[0])
-    for line in open(expanduser("~/robomussel_raw/big_file.txt")): 
-        dev_id, date, reading = line.strip().split(",")
-        if dev_id in ids:
-            r = Reading(dev_id, date, float(reading))
-            db_session.add(r)
-    db_session.commit()
-"""
+
 class Reading(Base):
     """ Represents a robomussell temperature entry """
 

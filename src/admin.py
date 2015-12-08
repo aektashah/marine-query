@@ -12,8 +12,7 @@ from models import Device, Reading
 class AuthMixin:
     """ Mixin which restricts a view to logged in users """
     def is_accessible(self):
-        return True
-        # return current_user.is_authenticated()
+        return current_user.is_authenticated()
 
 
 class HomeView(AdminIndexView):
@@ -37,8 +36,8 @@ class UploadView(AuthMixin, BaseView):
             Device.add_from_file(data.stream.read(), request.form["dev"])
             flash("Successfully uploaded data!")
             return redirect (url_for('uploadview.index', self=self))
-    	# flash("Get the fuck out!")
-	return redirect (url_for('uploadview.index', self=self))
+        return redirect (url_for('uploadview.index', self=self))
+
 
 # Subclass of a model view which requires authentication
 class AuthModelView(AuthMixin, model.ModelAdmin):
