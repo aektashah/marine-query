@@ -57,31 +57,30 @@ class ReadingResource(Resource):
         """
         args = self.query_parse()
         readings = readings.join(Device)
-
+        # http://159.203.111.95:port/api/reading/?start_date=<start_date>&end_date=<end_date>
         if args["start_date"] and args["end_date"]:
             readings = readings.filter(Reading.date.between(args["start_date"], 
                                                             args["end_date"]))
 
-        # http://159.203.111.95:port/api/reading?country=<country>
+        # http://159.203.111.95:port/api/reading/?country=<country>
         if args["country"]:
             readings = readings.filter(Device.country == args["country"])
        
-        # http://159.203.111.95:port/api/reading?state_province=<state_province>&country=<country>
-        if args["state_province"] and args["country"]:
-            readings = readings.filter(Device.state_province == args["state_province"])#.filter(Device.country == args["country"])
+        # http://159.203.111.95:port/api/reading/?state_province=<state_province>
+        if args["state_province"]:
+            readings = readings.filter(Device.state_province == args["state_province"])
        
-        # http://159.203.111.95:port/api/reading?location=<location>
+        # http://159.203.111.95:port/api/reading/?location=<location>
         if args["location"]:
             readings = readings.filter(Device.location == args["location"])        
         
-        # http://159.203.111.95:port/api/reading?country=<country>&wave_exp=<wave_exp>
-        # for layering queries (country and wave_exp) does this make the most sense?
-        if args["country"] and args["wave_exp"]:
-           readings = readings.filter(Device.wave_exp == args["wave_exp"]) # filter(Device.country == args["country"]).filter(Device.wave_exp == args["wave_exp"])
+        # http://159.203.111.95:port/api/reading/?wave_exp=<wave_exp>
+        if args["wave_exp"]:
+           readings = readings.filter(Device.wave_exp == args["wave_exp"])
         
-        # http://159.203.111.95:port/api/reading?device=<device>
+        # http://159.203.111.95:port/api/reading/?device=<device>
         if args["device"]:# and args["zone"]:
-           readings = readings.filter(Reading.device == args["device"])#.filter(Device.zone == args["zone"]) 
+           readings = readings.filter(Reading.device == args["device"]) 
 
         # http://159.203.111.95:port/api/reading?zone=<zone>
         if args["zone"]:
@@ -109,7 +108,7 @@ class ReadingResource(Resource):
         parser.add_argument('download', type=bool, location='args')
         return parser.parse_args()
     
-    # http://159.203.111.95:6969/api/reading/?location=Colins%20Cove&download=True     
+    # http://159.203.111.95:port/api/reading/?location=Colins%20Cove&download=True     
     def to_csv(self, json):
         """Converts json to csv"""
         """
