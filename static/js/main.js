@@ -52,14 +52,16 @@ function generate() {
         $('.bottombar').addClass('bottombar-expanded');
     }
     // send query to the server
-    sendQuery();
+    sendQuery(false);
 }
 
-function sendQuery() {
+function sendQuery(download) {
     var loggerType = $("#logger-type").val();
     var loc = $("#site").val()[0];
     var wave_exp = $("#wave").val();
     var sub_zone = $("#sub-zone").val();
+    var interval = $("#interval").val();
+    var aggregation = $("#maxmin").val();
     var startDay = $("#start-day").val();
     var startMonth = $("#start-month").val();
     var startYear = $("#start-year").val();
@@ -72,7 +74,7 @@ function sendQuery() {
     var endMin = $("#end-min").val();
     var startDate = parseDate(startDay, startMonth, startYear, startHour, startMin);
     var endDate = parseDate(endDay, endMonth, endYear, endHour, endMin);
-    var query = {"start_date": startDate,"end_date": endDate, "location": loc, "sub_zone": sub_zone};
+    var query = {"start_date": startDate,"end_date": endDate, "location": loc, "sub_zone": sub_zone, "interval": interval, "aggregation": aggregation};
     // parsing ALL
     $.each(query, function(k, v) {
         if (v == "ALL"){
@@ -80,31 +82,43 @@ function sendQuery() {
         }
     });
     // parsing date
-    console.log(query);
-    var devices = [];//newData[loc][loggerType];
-    /*if (loggerType == "ALL") {
-        $.each(newData[loc], function(type, subdevices) {
-            devices = devices.concat(subdevices);
-        });
-    }*/
-    $.ajax({"headers": {Accept: "application/json"}, "url": "http://159.203.111.95:8000/api/reading/", "data": query,"success": function(resp) {
-        result = resp;
-        console.log(resp);
-        var data = [];
-        $.each(resp, function(i, d) {
-            var item = JSON.parse(d);
-            var coordinates = {"x": i, "y": item["reading"]};
-            data = data.concat(coordinates);
-        });
-        console.log(data);
-        initChart(data);
-    }});
-    /*$.each(devices, function(i, device) {
+    //submit download
+    if (download) {
+        query["download"] = true;
+        var q_string = $.param(query);
+        var downloadUrl = "http://159.203.111.95:8000/api/reading/?" + q_string;
+        $("#downloadFrame").attr("src",downloadUrl);
+    }
+    else {
+        // just querying without download
         $.ajax({"headers": {Accept: "application/json"}, "url": "http://159.203.111.95:8000/api/reading/", "data": query,"success": function(resp) {
             result = resp;
-            console.log(resp.length);
+            //console.log(resp);
+            var data = [];
+            var tbody = $(".table > tbody");
+            tbody.empty();
+            // RENDERING GRAPH and TABLE
+            $.each(resp, function(i, d) {
+                var item = d;
+                var coordinates = {"x": i, "y": item["reading"]};
+                data = data.concat(coordinates);
+
+                var tr = "<tr>";
+                var item = d;
+                var loggerIdTD = "<td>" + item.device + "</td>";
+                var locationTD = "<td>" + $("#site").val()[0] +  "</td>";
+                var stateTD = "<td>" + $("#state").val() + "</td>";
+                var countryTD = "<td>" + $("#country").val() + "</td>";
+                var dateTD = "<td>" + item.date + "</td>";
+                var temperatureTD = "<td>" + item.reading + "</td>";
+                tr = tr + loggerIdTD + locationTD + stateTD + countryTD + dateTD + temperatureTD; 
+                tr = tr + "</tr>";
+                tbody.append(tr);
+            });
+            $("#visualisation").empty();
+            initChart(data);
         }});
-    });*/
+    }
 }
 function parseDate(day, month, year, hour, min) {
     var result = "";
@@ -138,7 +152,6 @@ function parseDate(day, month, year, hour, min) {
     else {
         result = "ALL";
     }
-    console.log(result);
     return result;
 
 }
@@ -206,6 +219,8 @@ function main() {
     $('.main-menu li span').on('click', function (e) {
         e.preventDefault();
         activateAndResetFields();
+        $("#visualisation").empty();
+        $(".table > tbody").empty();
     });
 
     
@@ -217,6 +232,10 @@ function main() {
     $('#generate').on('click', function(e) {
         e.preventDefault();
         generate();
+    });
+    $("#download").on("click", function(e) {
+        e.preventDefault();
+        sendQuery(true);
     });
     
     initNavgoco();
@@ -263,7 +282,6 @@ function main() {
 
 $(document).ready(function () {
     main();
-    console.log("asdf");
 });
 
 

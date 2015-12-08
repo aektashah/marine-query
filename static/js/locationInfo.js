@@ -1,11 +1,11 @@
-var data;
+/*var data;
 $.ajax({"headers": {Accept: "application/json"}, "url":"http://159.203.111.95:8000/api/dev", "data": {}, "success": function(result) {
     //console.log(result);   
     data = result;
     }
 });
 console.log(data);
-
+*/
 function toTitleCase(str)
 {
     return str//.replace(/\w\S*/g, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();});
@@ -26,9 +26,10 @@ function getOptions(result){
     var subzone = [];
 
     $.each(myData, function(i, d){
-        var data = JSON.parse(d);
+        var data = d;
+        //var data = JSON.parse(d);
         if($.inArray(data.biomimic, visited)<0){
-            console.log(data.biomimic);
+            //console.log(data.biomimic);
             visited.push(data.biomimic);
             loggerTypes.push(toTitleCase(data.biomimic));
         }
@@ -87,6 +88,20 @@ function initData() {
             var $wave = $('#wave');
             var $zone = $('#zone');
             var $sub_zone = $('#sub-zone');
+            $country.empty();
+            $state.empty();
+            $site.empty();
+            $wave.empty();
+            $zone.empty()
+            $sub_zone.empty();
+            $logger_type.empty();
+            $('<option>ALL</option>').appendTo($logger_type);
+            $('<option>ALL</option>').appendTo($country);
+            $('<option>ALL</option>').appendTo($state);
+            $('<option>ALL</option>').appendTo($wave);
+            $('<option selected="selected">ALL</option>').appendTo($site);
+            $('<option>ALL</option>').appendTo($zone);
+            $('<option>ALL</option>').appendTo($sub_zone);
 
             for(e in loggerTypes){
                 $('<option>' + loggerTypes[e] + '</option>').appendTo($logger_type);
@@ -105,7 +120,7 @@ function initData() {
             }
             for(e in zone){
                 $('<option>' + zone[e] + '</option>').appendTo($zone);
-                $('#zone option').css('display', 'none');
+                //$('#zone option').css('display', 'none');
             }
             for(e in subzone){
                 $('<option>' + subzone[e] + '</option>').appendTo($sub_zone);
@@ -120,14 +135,13 @@ function initMarkers(L, map){
     $(document).ready(function() {
         $.ajax({"headers": {Accept: "application/json"}, "url":"http://159.203.111.95:8000/api/dev/", "data": {}, "success": function(result) {
             $.each(result, function(i, d){
-                var data = JSON.parse(d);
+                var data = d;
+                //console.log(data);
                 var marker = L.marker([data.field_lat, data.field_lon],
                     {title: 'Click to View Data',  
                      opacity: 0.5}).bindPopup("<b>Location: </b>" + 
                      data.location + ", " + data.state_province + ", " + 
-                     data.country + 
-                     "<br><b>Logger Type: </b>" + toTitleCase(data.biomimic) +
-                     "<br><b>Logger ID: </b>" + data.microsite_id).addTo(map);
+                     data.country).addTo(map);
                 marker.on('dblclick', function(e){
                     map.setView([data.field_lat-80, data.field_lon], map.getZoom() + 1, {animate: true});
                 })
@@ -150,60 +164,20 @@ function populateField(selectedField, selected){
         field.value = selected;
     }
  }
-/*
-map.on('popupopen', function(centerMarker) {
-        $('.sidebar').addClass('sidebar-expanded');
-        $('.bottombar').addClass('bottombar-expanded');
-        $('.bottombar-expanded > nav').width('70%');
-        $('.sidebar-expanded > nav').width("25%");
-        $('.bottombar-expanded > nav').css('margin-left', '1%');
-        var cM = map.project(centerMarker.popup._latlng);
-        $("nav").scrollTop(0);
-        populateAllFields(centerMarker.popup._source._myId);
-        cM.y -= centerMarker.popup._container.clientHeight-200;
-        cM.x -= centerMarker.popup._container.clientWidth-180;
-        map.panTo(map.unproject(cM), {animate: true});
-        if($("#graphs").css("display") == "inline") {
-            $("#graphs").css("display", "none");
-            $("#data").css("display", "inline");
-            console.log('this' + $(".onoffswitch-inner:after").css("content"));
-            if($(".onoffswitch-inner:after").css("content") == "GRAPH"){
-              console.log($(".onoffswitch-inner:after").css("content"));
-                $(".onoffswitch-inner:before").css("content", "DATA")
-            }
-        }
-
-});*/
 
 // Autofills the drop downs in the filter
 function populateAllFields(markerID){
-    console.log(markerID);
     $(document).ready(function() {
         $.ajax({"headers": {Accept: "application/json"}, "url":"http://159.203.111.95:8000/api/dev/", "data": {}, "success": function(result) {
             $.each(result, function(i, d){
-                var data = JSON.parse(d);
+                var data = d;
                 if(data.microsite_id === markerID){
-                    //populateField('logger-type', toTitleCase(data.biomimic));
-                    //deactivateField('logger-type');
                     populateField('country', data.country);
                     deactivateField('country');
                     populateField('state', data.state_province);
                     deactivateField('state');
                     populateField('site', data.location);
                     deactivateField('site');
-                    /*if(data.wave_exp =! "N/A"){
-                        populateField('wave', toTitleCase(data.wave_exp));
-                        deactivateField('wave');
-                    }
-                    if(data.zone != "N/A"){
-                        populateField('zone', data.zone);
-                        deactivateField('zone');
-                    }
-                    if(data.sub_zone != "N/A"){
-                        populateField('sub-zone', data.sub_zone);
-                        deactivateField('sub-zone');
-                    }*/
-                    
                 }
             });
         }});
@@ -244,12 +218,12 @@ $(document).ready(function() {
             console.log(result);
             var states = [];
             $.each(result, function(i, d){
-                var data = JSON.parse(d);
+                var data =d;
                 if(country === data.country && $.inArray(data.state_province, states)<0){
                     states.push(data.state_province);
                 }
             });
-            console.log(states);
+            //console.log(states);
             changeCountry(states.sort());
         }});
         
@@ -261,15 +235,15 @@ $(document).ready(function() {
         console.log("state");
         var state = $("#state").val();
         $.ajax({"headers": {Accept: "application/json"}, "url":"http://159.203.111.95:8000/api/dev/", "data": {}, "success": function(result) {
-            console.log(result);
+            //console.log(result);
             var locations = [];
             $.each(result, function(i, d){
-                var data = JSON.parse(d);
+                var data = d;
                 if(state === data.state_province && $.inArray(data.location, locations)<0){
                     locations.push(data.location);
                 }
             });
-            console.log(locations);
+            //console.log(locations);
             changeState(locations.sort());
         }});
         
