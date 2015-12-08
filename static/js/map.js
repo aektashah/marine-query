@@ -31,6 +31,7 @@ function initmap() {
   map.on('popupopen', function(centerMarker) {
         $('.sidebar').addClass('sidebar-expanded');
         $('.sidebar-expanded > nav').width("25%");
+        $('.bottombar').addClass('bottombar-expanded');
         var cM = map.project(centerMarker.popup._latlng);
         $("nav").scrollTop(0);
         populateAllFields(centerMarker.popup._source._myId);
