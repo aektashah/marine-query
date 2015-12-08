@@ -2,7 +2,7 @@
 * Unit test for front end
 * go to http://159.203.111.95:5000/test.html to see results
 **/
-describe("show sidebar by clicking FILTER", function() {
+describe("Filter button sidebar toggle", function() {
     var spyEvent;
     var fixture;
     beforeEach(function() {
@@ -18,6 +18,73 @@ describe("show sidebar by clicking FILTER", function() {
         filterButton.click();
         expect("click").toHaveBeenTriggeredOn("#nav-expander");
         expect(spyEvent).toHaveBeenTriggered();
-        //expect($('.sidebar')).toHaveClass("sidebar-expanded");
+    });
+});
+
+describe("toggleSidebar()", function() {
+    var fixture;
+    beforeEach(function() {
+        loadFixtures("../../../index.html");
+    });
+    it ("should toggle", function() {
+        toggleSidebar();
+        expect($(".sidebar")).toHaveClass("sidebar-expanded");
+    });
+});
+
+/*sidebarCollapse?*/
+
+describe("removeSidebar()", function() {
+    var fixture;
+    beforeEach(function() {
+	loadFixtures("../../../index.html");
+    });
+    it ("should remove the sidebar", function() {
+	toggleSidebar();
+	removeSidebar();
+	expect($(".sidebar")).not.toHaveClass("sidebar-expanded");
+    });
+});
+
+
+describe("bottombarCollapse()", function() {
+    var fixture;
+    beforeEach(function() {
+	loadFixtures("../../../index.html");
+    });
+    it ("should remove the bottom bar", function() {
+	toggleSidebar();
+	generate();
+	bottombarCollapse();
+	expect($(".bottombar")).not.toHaveClass("bottombar-expanded");
+    });
+});
+
+describe("generate()", function() {
+    var fixture;
+    beforeEach(function() {
+        loadFixtures("../../../index.html");
+    });
+    it ("should add class bottombar-expanded", function() {
+        generate();
+        expect($(".bottombar")).toHaveClass("bottombar-expanded");
+    });
+});
+
+/*initNavgoco*/
+
+describe("bottombarContent()", function() {
+    var fixture;
+    beforeEach(function() {
+	loadFixtures("../../../index.html");
+    });
+    it ("should toggle between graph and data", function() { 
+	expect($('.data')).toHaveCss({display: "inline"});
+	bottombarContent();
+	expect($('.data')).toHaveCss({display: "none"});
+	expect($('.graphs')).toHaveCss({display: "inline"});
+	bottombarContent();
+	expect($('.data')).toHaveCss({display: "inline"});
+	expect($('.graphs')).toHaveCss({display: "none"});
     });
 });

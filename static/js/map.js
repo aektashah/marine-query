@@ -8,7 +8,10 @@ var plotlayers=[];
 function initmap() {
 	// set up the map
 	// initialize the map
-  var map = L.map('map').setView([-8.407168, 26.015625], 2);
+  var map = L.map('map', {
+    worldCopyJump: true,
+    inertia: false
+  }).setView([-8.407168, 26.015625], 2);
 
   // load a tile layer
 
@@ -27,18 +30,25 @@ function initmap() {
 
   map.on('popupopen', function(centerMarker) {
         $('.sidebar').addClass('sidebar-expanded');
-        $('.bottombar').addClass('bottombar-expanded');
-        $('.bottombar-expanded > nav').width('71%');
-        $('.bottombar-expanded > nav').css('margin-left', '0px');
+        $('.sidebar-expanded > nav').width("25%");
         var cM = map.project(centerMarker.popup._latlng);
         $("nav").scrollTop(0);
         populateAllFields(centerMarker.popup._source._myId);
         cM.y -= centerMarker.popup._container.clientHeight-200;
         cM.x -= centerMarker.popup._container.clientWidth-180;
         map.panTo(map.unproject(cM), {animate: true});
+        if($("#graphs").css("display") == "inline") {
+            $("#graphs").css("display", "none");
+            $("#data").css("display", "inline");
+            if($(".onoffswitch-inner:after").css("content") == "GRAPH"){
+                $(".onoffswitch-inner:before").css("content", "DATA")
+            }
+        }
+        
         });
 
   map.on('popupclose', function(){
+    $('.sidebar > nav').width("20%");
     $('.sidebar').removeClass('sidebar-expanded');
     $('.bottombar > nav').height("28%");
     $('.bottombar').removeClass('bottombar-expanded');
@@ -48,8 +58,8 @@ function initmap() {
   map.on('dblclick', function(marker){
     map.setView(marker.latlng, map.getZoom() + 1, {animate: true});
   });
-
 };
+
 
 
 
