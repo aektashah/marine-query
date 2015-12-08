@@ -83,12 +83,8 @@ function sendQuery(download) {
     console.log(query);
     //submit download
     if (download) {
-        query["download"] = true; 
-        $.ajax({"headers": {Accept: "application/json"}, "url": "http://159.203.111.95:8000/api/reading/", "data": query,"success": function(resp) {
-            console.log(resp);
-            console.log("successfully downloaded the file");
-        }});
-
+        query["download"] = true;
+        $("#downloadFrame").attr("src", "http://159.203.111.95:8000/api/reading/?start_date=2012%2F10%2F05+00%3A00&end_date=2012%2F10%2F06+00%3A00&location=Fogarty+Creek&download=true");
     }
     else {
         // just querying without download
@@ -96,30 +92,28 @@ function sendQuery(download) {
             result = resp;
             console.log(resp);
             var data = [];
-            // RENDERING GRAPH
+            var tbody = $(".table > tbody");
+            tbody.empty();
+            // RENDERING GRAPH and TABLE
             $.each(resp, function(i, d) {
-                var item = JSON.parse(d);
+                var item = d;
                 var coordinates = {"x": i, "y": item["reading"]};
                 data = data.concat(coordinates);
-            });
-            //console.log(data);
-            initChart(data);
-            // RENDERING TABLE
-            var tbody = $(".table > tbody");
-            console.log(tbody);
-            $.each(resp, function(i, d) {
+
                 var tr = "<tr>";
-                var item = JSON.parse(d);
+                var item = d;
                 var loggerIdTD = "<td>" + item.device + "</td>";
                 var locationTD = "<td>meow" + "</td>";
                 var stateTD = "<td>meow" + "</td>";
                 var countryTD = "<td>meow" + "</td>";
                 var dateTD = "<td>" + item.date + "</td>";
-                var temperatureTD = "<td>meow" + item.reading + "</td>";
+                var temperatureTD = "<td>" + item.reading + "</td>";
                 tr = tr + loggerIdTD + locationTD + stateTD + countryTD + dateTD + temperatureTD; 
                 tr = tr + "</tr>";
                 tbody.append(tr);
             });
+            $("#visualisation").empty();
+            initChart(data);
         }});
     }
 }
@@ -223,6 +217,8 @@ function main() {
     $('.main-menu li span').on('click', function (e) {
         e.preventDefault();
         activateAndResetFields();
+        $("#visualisation").empty();
+        $(".table > tbody").empty();
     });
 
     

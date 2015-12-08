@@ -26,9 +26,10 @@ function getOptions(result){
     var subzone = [];
 
     $.each(myData, function(i, d){
-        var data = JSON.parse(d);
+        var data = d;
+        //var data = JSON.parse(d);
         if($.inArray(data.biomimic, visited)<0){
-            console.log(data.biomimic);
+            //console.log(data.biomimic);
             visited.push(data.biomimic);
             loggerTypes.push(toTitleCase(data.biomimic));
         }
@@ -87,6 +88,20 @@ function initData() {
             var $wave = $('#wave');
             var $zone = $('#zone');
             var $sub_zone = $('#sub-zone');
+            $country.empty();
+            $state.empty();
+            $site.empty();
+            $wave.empty();
+            $zone.empty()
+            $sub_zone.empty();
+            $logger_type.empty();
+            $('<option>ALL</option>').appendTo($logger_type);
+            $('<option>ALL</option>').appendTo($country);
+            $('<option>ALL</option>').appendTo($state);
+            $('<option>ALL</option>').appendTo($wave);
+            $('<option selected="selected">ALL</option>').appendTo($site);
+            $('<option>ALL</option>').appendTo($zone);
+            $('<option>ALL</option>').appendTo($sub_zone);
 
             for(e in loggerTypes){
                 $('<option>' + loggerTypes[e] + '</option>').appendTo($logger_type);
@@ -120,7 +135,7 @@ function initMarkers(L, map){
     $(document).ready(function() {
         $.ajax({"headers": {Accept: "application/json"}, "url":"http://159.203.111.95:8000/api/dev/", "data": {}, "success": function(result) {
             $.each(result, function(i, d){
-                var data = JSON.parse(d);
+                var data = d;
                 var marker = L.marker([data.field_lat, data.field_lon],
                     {title: 'Click to View Data',  
                      opacity: 0.5}).bindPopup("<b>Location: </b>" + 
@@ -181,7 +196,7 @@ function populateAllFields(markerID){
     $(document).ready(function() {
         $.ajax({"headers": {Accept: "application/json"}, "url":"http://159.203.111.95:8000/api/dev/", "data": {}, "success": function(result) {
             $.each(result, function(i, d){
-                var data = JSON.parse(d);
+                var data = d;
                 if(data.microsite_id === markerID){
                     //populateField('logger-type', toTitleCase(data.biomimic));
                     //deactivateField('logger-type');
@@ -244,12 +259,12 @@ $(document).ready(function() {
             console.log(result);
             var states = [];
             $.each(result, function(i, d){
-                var data = JSON.parse(d);
+                var data =d;
                 if(country === data.country && $.inArray(data.state_province, states)<0){
                     states.push(data.state_province);
                 }
             });
-            console.log(states);
+            //console.log(states);
             changeCountry(states.sort());
         }});
         
@@ -261,15 +276,15 @@ $(document).ready(function() {
         console.log("state");
         var state = $("#state").val();
         $.ajax({"headers": {Accept: "application/json"}, "url":"http://159.203.111.95:8000/api/dev/", "data": {}, "success": function(result) {
-            console.log(result);
+            //console.log(result);
             var locations = [];
             $.each(result, function(i, d){
-                var data = JSON.parse(d);
+                var data = d;
                 if(state === data.state_province && $.inArray(data.location, locations)<0){
                     locations.push(data.location);
                 }
             });
-            console.log(locations);
+            //console.log(locations);
             changeState(locations.sort());
         }});
         

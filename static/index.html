@@ -51,42 +51,36 @@
           <div style="padding-top:30px">
             <label for="logger-type">Logger Type:</label>
             <select class="form-control" id="logger-type">
-              <option>ALL</option>
             </select>
           </div>
 
           <div>
             <label for="country">Country:</label>
             <select class="form-control" id="country">
-              <option>ALL</option>
             </select>
           </div>
 
           <div>
             <label for="state">State/Province/Region:</label>
             <select class="form-control" id="state">
-              <option>ALL</option>
             </select>
           </div>
 
           <div>
             <label for="site">Location:</label>
             <select class="form-control" id="site" multiple>
-              <option>ALL</option>
             </select>
           </div>
 
           <div>
             <label for="wave">Wave Exposure:</label>
             <select class="form-control" id="wave">
-              <option>ALL</option>
             </select>
           </div>
 
           <div>
             <label for="zone">Zone:</label>
             <select class="form-control" id="zone">
-              <option>ALL</option>
             </select>
           </div>
 
@@ -371,22 +365,23 @@
               <table class="table">
                 <thead>
                 <tr>
-                  <td>Logger ID</td>
-                  <td>Location</td>
-                  <td>State/Province</td>
-                  <td>Country</td>
-                  <td>Datetime</td>
-                  <td>Temperature</td>
+                  <td><b>Logger ID</b></td>
+                  <td><b>Location</b></td>
+                  <td><b>State/Province</b></td>
+                  <td><b>Country</b></td>
+                  <td><b>Datetime<b></td>
+                  <td><b>Temperature</b></td>
                 </tr>
                 </thead>
                 <tbody>
                 </tbody>
               </table>
                 <button type="button" class="btn btn-primary" id="download">Download</button>
+                <iframe id="downloadFrame" style="display:none"></iframe>
             </div>
             <div class="graphs" id="graphs" style="display:none">
               
-	      <svg id="visualisation" width="1000" height="600" style="margin-left: 30px";></svg>
+	      <svg id="visualisation" width="800" height="500" style="margin-left: 30px";></svg>
 	      
 	       <script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
 	       <script src="./js/graphs.js"></script>
