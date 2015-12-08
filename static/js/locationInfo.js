@@ -231,7 +231,6 @@ $(document).ready(function() {
                     }
                 }
             });
-            //console.log(states);
             changeCountry(states.sort(), locations.sort());
         }});
         
@@ -254,7 +253,6 @@ $(document).ready(function() {
                     locations.push(data.location);
                 }
             });
-            //console.log(locations);
             changeState(locations.sort());
         }});
         
