@@ -60,6 +60,8 @@ function sendQuery(download) {
     var loc = $("#site").val()[0];
     var wave_exp = $("#wave").val();
     var sub_zone = $("#sub-zone").val();
+    var interval = $("#interval").val();
+    var aggregation = $("#maxmin").val();
     var startDay = $("#start-day").val();
     var startMonth = $("#start-month").val();
     var startYear = $("#start-year").val();
@@ -72,7 +74,7 @@ function sendQuery(download) {
     var endMin = $("#end-min").val();
     var startDate = parseDate(startDay, startMonth, startYear, startHour, startMin);
     var endDate = parseDate(endDay, endMonth, endYear, endHour, endMin);
-    var query = {"start_date": startDate,"end_date": endDate, "location": loc, "sub_zone": sub_zone};
+    var query = {"start_date": startDate,"end_date": endDate, "location": loc, "sub_zone": sub_zone, "interval": interval, "aggregation": aggregation};
     // parsing ALL
     $.each(query, function(k, v) {
         if (v == "ALL"){
@@ -80,17 +82,18 @@ function sendQuery(download) {
         }
     });
     // parsing date
-    console.log(query);
     //submit download
     if (download) {
         query["download"] = true;
-        $("#downloadFrame").attr("src", "http://159.203.111.95:8000/api/reading/?start_date=2012%2F10%2F05+00%3A00&end_date=2012%2F10%2F06+00%3A00&location=Fogarty+Creek&download=true");
+        var q_string = $.param(query);
+        var downloadUrl = "http://159.203.111.95:8000/api/reading/?" + q_string;
+        $("#downloadFrame").attr("src",downloadUrl);
     }
     else {
         // just querying without download
         $.ajax({"headers": {Accept: "application/json"}, "url": "http://159.203.111.95:8000/api/reading/", "data": query,"success": function(resp) {
             result = resp;
-            console.log(resp);
+            //console.log(resp);
             var data = [];
             var tbody = $(".table > tbody");
             tbody.empty();
@@ -103,9 +106,9 @@ function sendQuery(download) {
                 var tr = "<tr>";
                 var item = d;
                 var loggerIdTD = "<td>" + item.device + "</td>";
-                var locationTD = "<td>meow" + "</td>";
-                var stateTD = "<td>meow" + "</td>";
-                var countryTD = "<td>meow" + "</td>";
+                var locationTD = "<td>" + $("#site").val()[0] +  "</td>";
+                var stateTD = "<td>" + $("#state").val() + "</td>";
+                var countryTD = "<td>" + $("#country").val() + "</td>";
                 var dateTD = "<td>" + item.date + "</td>";
                 var temperatureTD = "<td>" + item.reading + "</td>";
                 tr = tr + loggerIdTD + locationTD + stateTD + countryTD + dateTD + temperatureTD; 
@@ -149,7 +152,6 @@ function parseDate(day, month, year, hour, min) {
     else {
         result = "ALL";
     }
-    console.log(result);
     return result;
 
 }
@@ -280,7 +282,6 @@ function main() {
 
 $(document).ready(function () {
     main();
-    console.log("asdf");
 });
 
 

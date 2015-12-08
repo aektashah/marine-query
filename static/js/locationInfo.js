@@ -1,11 +1,11 @@
-var data;
+/*var data;
 $.ajax({"headers": {Accept: "application/json"}, "url":"http://159.203.111.95:8000/api/dev", "data": {}, "success": function(result) {
     //console.log(result);   
     data = result;
     }
 });
 console.log(data);
-
+*/
 function toTitleCase(str)
 {
     return str//.replace(/\w\S*/g, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();});
@@ -120,7 +120,7 @@ function initData() {
             }
             for(e in zone){
                 $('<option>' + zone[e] + '</option>').appendTo($zone);
-                $('#zone option').css('display', 'none');
+                //$('#zone option').css('display', 'none');
             }
             for(e in subzone){
                 $('<option>' + subzone[e] + '</option>').appendTo($sub_zone);
@@ -164,60 +164,20 @@ function populateField(selectedField, selected){
         field.value = selected;
     }
  }
-/*
-map.on('popupopen', function(centerMarker) {
-        $('.sidebar').addClass('sidebar-expanded');
-        $('.bottombar').addClass('bottombar-expanded');
-        $('.bottombar-expanded > nav').width('70%');
-        $('.sidebar-expanded > nav').width("25%");
-        $('.bottombar-expanded > nav').css('margin-left', '1%');
-        var cM = map.project(centerMarker.popup._latlng);
-        $("nav").scrollTop(0);
-        populateAllFields(centerMarker.popup._source._myId);
-        cM.y -= centerMarker.popup._container.clientHeight-200;
-        cM.x -= centerMarker.popup._container.clientWidth-180;
-        map.panTo(map.unproject(cM), {animate: true});
-        if($("#graphs").css("display") == "inline") {
-            $("#graphs").css("display", "none");
-            $("#data").css("display", "inline");
-            console.log('this' + $(".onoffswitch-inner:after").css("content"));
-            if($(".onoffswitch-inner:after").css("content") == "GRAPH"){
-              console.log($(".onoffswitch-inner:after").css("content"));
-                $(".onoffswitch-inner:before").css("content", "DATA")
-            }
-        }
-
-});*/
 
 // Autofills the drop downs in the filter
 function populateAllFields(markerID){
-    console.log(markerID);
     $(document).ready(function() {
         $.ajax({"headers": {Accept: "application/json"}, "url":"http://159.203.111.95:8000/api/dev/", "data": {}, "success": function(result) {
             $.each(result, function(i, d){
                 var data = d;
                 if(data.microsite_id === markerID){
-                    //populateField('logger-type', toTitleCase(data.biomimic));
-                    //deactivateField('logger-type');
                     populateField('country', data.country);
                     deactivateField('country');
                     populateField('state', data.state_province);
                     deactivateField('state');
                     populateField('site', data.location);
                     deactivateField('site');
-                    /*if(data.wave_exp =! "N/A"){
-                        populateField('wave', toTitleCase(data.wave_exp));
-                        deactivateField('wave');
-                    }
-                    if(data.zone != "N/A"){
-                        populateField('zone', data.zone);
-                        deactivateField('zone');
-                    }
-                    if(data.sub_zone != "N/A"){
-                        populateField('sub-zone', data.sub_zone);
-                        deactivateField('sub-zone');
-                    }*/
-                    
                 }
             });
         }});
