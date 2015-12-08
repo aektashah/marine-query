@@ -29,6 +29,7 @@ function initmap() {
   initMarkers(L, map);
 
   map.on('popupopen', function(centerMarker) {
+        console.log(centerMarker);
         $('.sidebar').addClass('sidebar-expanded');
         $('.bottombar').addClass('bottombar-expanded');
         $('.bottombar-expanded > nav').width('70%');
@@ -36,7 +37,7 @@ function initmap() {
         $('.bottombar-expanded > nav').css('margin-left', '1%');
         var cM = map.project(centerMarker.popup._latlng);
         $("nav").scrollTop(0);
-        console.log(centerMarker.popup._source._myId);
+        //console.log(centerMarker.popup._source._myId);
         populateAllFields(centerMarker.popup._source._myId);
         cM.y -= centerMarker.popup._container.clientHeight-200;
         cM.x -= centerMarker.popup._container.clientWidth-180;
@@ -44,9 +45,9 @@ function initmap() {
         if($("#graphs").css("display") == "inline") {
             $("#graphs").css("display", "none");
             $("#data").css("display", "inline");
-            console.log('this' + $(".onoffswitch-inner:after").css("content"));
+            //console.log('this' + $(".onoffswitch-inner:after").css("content"));
             if($(".onoffswitch-inner:after").css("content") == "GRAPH"){
-              console.log($(".onoffswitch-inner:after").css("content"));
+              //console.log($(".onoffswitch-inner:after").css("content"));
                 $(".onoffswitch-inner:before").css("content", "DATA")
             }
         }

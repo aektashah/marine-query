@@ -136,13 +136,12 @@ function initMarkers(L, map){
         $.ajax({"headers": {Accept: "application/json"}, "url":"http://159.203.111.95:8000/api/dev/", "data": {}, "success": function(result) {
             $.each(result, function(i, d){
                 var data = d;
+                //console.log(data);
                 var marker = L.marker([data.field_lat, data.field_lon],
                     {title: 'Click to View Data',  
                      opacity: 0.5}).bindPopup("<b>Location: </b>" + 
                      data.location + ", " + data.state_province + ", " + 
-                     data.country + 
-                     "<br><b>Logger Type: </b>" + toTitleCase(data.biomimic) +
-                     "<br><b>Logger ID: </b>" + data.microsite_id).addTo(map);
+                     data.country).addTo(map);
                 marker.on('dblclick', function(e){
                     map.setView([data.field_lat-80, data.field_lon], map.getZoom() + 1, {animate: true});
                 })
