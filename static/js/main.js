@@ -72,9 +72,10 @@ function sendQuery(download) {
     var endYear = $("#end-year").val();
     var endHour = $("#end-hour").val();
     var endMin = $("#end-min").val();
+    var country = $("#country").val();
     var startDate = parseDate(startDay, startMonth, startYear, startHour, startMin);
     var endDate = parseDate(endDay, endMonth, endYear, endHour, endMin);
-    var query = {"start_date": startDate,"end_date": endDate, "location": loc, "sub_zone": sub_zone, "interval": interval, "aggregation": aggregation};
+    var query = {"start_date": startDate,"end_date": endDate, "location": loc, "sub_zone": sub_zone, "interval": interval, "aggregation": aggregation, "country": country};
     // parsing ALL
     $.each(query, function(k, v) {
         if (v == "ALL"){
