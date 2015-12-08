@@ -29,7 +29,7 @@ function toggleSidebar() {
 function sidebarCollapse() {
     $('.sidebar > nav').width('20%');
     $('.bottombar-expanded > nav').width('97%');
-    $('.bottombar-expanded > nav').css('margin-left', '-26%')
+    $('.bottombar-expanded > nav').css('margin-left', '-28%')
     activateAndResetFields();
 }
 // remove sidebar from screen
@@ -37,7 +37,7 @@ function removeSidebar() {
     $('.sidebar > nav').width('20%');
     $('.sidebar').removeClass('sidebar-expanded');
     $('.bottombar-expanded > nav').width('97%');
-    $('.bottombar-expanded > nav').css('margin-left', '-26%');
+    $('.bottombar-expanded > nav').css('margin-left', '-28%');
 }
 // collapse bottom bar
 function bottombarCollapse() {
