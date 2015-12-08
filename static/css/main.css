@@ -243,7 +243,7 @@ a.nav-expander.fixed {
 
 .bottombar #drag{
   position: fixed;
-  width: 72%;
+  width: 71.5%;
   height: 3px;
   background-color: gray;
   cursor: row-resize
