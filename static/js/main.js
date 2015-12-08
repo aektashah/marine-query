@@ -52,52 +52,110 @@ function generate() {
         $('.bottombar').addClass('bottombar-expanded');
     }
     // send query to the server
-    sendQuery();
+    sendQuery(false);
 }
 
-function sendQuery() {
+function sendQuery(download) {
     var loggerType = $("#logger-type").val();
-    var country = $("#country").val();
-    var state = $("#state").val();
     var loc = $("#site").val()[0];
-    var wave = $("#wave").val();
-    var zone = $("#zone").val();
-    var subzone = $("#sub-zone").val();
+    var wave_exp = $("#wave").val();
+    var sub_zone = $("#sub-zone").val();
     var interval = $("#interval").val();
-    var intervalMaxmin = $("#maxmin").val();
-    var startTime = $("#start-time > select");
-    var endTime = $("#end-time > select");
-    var query = {"country": country, "biomimic": loggerType};
-    var devices = newData[loc][loggerType];
-    var result;
-    console.log(devices);
-    //var query = {"biomimic": loggerType, "country": country, "state_province": state, "location": loc, "wave_exp": wave, "zone": zone, "sub_zone": subzone}// "interval": interval, "intervalMaxmin": intervalMaxmin, "start_date": startTime, "end_date": endTime};
-    $.each(devices, function(i, device) {
-        $.ajax({"url": "http://159.203.111.95:6969/api/reading", "data": {"device": "BMRMUSORFC1"},"success": function(resp) {
-            console.log(resp);
+    var aggregation = $("#maxmin").val();
+    var startDay = $("#start-day").val();
+    var startMonth = $("#start-month").val();
+    var startYear = $("#start-year").val();
+    var startHour = $("#start-hour").val();
+    var startMin = $("#start-min").val();
+    var endDay = $("#end-day").val();
+    var endMonth = $("#end-month").val();
+    var endYear = $("#end-year").val();
+    var endHour = $("#end-hour").val();
+    var endMin = $("#end-min").val();
+    var startDate = parseDate(startDay, startMonth, startYear, startHour, startMin);
+    var endDate = parseDate(endDay, endMonth, endYear, endHour, endMin);
+    var query = {"start_date": startDate,"end_date": endDate, "location": loc, "sub_zone": sub_zone, "interval": interval, "aggregation": aggregation};
+    // parsing ALL
+    $.each(query, function(k, v) {
+        if (v == "ALL"){
+            delete query[k];
+        }
+    });
+    // parsing date
+    //submit download
+    if (download) {
+        query["download"] = true;
+        var q_string = $.param(query);
+        var downloadUrl = "http://159.203.111.95:8000/api/reading/?" + q_string;
+        $("#downloadFrame").attr("src",downloadUrl);
+    }
+    else {
+        // just querying without download
+        $.ajax({"headers": {Accept: "application/json"}, "url": "http://159.203.111.95:8000/api/reading/", "data": query,"success": function(resp) {
             result = resp;
+            //console.log(resp);
+            var data = [];
+            var tbody = $(".table > tbody");
+            tbody.empty();
+            // RENDERING GRAPH and TABLE
+            $.each(resp, function(i, d) {
+                var item = d;
+                var coordinates = {"x": i, "y": item["reading"]};
+                data = data.concat(coordinates);
+
+                var tr = "<tr>";
+                var item = d;
+                var loggerIdTD = "<td>" + item.device + "</td>";
+                var locationTD = "<td>" + $("#site").val()[0] +  "</td>";
+                var stateTD = "<td>" + $("#state").val() + "</td>";
+                var countryTD = "<td>" + $("#country").val() + "</td>";
+                var dateTD = "<td>" + item.date + "</td>";
+                var temperatureTD = "<td>" + item.reading + "</td>";
+                tr = tr + loggerIdTD + locationTD + stateTD + countryTD + dateTD + temperatureTD; 
+                tr = tr + "</tr>";
+                tbody.append(tr);
+            });
+            $("#visualisation").empty();
+            initChart(data);
         }});
-    });
-    filterData(result, wave, zone, subzone, interval, intervalMaxmin, startTime, endTime);
+    }
 }
-function filterData(result, wave, zone, subzone, interval, intervalMaxmin, startTime, endTime) {
-    var final = [];
-    //console.log(parseDate(startTime));
-    parseDate(startTime); 
-    $.each(result, function(i, item) {
-        
-    });
-}
-function parseDate(date) {
-    var finalDate = "";
-    $.each(date, function(i, d){ 
-        console.log(d);
-        //finalDate + d + " ";
-    });
-    $.trim(finalDate);
-    return finalDate;
+function parseDate(day, month, year, hour, min) {
+    var result = "";
+    if (year != "YYYY") {
+        result = result + year + "/";
+        if (month != "MM") {
+            result = result + month + "/";
+        }
+        else if (month == "MM") {
+            result = result + "01" + "/";
+        }
+        if (day != "DD"){
+            result = result + day + " ";
+        }
+        else if (day == "DD") {
+            result = result + "01" + " ";
+        }
+        if (hour == "HH") {
+            result = result + "00:";
+        }
+        else if (hour != "HH") {
+            result = result + hour + ":";
+        }
+        if (min == "MM") {
+            result = result + "00";
+        }
+        else if (min != "MM") {
+            result = result + min;
+        }
+    }
+    else {
+        result = "ALL";
+    }
+    return result;
 
 }
+
 // Initialize navgoco with default options
 function initNavgoco() {
     $(".main-menu").navgoco({
@@ -127,7 +185,21 @@ function bottombarContent() {
         $("#graphs").css("display", "none");
     }
 }
+function changeCountry(states) {
+    var statesString = '<option>ALL</option>';
+    for(e in states){
+        statesString = statesString + '<option>' + states[e] + '</option>';
+    }
+    $('#state').html(statesString);
+}
 
+function changeState(locations) {
+    var locationsString = '<option>ALL</option>';
+    for(e in locations){
+        locationsString = locationsString + '<option>' + locations[e] + '</option>';
+    }
+    $('#site').html(locationsString);
+}
 // Main function 
 function main() {
     $('#nav-expander').on('click', function (e) {
@@ -147,6 +219,8 @@ function main() {
     $('.main-menu li span').on('click', function (e) {
         e.preventDefault();
         activateAndResetFields();
+        $("#visualisation").empty();
+        $(".table > tbody").empty();
     });
 
     
@@ -158,6 +232,10 @@ function main() {
     $('#generate').on('click', function(e) {
         e.preventDefault();
         generate();
+    });
+    $("#download").on("click", function(e) {
+        e.preventDefault();
+        sendQuery(true);
     });
     
     initNavgoco();
@@ -199,31 +277,6 @@ function main() {
         else {
             $('#zone').html('<option>ALL</option><option>High</option><option>Mid</option><option>Low</option>');
         }
-    })
-
-    // changes the states/provinces based on country selection
-    $('#country').change(function(){
-        var val = $(this).val();
-        console.log(val);
-        var states = getStates(val);
-        
-        var statesString = '<option>ALL</option>';
-        for(e in states){
-            statesString = statesString + '<option>' + states[e] + '</option>';
-        }
-        console.log(statesString);
-        $('#state').html(statesString);
-    })
-
-    // changes the location based on state/province selection
-    $('#state').change(function(){
-        var val = $(this).val();
-        var locations = getLocations(val);
-        var locationsString = '<option>ALL</option>';
-        for(e in locations){
-            locationsString = locationsString + '<option>' + locations[e] + '</option>';
-        }
-        $('#site').html(locationsString);
     })
 }
 

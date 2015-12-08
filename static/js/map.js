@@ -30,10 +30,7 @@ function initmap() {
 
   map.on('popupopen', function(centerMarker) {
         $('.sidebar').addClass('sidebar-expanded');
-        $('.bottombar').addClass('bottombar-expanded');
-        $('.bottombar-expanded > nav').width('70%');
         $('.sidebar-expanded > nav').width("25%");
-        $('.bottombar-expanded > nav').css('margin-left', '1%');
         var cM = map.project(centerMarker.popup._latlng);
         $("nav").scrollTop(0);
         populateAllFields(centerMarker.popup._source._myId);
@@ -43,9 +40,7 @@ function initmap() {
         if($("#graphs").css("display") == "inline") {
             $("#graphs").css("display", "none");
             $("#data").css("display", "inline");
-            console.log('this' + $(".onoffswitch-inner:after").css("content"));
             if($(".onoffswitch-inner:after").css("content") == "GRAPH"){
-              console.log($(".onoffswitch-inner:after").css("content"));
                 $(".onoffswitch-inner:before").css("content", "DATA")
             }
         }
@@ -63,14 +58,8 @@ function initmap() {
   map.on('dblclick', function(marker){
     map.setView(marker.latlng, map.getZoom() + 1, {animate: true});
   });
-
-$('#location option').click(function(){
-        var val = $(this).val();
-        var latlong = getLatLong(val);
-        console.log(latlong);
-        L.map('map').setView(latlong, 5, {animate: true});
-    })
 };
+
 
 
 

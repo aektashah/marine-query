@@ -32,6 +32,7 @@ class Device(Base):
     
     def to_json(self):
         return {"site": self.site,
+            "microsite_id": self.id,
             "field_lat": self.field_lat,
             "field_lon": self.field_lon,
             "location": self.location,
@@ -80,7 +81,7 @@ class Reading(Base):
 
     def to_json(self):
         return {"device": self.device, 
-                "date": self.date.ftime("%Y/%m/%d %H:%M"),
+                "date": self.date.strftime("%Y/%m/%d %H:%M"),
                 "reading": self.reading}
 
     def __repr__(self):

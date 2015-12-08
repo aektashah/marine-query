@@ -91,7 +91,7 @@ class ReadingResource(Resource):
        
         # http://159.203.111.95:port/api/reading?state_province=<state_province>&country=<country>
         if args["state_province"] and args["country"]:
-            readings = readings.filter(Device.state_province == args["state_province"]).filter(Device.country == args["country"])
+            readings = readings.filter(Device.state_province == args["state_province"])#.filter(Device.country == args["country"])
        
         # http://159.203.111.95:port/api/reading?location=<location>
         if args["location"]:
@@ -100,13 +100,17 @@ class ReadingResource(Resource):
         # http://159.203.111.95:port/api/reading?country=<country>&wave_exp=<wave_exp>
         # for layering queries (country and wave_exp) does this make the most sense?
         if args["country"] and args["wave_exp"]:
-           readings = readings.filter(Device.country == args["country"]).filter(Device.wave_exp == args["wave_exp"])
+           readings = readings.filter(Device.wave_exp == args["wave_exp"]) # filter(Device.country == args["country"]).filter(Device.wave_exp == args["wave_exp"])
         
-        # http://159.203.111.95:port/api/reading?device=<device>&zone=<zone>
+        # http://159.203.111.95:port/api/reading?device=<device>
         if args["device"]:# and args["zone"]:
            readings = readings.filter(Reading.device == args["device"])#.filter(Device.zone == args["zone"]) 
-        
-        # http://159.203.111.95:port/api/reading?device=<device>&sub_zone=<sub_zone>
+
+        # http://159.203.111.95:port/api/reading?zone=<zone>
+        if args["zone"]:
+           readings = readings.filter(Device.zone == args["zone"])
+
+        # http://159.203.111.95:port/api/reading?sub_zone=<sub_zone>
         if args["sub_zone"]:
            readings = readings.filter(Device.sub_zone == args["sub_zone"])
         
