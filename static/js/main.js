@@ -46,7 +46,7 @@ function generate() {
 
 function sendQuery(download) {
     var loggerType = $("#logger-type").val();
-    var loc = $("#site").val()[0];
+    var loc = $("#site").val() ? $("#site").val()[0] : "ALL";
     var wave_exp = $("#wave").val();
     var sub_zone = $("#sub-zone").val();
     var interval = $("#interval").val();
@@ -96,7 +96,7 @@ function sendQuery(download) {
                 var tr = "<tr>";
                 var item = d;
                 var loggerIdTD = "<td>" + item.device + "</td>";
-                var locationTD = "<td>" + $("#site").val()[0] +  "</td>";
+                var locationTD = "<td>" + ($("#site").val() ? $("#site").val()[0] : "ALL") +  "</td>";
                 var stateTD = "<td>" + $("#state").val() + "</td>";
                 var countryTD = "<td>" + $("#country").val() + "</td>";
                 var dateTD = "<td>" + item.date + "</td>";
