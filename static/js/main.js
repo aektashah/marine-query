@@ -5,7 +5,7 @@ function toggleSidebar() {
     if($('.sidebar-expanded').length <= 0) {
         $('.sidebar > nav').width('20%');
         $('.bottombar-expanded > nav').width('97%');
-        $('.bottombar-expanded > nav').css('margin-left', '-26%');
+        $('.bottombar-expanded > nav').css('margin-left', '-28%');
     }
     if($('.sidebar-expanded').length > 0) {
         $('.sidebar > nav').width('25%');
@@ -14,22 +14,11 @@ function toggleSidebar() {
     }
 }
 
-/*$('#nav-expander').on('click', function () {
-    if($('.sidebar-expanded').length <= 0) {
-        $('.bottombar-expanded > nav').width('97%');
-        $('.bottombar-expanded > nav').css('margin-left', '-26%');
-    }
-    if($('.sidebar-expanded').length > 0) {
-        $('.bottombar-expanded > nav').width('71%');
-        $('.bottombar-expanded > nav').css('margin-left', '0px');
-    }
-});
-*/
 // expand bottom bar when sidebar collapse
 function sidebarCollapse() {
     $('.sidebar > nav').width('20%');
     $('.bottombar-expanded > nav').width('97%');
-    $('.bottombar-expanded > nav').css('margin-left', '-26%')
+    $('.bottombar-expanded > nav').css('margin-left', '-28%')
     activateAndResetFields();
 }
 // remove sidebar from screen
@@ -37,7 +26,7 @@ function removeSidebar() {
     $('.sidebar > nav').width('20%');
     $('.sidebar').removeClass('sidebar-expanded');
     $('.bottombar-expanded > nav').width('97%');
-    $('.bottombar-expanded > nav').css('margin-left', '-26%');
+    $('.bottombar-expanded > nav').css('margin-left', '-28%');
 }
 // collapse bottom bar
 function bottombarCollapse() {
@@ -185,11 +174,12 @@ function bottombarContent() {
         $("#graphs").css("display", "none");
     }
 }
-function changeCountry(states) {
+function changeCountry(states, locations) {
     var statesString = '<option>ALL</option>';
     for(e in states){
         statesString = statesString + '<option>' + states[e] + '</option>';
     }
+    changeState(locations);
     $('#state').html(statesString);
 }
 

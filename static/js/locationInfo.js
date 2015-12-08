@@ -1,16 +1,3 @@
-/*var data;
-$.ajax({"headers": {Accept: "application/json"}, "url":"http://159.203.111.95:8000/api/dev", "data": {}, "success": function(result) {
-    //console.log(result);   
-    data = result;
-    }
-});
-console.log(data);
-*/
-function toTitleCase(str)
-{
-    return str//.replace(/\w\S*/g, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();});
-}
-
 function getOptions(result){
     var myData = result;
     data = result;
@@ -31,7 +18,7 @@ function getOptions(result){
         if($.inArray(data.biomimic, visited)<0){
             //console.log(data.biomimic);
             visited.push(data.biomimic);
-            loggerTypes.push(toTitleCase(data.biomimic));
+            loggerTypes.push(data.biomimic);
         }
         if($.inArray(data.country, visited)<0){
             visited.push(data.country);
@@ -47,7 +34,7 @@ function getOptions(result){
         }
         if($.inArray(data.wave_exp, visited)<0 && data.wave_exp != 'N/A'){
             visited.push(data.wave_exp);
-            wave.push(toTitleCase(data.wave_exp));
+            wave.push(data.wave_exp);
         }
         if($.inArray(data.zone, visited)<0 && data.zone != 'N/A'){
             visited.push(data.zone);
@@ -217,14 +204,34 @@ $(document).ready(function() {
         $.ajax({"headers": {Accept: "application/json"}, "url":"http://159.203.111.95:8000/api/dev/", "data": {}, "success": function(result) {
             console.log(result);
             var states = [];
+            var locations = [];
             $.each(result, function(i, d){
+                var data =d;
+                if(country === 'ALL'){
+                    if($.inArray(data.state_province, states)<0){
+                        states.push(data.state_province);
+                    }
+                    if($.inArray(data.location, locations)<0){
+                        locations.push(data.location);
+                    }
+                }
+                if(country === data.country){
+                    if($.inArray(data.state_province, states)<0){
+                        states.push(data.state_province);
+                    }
+                    if($.inArray(data.location, locations)<0){
+                        locations.push(data.location);
+                    }
+                }
+            });
+            /*$.each(result, function(i, d){
                 var data =d;
                 if(country === data.country && $.inArray(data.state_province, states)<0){
                     states.push(data.state_province);
                 }
-            });
+            });*/
             //console.log(states);
-            changeCountry(states.sort());
+            changeCountry(states.sort(), locations.sort());
         }});
         
     });
@@ -239,6 +246,9 @@ $(document).ready(function() {
             var locations = [];
             $.each(result, function(i, d){
                 var data = d;
+                if(state === 'ALL' && $.inArray(data.location, locations)<0){
+                    locations.push(data.location);
+                }
                 if(state === data.state_province && $.inArray(data.location, locations)<0){
                     locations.push(data.location);
                 }

@@ -210,11 +210,11 @@ a.nav-expander.fixed {
   margin-right:50px;
   overflow: auto;
   position: fixed;
-  left: 26.5%;
+  left: 27.5%;
   float:right;
   font-size: 15px;
   bottom: -88%;
-  width:73%;
+  width:72%;
   z-index: 500;
   box-shadow: 5px 5px 5px #888888;
   opacity:.8;
@@ -227,7 +227,6 @@ a.nav-expander.fixed {
   -webkit-transition: bottom 0.3s ease-in-out 0s;
   -moz-transition: bottom 0.3s ease-in-out 0s;
   -o-transition: bottom 0.3s ease-in-out 0s;
-
 }
 
 .bottombar > nav:hover {
@@ -236,13 +235,13 @@ a.nav-expander.fixed {
 
 .bottombar-expanded>nav {
   bottom: 0;
-  width:73%;
+  width:72%;
   float:right;
 }
 
 .bottombar #drag{
   position: fixed;
-  width: 73%;
+  width:71.5%;
   height: 3px;
   background-color: gray;
   cursor: row-resize
