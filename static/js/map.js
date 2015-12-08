@@ -29,6 +29,7 @@ function initmap() {
   initMarkers(L, map);
 
   map.on('popupopen', function(centerMarker) {
+        activateAndResetFields();
         $('.sidebar').addClass('sidebar-expanded');
         $('.sidebar-expanded > nav').width("25%");
         populateAllFields(centerMarker.popup._source._myId);
@@ -49,11 +50,11 @@ function initmap() {
         });
 
   map.on('popupclose', function(){
+    activateAndResetFields();
     $('.sidebar > nav').width("15%");
     $('.sidebar').removeClass('sidebar-expanded');
     $('.bottombar > nav').height("28%");
     $('.bottombar').removeClass('bottombar-expanded');
-    activateAndResetFields();
   });
 
   map.on('dblclick', function(marker){
