@@ -12,6 +12,7 @@ from models import Reading, Device
 
 
 class MultiApi(Api):
+    """ restful.Api only supports JSON """
     def __init__(self, *args, **kwargs):
         super(MultiApi, self).__init__(*args, **kwargs)
         self.representations["text/csv"] = MultiApi.output_csv

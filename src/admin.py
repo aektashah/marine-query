@@ -25,23 +25,24 @@ class HomeView(AdminIndexView):
 class UploadView(AuthMixin, BaseView):
     @expose("/")
     def index(self):
+        """ Renders the upload page """
         devices = Device.query.with_entities(Device.id).all()
         devices = map(lambda (arg,): arg, devices)
         return self.render("upload.html", uploader=self.upload, devs=devices)
 
     @expose("/upload_data/", methods=("GET", "POST"))
     def upload(self):
+        """ uploads the given file of device readings to the database """
         if request.method == "POST":
             data = request.files["data"]
-            Device.add_from_file(data.stream.read(), request.form["dev"])
+            device = request.form["dev"]
+            if device == "infer":
+                device = data.filename.split("_")[0]
+            Device.add_from_file(data.stream.read(), device)
             flash("Successfully uploaded data!")
             return redirect (url_for('uploadview.index', self=self))
         return redirect (url_for('uploadview.index', self=self))
 
 
 # Subclass of a model view which requires authentication
-class AuthModelView(AuthMixin, model.ModelAdmin):
-    @expose('/add/', methods=('GET', 'POST'))
-    def add(self):
-        return super(AuthModelView, self).add()
-
+AuthModelView = type("AuthModelView", (AuthMixin, model.ModelAdmin), {})
