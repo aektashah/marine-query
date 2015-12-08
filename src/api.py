@@ -12,7 +12,7 @@ from models import Reading, Device
 
 
 class MultiApi(Api):
-    """ restful.Api only supports JSON """
+    """ restful.Api only supports JSON, so we subclass to handle CSV downloads """
     def __init__(self, *args, **kwargs):
         super(MultiApi, self).__init__(*args, **kwargs)
         self.representations["text/csv"] = MultiApi.output_csv
@@ -37,12 +37,17 @@ class DeviceResource(Resource):
 
 
 def avg(collection, key=lambda x: x):
+    """ Averages a collection using the given getter, and constructs a 
+        bogus reading for the aggregated value """
     first = collection[0]
     return Reading(device=first.device, date=first.date, 
             reading=sum(map(key, collection)) / len(collection))
 
-
+    
 def func_by_date(func):
+    """ Higher order function that consumes an iterator consumer function,
+        and wraps it in a consumer that keys off a reading's reading field
+    """
     def wrapped(readings):
         return func(readings, key=lambda reading: reading.reading)
     return wrapped
@@ -125,6 +130,9 @@ class ReadingResource(Resource):
         return readings, args["download"]
 
     def bin_readings(self, readings, interval, agg):
+        """ Consumes a collection of readings, an interval to sort by, and an
+            aggregation function, and combines the readings
+        """
         start_date = readings[0].date 
         interval_len = self.INTERVAL_MAP[interval.lower()]
         agg_func = self.AGG_MAP[agg.lower()]
@@ -138,6 +146,7 @@ class ReadingResource(Resource):
             current_bin.append(reading)
         if not bins or bins[-1] != current_bin:
             bins.append(current_bin)
+
         return map(agg_func, bins) 
 
     def query_parse(self):

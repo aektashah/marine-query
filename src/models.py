@@ -49,6 +49,8 @@ class Device(Base):
 
     @staticmethod
     def add_from_file(upload, device_name):
+        """ adds the contents of the string upload to database under device_name 
+        """
         values = [line.split("\t") for line in upload.split("\n")]
         for date, reading in values[1:]:
             r = Reading(device=device_name,date=date,reading=float(reading))

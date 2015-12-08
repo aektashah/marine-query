@@ -1,11 +1,10 @@
+""" Backend API testing """
 from datetime import datetime
 import json
 import os
 import unittest
 
 from flask.ext.testing import LiveServerTestCase, TestCase
-from selenium.webdriver import PhantomJS
-from selenium.webdriver.common.keys import Keys
 
 os.environ["TESTING"] = "true"
 

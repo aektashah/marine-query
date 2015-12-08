@@ -11,6 +11,9 @@ from flask.ext.superadmin import Admin
 # Connection URL to communicate with the local database
 SQLALCHEMY_DATABASE_URI = "postgresql://james:fishes@localhost/marine"
 TESTING_URI = "postgresql://james:fishes@localhost/testing"
+
+# Which database to use depends on whether we are testing or in production
+# To prevent circular dependencies we simply set and read environment variables 
 if environ.get("TESTING", False) == "true":
     environ["SQLALCHEMY_DATABASE_URI"] = TESTING_URI
 else:
