@@ -206,14 +206,14 @@ a.nav-expander.fixed {
 .bottombar > nav {
   background: white;
   display: block;
-  height: 30%;
+  height: 88%;
   margin-right:50px;
   overflow: auto;
   position: fixed;
   left: 26.5%;
   float:right;
   font-size: 15px;
-  bottom: -30%;
+  bottom: -88%;
   width:73%;
   z-index: 500;
   box-shadow: 5px 5px 5px #888888;
@@ -241,8 +241,8 @@ a.nav-expander.fixed {
 }
 
 .bottombar #drag{
-  position: absolute;
-  width: 100%;
+  position: fixed;
+  width: 73%;
   height: 3px;
   background-color: gray;
   cursor: row-resize

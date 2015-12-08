@@ -1,9 +1,12 @@
 """ 
     Class based approach to RESTful API endpoints
 """
+from datetime import datetime, timedelta
+
 from flask import make_response
 from flask.ext.restful import Api, Resource
 from flask_restful.reqparse import RequestParser
+from sqlalchemy import and_
 
 from models import Reading, Device
 
@@ -31,12 +34,36 @@ class DeviceResource(Resource):
         """
         return map(Device.to_json, Device.query.all()) 
 
+
+def avg(collection, key=lambda x: x):
+    first = collection[0]
+    return Reading(device=first.device, date=first.date, 
+            reading=sum(map(key, collection)) / len(collection))
+
+
+def func_by_date(func):
+    def wrapped(readings):
+        return func(readings, key=lambda reading: reading.reading)
+    return wrapped
+
+
 class ReadingResource(Resource):
     """
         The reading resources handles API requests relating to robomussel data
         it additionally supports facilities to filter datasets based on query
         string parameters
     """
+    INTERVAL_MAP = {"10min": timedelta(minutes=10), 
+            "hourly": timedelta(hours=1), 
+            "daily": timedelta(days=1),
+            "weekly": timedelta(weeks=1), 
+            "monthly": timedelta(weeks=4), 
+            "yearly": timedelta(weeks=52)}
+
+    AGG_MAP = {"min": func_by_date(min),
+            "max": func_by_date(max),
+            "average": func_by_date(avg)}
+
     def get(self):
         """
             Filters the database by the given device id, and returns a JSON
@@ -90,9 +117,28 @@ class ReadingResource(Resource):
         # http://159.203.111.95:port/api/reading?sub_zone=<sub_zone>
         if args["sub_zone"]:
            readings = readings.filter(Device.sub_zone == args["sub_zone"])
+        
+        if args["interval"] and args["aggregation"]:
+            readings = self.bin_readings(readings, args["interval"], args["aggregation"])
 
         # allow user to download csv files of data
         return readings, args["download"]
+
+    def bin_readings(self, readings, interval, agg):
+        start_date = readings[0].date 
+        interval_len = self.INTERVAL_MAP[interval.lower()]
+        agg_func = self.AGG_MAP[agg.lower()]
+
+        current_bin, bins = [], []
+        for reading in readings:
+            if reading.date - start_date >= interval_len:
+                start_date = reading.date
+                bins.append(current_bin)
+                current_bin = []
+            current_bin.append(reading)
+        if not bins or bins[-1] != current_bin:
+            bins.append(current_bin)
+        return map(agg_func, bins) 
 
     def query_parse(self):
         """ Parses dates from the query string """
@@ -107,23 +153,13 @@ class ReadingResource(Resource):
         parser.add_argument('sub_zone', type=str, location='args')
         parser.add_argument('device', type=str, location='args')
         parser.add_argument('download', type=bool, location='args')
+        parser.add_argument('interval', type=str, location='args')
+        parser.add_argument('aggregation', type=str, location='args')
         return parser.parse_args()
     
     # http://159.203.111.95:6969/api/reading/?location=Colins%20Cove&download=True     
     def to_csv(self, json):
         """Converts json to csv"""
-        """
-        string_buffer = StringIO()
-        json = json.replace("\r", "").replace("\n", "")
-        convert = csv.writer(string_buffer)
-        convert.writerow(["device", "date", "reading"])
-
-        for x in json:
-            convert.writerow([x["device"],
-                              x["date"],
-                              x["reading"]])
-        return string_buffer.getvalue()
-        """
         csv = "device,date,reading\n"
         for x in json:
             csv += (",".join([str(x[arg]) for arg in ("device", "date", "reading")]) + "\n")
