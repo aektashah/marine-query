@@ -62,10 +62,11 @@ a.nav-expander.fixed {
   display: block;
   overflow: auto;
   position: fixed;
-  left: -26%; /*used to be 20em*/
+  left: -26%; 
   font-size: 15px;
   top: 0;
-  width: 25%; /*used to be 20em*/
+  min-width: 327px; 
+  width:25%;
   z-index: 2000;
   margin-top: 70px;
   box-shadow: 5px 5px 5px #888888;

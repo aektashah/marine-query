@@ -172,7 +172,6 @@ function populateAllFields(markerID){
                     populateField('state', data.state_province);
                     deactivateField('state');
                     populateField('site', data.location);
-                    deactivateField('site');
                 }
             });
         }});

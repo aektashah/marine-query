@@ -31,11 +31,11 @@ function initmap() {
   map.on('popupopen', function(centerMarker) {
         $('.sidebar').addClass('sidebar-expanded');
         $('.sidebar-expanded > nav').width("25%");
+        populateAllFields(centerMarker.popup._source._myId);
         $('.bottombar').addClass('bottombar-expanded');
         $('.bottombar-expanded > nav').height("37%");
         var cM = map.project(centerMarker.popup._latlng);
         $("nav").scrollTop(0);
-        populateAllFields(centerMarker.popup._source._myId);
         cM.y -= centerMarker.popup._container.clientHeight-200;
         cM.x -= centerMarker.popup._container.clientWidth-180;
         map.panTo(map.unproject(cM), {animate: true});
