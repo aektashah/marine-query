@@ -341,10 +341,10 @@
   <span>
     <div class="bottombar">
         <nav style="dislplay:inline-block;">
-            <a href="#" class="nav-close">X</a>
-            <div id='drag'></div>
-
-            <div class="onoffswitch" id="onoffswitch" style="margin-left:5px">
+          <div id='drag'></div>
+          <div style="height:60px;">
+            <a href="#" class="nav-close" style="margin-top: 3px;margin-right: 5px;padding-left: 69%;position:fixed;float: right;width: 70%;background: white;">X</a>
+            <div class="onoffswitch" id="onoffswitch" style="margin-left:5px;position: fixed;height: px;margin-top: 10px;">
                 
                 <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="myonoffswitch" checked>
                 <label class="onoffswitch-label" for="myonoffswitch">
@@ -352,11 +352,12 @@
                     <span class="onoffswitch-switch"></span>
                 </label>
             </div>
-           
+           </div>
            <div class="bottom-content" style="display: inline">
 
            </div>
             <div class="data" id="data" style="display:inline">
+              <div><button type="button" class="btn btn-primary" id="download" style="float: right;margin-right: 2%; margin-top:-3px;">Download</button></div>
               <table class="table">
                 <thead>
                 <tr>
@@ -371,7 +372,6 @@
                 <tbody>
                 </tbody>
               </table>
-                <button type="button" class="btn btn-primary" id="download">Download</button>
                 <iframe id="downloadFrame" style="display:none"></iframe>
             </div>
             <div class="graphs" id="graphs" style="display:none">
